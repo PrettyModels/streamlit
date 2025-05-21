@@ -61,7 +61,7 @@ df_filtered = df.loc[df["Rank"].between(ranks[0], ranks[1]), cols]
 d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
 
 st.dataframe(
-    df_filtered,
+    df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
     use_container_width=True,
     column_config=d_column_config,
 )
