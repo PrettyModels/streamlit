@@ -1,6 +1,6 @@
-# 🎬 Movies dataset template
+# PrettyModels.AI - Marylin
 
-A simple Streamlit app showing movie data from [The Movie Database (TMDB)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata). 
+A simple Streamlit app showing the Marylin portfolio from [PrettyModels.AI](https://prettymodels.ai/). 
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://movies-dataset-template.streamlit.app/)
 

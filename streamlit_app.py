@@ -22,6 +22,7 @@ st.logo("images/logo.png", size="large")
 @st.cache_data
 def load_data():
     df = pd.read_csv("data/full_weights - full.csv")
+    df.set_index("Asset", inplace=True, drop=True)
     df = df.sort_values("w", ascending=False)
     df['Rank'] = df['w'].rank(ascending=False)
     cols = df.columns.tolist()                     # get current column order
@@ -44,8 +45,8 @@ df = load_data()
 
 scores = st.multiselect(
     "Scores",
-    sorted(set(df.columns).symmetric_difference(["w", "Asset", "Rank"])),
-    ["Alpha (vs. Tech)"],
+    sorted(set(df.columns).symmetric_difference(["w", "Rank", "hard-sell"])),
+    ["Alpha (vs. Tech)", "Valuation", "Risk"],
 )
 
 # Show a slider widget with the years using `st.slider`.
@@ -53,36 +54,54 @@ max_rank = df["Rank"].max()
 ranks = st.slider("Rank", 1, min(50, int(max_rank)), (1, 10))
 
 # Filter the dataframe based on the widget input and reshape it.
-cols = ["Rank", "Asset"] + list(scores)
+cols = ["Rank"] + list(scores)
 df_filtered = df.loc[df["Rank"].between(ranks[0], ranks[1]), cols]
 
 
 # Display the data as a table using `st.dataframe`.
 d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
+d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
 
+# Dataframe
 st.dataframe(
     df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
     use_container_width=True,
     column_config=d_column_config,
 )
 
-if False:
-    # Display the data as an Altair chart using `st.altair_chart`.
-    df_chart = pd.melt(
-        df_reshaped.reset_index(), id_vars="w", var_name="Scores", value_name="gross"
-    )
-    chart = (
-        alt.Chart(df_chart)
-        .mark_line()
-        .encode(
-            x=alt.X("w:N", title="Weights"),
-            y=alt.Y("gross:Q", title="Gross earnings ($)"),
-            color="genre:N",
-        )
-        .properties(height=320)
-    )
-    st.altair_chart(chart, use_container_width=True)
+# Header
+st.header("Cumulative Score")
 
+# Bar Chart
+# st.bar_chart(data=df_filtered, y=list(scores))
+
+# Altair Chart Approach
+df = df_filtered.copy()
+df["Asset"] = df.index
+if len(scores) == 0:
+    scores = ["Rank"]
+    df["Rank"] = 1 / df["Rank"]
+
+# Compute row sums and sort
+df['row_sum'] = df[scores].sum(axis=1)
+df = df.sort_values('row_sum', ascending=False)
+
+# Melt the DataFrame to long format for Altair
+df_long = df.melt(id_vars=['Asset'], value_vars=scores,
+                  var_name='Metric', value_name='Sum of Scores')
+
+# Altair bar chart with fixed x-axis order
+order = df['Asset'].tolist()
+
+chart = alt.Chart(df_long).mark_bar().encode(
+    x=alt.X('Asset:N', sort=order),
+    y='Sum of Scores:Q',
+    color='Metric:N'
+).properties(width=600)
+
+st.altair_chart(chart, use_container_width=True)
+
+# Disclaimer
 
 st.divider()  # 👈 Draws a horizontal rule
 
