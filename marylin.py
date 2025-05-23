@@ -37,71 +37,111 @@ def load_data():
     cols2drop = ['Tenbagger Probability100', "Growth Rate100", "Return100", "iKelly-weight", "t-value"]
     df.drop(cols2drop, axis=1, inplace=True)
     df.rename(columns={"Alpha": "Alpha (vs. Tech)"}, inplace=True)
+    df = df[df["w"] > 0]
 
     return df
 
 
-df = load_data()
+df_data = load_data()
 
-# Show a multiselect widget with the genres using `st.multiselect`.
+tab1, tab2 = st.tabs(["Select Scores", "Select Companies"])
 
-scores = st.multiselect(
-    "Scores",
-    sorted(set(df.columns).symmetric_difference(["w", "Rank", "hard-sell"])),
-    ["Alpha (vs. Tech)", "Valuation", "Risk"],
-)
+def make_bar_chart(df, scores, id_vars):
+    # Altair Chart Approach
+    # df = df_filtered.copy()
 
-# Show a slider widget with the years using `st.slider`.
-max_rank = df["Rank"].max()
-ranks = st.slider("Rank", 1, min(50, int(max_rank)), (1, 10))
+    df["Asset"] = df.index
+    if len(scores) == 0:
+        scores = ["Rank"]
+        df["Rank"] = 1 / df["Rank"]
 
-# Filter the dataframe based on the widget input and reshape it.
-cols = ["Rank"] + list(scores)
-df_filtered = df.loc[df["Rank"].between(ranks[0], ranks[1]), cols]
+    # Compute row sums and sort
+    df['row_sum'] = df[scores].sum(axis=1)
+    df = df.sort_values('row_sum', ascending=False)
+
+    # Melt the DataFrame to long format for Altair
+    df_long = df.melt(id_vars=id_vars, value_vars=scores,
+                    var_name='Metric', value_name='Sum of Scores')
+
+    # Altair bar chart with fixed x-axis order
+    order = df['Asset'].tolist()
+
+    chart = alt.Chart(df_long).mark_bar().encode(
+        x=alt.X('Asset:N', sort=order),
+        y='Sum of Scores:Q',
+        color='Metric:N'
+    ).properties(width=600)
+
+    st.altair_chart(chart, use_container_width=True)
 
 
-# Display the data as a table using `st.dataframe`.
-d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
-d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
+with tab1:
+    # Show a multiselect widget with the genres using `st.multiselect`.
+    scores = st.multiselect(
+        "Scores",
+        sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"])),
+        ["Alpha (vs. Tech)", "Valuation", "Risk"],
+    )
 
-# Dataframe
-st.dataframe(
-    df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
-    use_container_width=True,
-    column_config=d_column_config,
-)
+    # Show a slider widget with the years using `st.slider`.
+    max_rank = df_data["Rank"].max()
+    ranks = st.slider("Rank", 1, min(500, int(max_rank)), (1, 10))
 
-# Cumulative Score Chart
-st.header("Cumulative Score")
+    # Filter the dataframe based on the widget input and reshape it.
+    cols = ["Rank"] + list(scores)
+    df_filtered = df_data.loc[df_data["Rank"].between(ranks[0], ranks[1]), cols]
 
-# Bar Chart
-# st.bar_chart(data=df_filtered, y=list(scores))
 
-# Altair Chart Approach
-df = df_filtered.copy()
-df["Asset"] = df.index
-if len(scores) == 0:
-    scores = ["Rank"]
-    df["Rank"] = 1 / df["Rank"]
+    # Display the data as a table using `st.dataframe`.
+    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
+    d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
 
-# Compute row sums and sort
-df['row_sum'] = df[scores].sum(axis=1)
-df = df.sort_values('row_sum', ascending=False)
+    # Dataframe
+    st.dataframe(
+        df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
+        use_container_width=True,
+        column_config=d_column_config,
+    )
 
-# Melt the DataFrame to long format for Altair
-df_long = df.melt(id_vars=['Asset'], value_vars=scores,
-                  var_name='Metric', value_name='Sum of Scores')
+    # Cumulative Score Chart
+    st.header("Cumulative Score")
 
-# Altair bar chart with fixed x-axis order
-order = df['Asset'].tolist()
+    # Bar Chart
+    # st.bar_chart(data=df_filtered, y=list(scores))
+    make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
 
-chart = alt.Chart(df_long).mark_bar().encode(
-    x=alt.X('Asset:N', sort=order),
-    y='Sum of Scores:Q',
-    color='Metric:N'
-).properties(width=600)
 
-st.altair_chart(chart, use_container_width=True)
+with tab2:
+    # Show a multiselect widget with the genres using `st.multiselect`.
+    default_companies = df_data.nlargest(10, 'w').sort_index().index
+
+    companies = st.multiselect(
+        "Companies",
+        sorted(set(df_data.index)),
+        default_companies,
+    )
+
+    # Filter the dataframe based on the widget input and reshape it.
+    df_filtered = df_data.loc[companies, :]
+
+    # Display the data as a table using `st.dataframe`.
+    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
+
+    # Dataframe
+    st.dataframe(
+        df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
+        use_container_width=True,
+        column_config=d_column_config,
+    )
+
+    # Cumulative Score Chart
+    st.header("Cumulative Score")
+
+    # Bar Chart
+    # st.bar_chart(data=df_filtered, y=list(scores))
+    scores1 = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"]))
+    make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
+
 
 # Wikifolio Performance
 # with st.expander("Click to see Wikifolio"):
