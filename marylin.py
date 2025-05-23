@@ -113,7 +113,7 @@ with tab1:
 
 with tab2:
     # Show a multiselect widget with the genres using `st.multiselect`.
-    default_companies = df_data.nlargest(10, 'w').sort_index().index
+    default_companies = df_data.nlargest(5, 'w').sort_index().index
 
     companies = st.multiselect(
         "Companies",
@@ -122,10 +122,11 @@ with tab2:
     )
 
     # Filter the dataframe based on the widget input and reshape it.
-    df_filtered = df_data.loc[companies, :]
+    df_filtered = df_data.loc[companies, :].copy()
+    df_filtered.drop(columns=["w", "Rank", "hard-sell"], inplace=True)
 
     # Display the data as a table using `st.dataframe`.
-    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
+    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
 
     # Dataframe
     st.dataframe(
@@ -139,7 +140,7 @@ with tab2:
 
     # Bar Chart
     # st.bar_chart(data=df_filtered, y=list(scores))
-    scores1 = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"]))
+    scores1 = sorted(set(df_filtered.columns))
     make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
 
 
