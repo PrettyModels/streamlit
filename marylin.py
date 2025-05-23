@@ -61,7 +61,7 @@ def make_bar_chart(df, scores, id_vars):
 
     # Melt the DataFrame to long format for Altair
     df_long = df.melt(id_vars=id_vars, value_vars=scores,
-                    var_name='Metric', value_name='Sum of Scores')
+                    var_name='Score', value_name='Sum of Scores')
 
     # Altair bar chart with fixed x-axis order
     order = df['Asset'].tolist()
@@ -69,7 +69,7 @@ def make_bar_chart(df, scores, id_vars):
     chart = alt.Chart(df_long).mark_bar().encode(
         x=alt.X('Asset:N', sort=order),
         y='Sum of Scores:Q',
-        color='Metric:N'
+        color='Score:N'
     ).properties(width=600)
 
     st.altair_chart(chart, use_container_width=True)
