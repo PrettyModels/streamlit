@@ -75,11 +75,48 @@ def make_bar_chart(df, scores, id_vars):
     st.altair_chart(chart, use_container_width=True)
 
 
+# Define all scores available in the dataset.
+all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"]))
+
+
 with tab1:
+    # Show a multiselect widget with the genres using `st.multiselect`.
+    default_companies = df_data.nlargest(6, 'w').sort_index().index
+
+    companies = st.multiselect(
+        "Companies",
+        sorted(set(df_data.index)),
+        default_companies,
+    )
+
+    # Filter the dataframe based on the widget input and reshape it.
+    df_filtered = df_data.loc[companies, :].copy()
+    df_filtered.drop(columns=["w", "Rank", "hard-sell"], inplace=True)
+
+    # Display the data as a table using `st.dataframe`.
+    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
+
+    # Dataframe
+    st.dataframe(
+        df_filtered.style.highlight_max(axis=0, subset=all_scores, color="green"),
+        use_container_width=True,
+        column_config=d_column_config,
+    )
+
+    # Cumulative Score Chart
+    st.header("Cumulative Score")
+
+    # Bar Chart
+    # st.bar_chart(data=df_filtered, y=list(scores))
+    scores1 = sorted(set(df_filtered.columns))
+    make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
+
+
+with tab2:
     # Show a multiselect widget with the genres using `st.multiselect`.
     scores = st.multiselect(
         "Scores",
-        sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"])),
+        all_scores,
         ["Alpha (vs. Tech)", "Valuation", "Risk"],
     )
 
@@ -109,39 +146,6 @@ with tab1:
     # Bar Chart
     # st.bar_chart(data=df_filtered, y=list(scores))
     make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
-
-
-with tab2:
-    # Show a multiselect widget with the genres using `st.multiselect`.
-    default_companies = df_data.nlargest(5, 'w').sort_index().index
-
-    companies = st.multiselect(
-        "Companies",
-        sorted(set(df_data.index)),
-        default_companies,
-    )
-
-    # Filter the dataframe based on the widget input and reshape it.
-    df_filtered = df_data.loc[companies, :].copy()
-    df_filtered.drop(columns=["w", "Rank", "hard-sell"], inplace=True)
-
-    # Display the data as a table using `st.dataframe`.
-    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
-
-    # Dataframe
-    st.dataframe(
-        df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
-        use_container_width=True,
-        column_config=d_column_config,
-    )
-
-    # Cumulative Score Chart
-    st.header("Cumulative Score")
-
-    # Bar Chart
-    # st.bar_chart(data=df_filtered, y=list(scores))
-    scores1 = sorted(set(df_filtered.columns))
-    make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
 
 
 # Wikifolio Performance
