@@ -34,6 +34,7 @@ def load_data():
     df['Tenbagger'] = df['Tenbagger Probability100'].rank(pct=True)
     df['Growth'] = df["Growth Rate100"].rank(pct=True)
     df['Return'] = df["Return100"].rank(pct=True)
+    df['Bankruptcy'] = df["Bankruptcy"].rank(pct=True)
     cols2drop = ['Tenbagger Probability100', "Growth Rate100", "Return100", "iKelly-weight", "t-value"]
     df.drop(cols2drop, axis=1, inplace=True)
     df.rename(columns={"Alpha": "Alpha (vs. Tech)"}, inplace=True)
@@ -43,8 +44,6 @@ def load_data():
 
 
 df_data = load_data()
-
-tab1, tab2 = st.tabs(["Select Companies", "Select Scores"])
 
 def make_bar_chart(df, scores, id_vars):
     # Altair Chart Approach
@@ -77,6 +76,47 @@ def make_bar_chart(df, scores, id_vars):
 
 # Define all scores available in the dataset.
 all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"]))
+
+
+# Make Tabs
+tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Select Companies", "Select Scores"])
+
+
+with tab0:
+    company = st.selectbox(
+    "Which asset do you want to analyze?",
+    sorted(set(df_data.index)),
+    ) 
+
+    cols = set(df_data.columns).symmetric_difference({"w", "Rank", "hard-sell", "Alpha (vs. Tech)"})
+    s = df_data.loc[company, list(cols)].copy()
+
+    # Convert Series to DataFrame
+    df1 = s.reset_index()
+    company = company.replace(",", " ").replace(".", "-")
+    df1.columns = ['Score', company]
+    df1.sort_values(by=company, ascending=False, inplace=True)
+
+    # compute min/max (optional if you know the domain already)
+    min_score, max_score = df1[company].min(), df1[company].max()
+    min_score = 0
+    max_score = 1
+
+    # Create Altair chart with color gradient
+    chart = alt.Chart(df1).mark_bar().encode(
+        x=alt.X('Score:N', sort='-y', axis=alt.Axis(title=None)),
+        y=alt.Y(f'{company}:Q', axis=alt.Axis(title=None)),
+        color=alt.Color(
+            f'{company}:Q',
+            scale=alt.Scale(
+                domain=[min_score, max_score],     # data range
+                range=['red', 'green']             # low→high colors
+            ),
+            legend=alt.Legend(title=None)
+        )
+    )
+
+    st.altair_chart(chart, use_container_width=True)
 
 
 with tab1:
@@ -146,6 +186,8 @@ with tab2:
     # Bar Chart
     # st.bar_chart(data=df_filtered, y=list(scores))
     make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
+
+
 
 
 # Wikifolio Performance
