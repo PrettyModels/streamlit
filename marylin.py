@@ -64,8 +64,8 @@ def make_bar_chart(df, scores, id_vars):
     order = df['Asset'].tolist()
 
     chart = alt.Chart(df_long).mark_bar().encode(
-        x=alt.X('Asset:N', sort=order),
-        y='Sum of Scores:Q',
+        x=alt.X('Asset:N', sort=order, axis=alt.Axis(title=None)),
+        y=alt.Y('Sum of Scores:Q', axis=alt.Axis(title=None)),
         color='Score:N'
     ).properties(width=600)
 
