@@ -9,9 +9,9 @@ st.title("PrettyModels AI - Marylin")
 st.write(
     """
     This app visualizes data from [Marylin](https://docs.prettymodels.ai/public-investment-ai/marylin).
-    It shows 100% AI-based assessments of many stocks. 
+    It shows 100% AI-based assessments of many assets. 
 
-    Just click on the widgets below to explore!
+    Just click on the widgets below to explore your favorite stocks!
     """
 )
 
@@ -44,7 +44,7 @@ def load_data():
 
 df_data = load_data()
 
-tab1, tab2 = st.tabs(["Select Scores", "Select Companies"])
+tab1, tab2 = st.tabs(["Select Companies", "Select Scores"])
 
 def make_bar_chart(df, scores, id_vars):
     # Altair Chart Approach
