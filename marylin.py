@@ -10,8 +10,6 @@ st.write(
     """
     This app visualizes data from [Marylin](https://docs.prettymodels.ai/public-investment-ai/marylin).
     It shows 100% AI-powered assessments of many assets. 
-
-    Just click on the widgets below to explore your favorite stocks!
     """
 )
 
