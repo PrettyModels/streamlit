@@ -5,7 +5,7 @@ import streamlit as st
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
 
-st.title("PrettyModels AI - Marylin")
+st.title("PrettyModels AI")
 st.write(
     """
     This app visualizes data from [Marylin](https://docs.prettymodels.ai/public-investment-ai/marylin).
