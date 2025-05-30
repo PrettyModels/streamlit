@@ -154,7 +154,7 @@ show_section = st.checkbox("Check real-world portfolio")
 
 if show_section:
     #st.balloons()
-    st.toast('Thank you for investing $100!', icon='😍')
+    st.toast('Thank you for investing!', icon='😍')
     st.header("Wikifolio Performance")
 
     st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
