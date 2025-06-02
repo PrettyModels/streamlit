@@ -1,6 +1,8 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
+#from sklearn.preprocessing import StandardScaler
+#from sklearn.decomposition import PCA
 
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
@@ -184,6 +186,28 @@ with tab2:
     # Bar Chart
     # st.bar_chart(data=df_filtered, y=list(scores))
     make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
+
+    # Heatmap with PCA
+    if False:
+        # 1) Select only numeric score columns (drop 'w' and 'hard-sell')
+        pca_features = df_filtered.columns.tolist()
+        X = df_filtered[pca_features].dropna().copy()
+
+        # 2) Standardize
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        # 3) Fit PCA (one component per feature)
+        pca = PCA(n_components=len(pca_features))
+        pca.fit(X_scaled)
+
+        # 4) Build loadings DataFrame (index=original features, columns=PC1, PC2, ...)
+        pcs = [f"PC{i+1}" for i in range(len(pca_features))]
+        loadings = pd.DataFrame(
+            pca.components_.T,
+            index=pca_features,
+            columns=pcs,
+        )
 
 
 
