@@ -1,8 +1,8 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
+#from sklearn.preprocessing import StandardScaler
+#from sklearn.decomposition import PCA
 
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
