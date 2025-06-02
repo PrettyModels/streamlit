@@ -1,8 +1,8 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-#from sklearn.preprocessing import StandardScaler
-#from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
@@ -188,9 +188,11 @@ with tab2:
     make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
 
     # Heatmap with PCA
-    if False:
+    st.header("Principal Component Analysis")
+
+    if True:
         # 1) Select only numeric score columns (drop 'w' and 'hard-sell')
-        pca_features = df_filtered.columns.tolist()
+        pca_features = df_filtered.drop(columns=["Rank"]).columns.tolist()
         X = df_filtered[pca_features].dropna().copy()
 
         # 2) Standardize
@@ -198,17 +200,37 @@ with tab2:
         X_scaled = scaler.fit_transform(X)
 
         # 3) Fit PCA (one component per feature)
-        pca = PCA(n_components=len(pca_features))
+        n_comp = min(len(df_filtered), len(pca_features))
+
+        n_comp = st.slider("Number of Principal Components", 1, n_comp, n_comp)
+
+        pca = PCA(n_components=n_comp)
         pca.fit(X_scaled)
 
         # 4) Build loadings DataFrame (index=original features, columns=PC1, PC2, ...)
-        pcs = [f"PC{i+1}" for i in range(len(pca_features))]
+        pcs = [f"PC {i+1}" for i in range(n_comp)]
         loadings = pd.DataFrame(
             pca.components_.T,
             index=pca_features,
             columns=pcs,
         )
 
+        # 5) Altair Heatmap
+        df_long = loadings.reset_index().melt(id_vars='index')
+        df_long.columns = ['Scores', 'PCAs', 'Value']
+
+        # Create Altair heatmap chart
+        chart = alt.Chart(df_long).mark_rect().encode(
+            x=alt.X('PCAs:O', title=None),
+            y=alt.Y('Scores:O', title=None),
+            color=alt.Color('Value:Q', scale=alt.Scale(scheme='reds')),
+            tooltip=['PCAs', 'Scores', 'Value']
+        ).properties(
+            width=300,
+            height=300
+        )
+
+        st.altair_chart(chart, use_container_width=True)
 
 
 
