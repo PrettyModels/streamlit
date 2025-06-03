@@ -4,6 +4,8 @@ import streamlit as st
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
+from wishlist import wishlist
+
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
 
@@ -79,7 +81,7 @@ all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "har
 
 
 # Make Tabs
-tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Select Companies", "Select Scores"])
+tab0, tab1, tab2, tab3 = st.tabs(["Asset Analyzer", "Select Companies", "Select Scores", "Wishlist"])
 
 
 with tab0:
@@ -232,6 +234,10 @@ with tab2:
 
         st.altair_chart(chart, use_container_width=True)
 
+
+# Wishlist
+with tab3:
+    wishlist()
 
 
 # Wikifolio Performance
