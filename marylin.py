@@ -107,7 +107,7 @@ with tab0:
     # Create Altair chart with color gradient
     chart = alt.Chart(df1).mark_bar().encode(
         x=alt.X('Score:N', sort='-y', axis=alt.Axis(title=None)),
-        y=alt.Y(f'{company}:Q', axis=alt.Axis(title=None)),
+        y=alt.Y(f'{company}:Q', axis=alt.Axis(title=None), scale=alt.Scale(domain=[0, 1])),
         color=alt.Color(
             f'{company}:Q',
             scale=alt.Scale(
