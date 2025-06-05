@@ -32,54 +32,55 @@ def wishlist():
     DATAFILE = "wishlist_votes.csv"          # simple persistence for a PoC
 
     # ---- 2. FORM ---------------------------------------------------------------
-    st.header("📊  Tell us which stocks you'd like us to analyze")
-
     with st.form("wishlist_form", clear_on_submit=True):
+        st.subheader("📊  Tell us more stocks you'd like us to analyze")
+
         picks   = st.multiselect("Choose as many as you like", ASSETS)
         other = ""
         # other   = st.text_input("Other tickers (comma-separated)")
         submit  = st.form_submit_button("Submit")
 
-    # ---- 3. SAVE & ACK ---------------------------------------------------------
-    if submit:
-        # Normalise the free-text field
-        extra = [
-            x.strip().upper() for x in other.split(",")
-            if x.strip() and x.strip().upper() not in ("OTHER", ",")
-        ]
-        wishlist = picks + extra
-        if not wishlist:
-            st.warning("Please select at least one ticker 😊")
-            st.stop()
+        # ---- 3. SAVE & ACK ---------------------------------------------------------
+        if submit:
+            # Normalise the free-text field
+            extra = [
+                x.strip().upper() for x in other.split(",")
+                if x.strip() and x.strip().upper() not in ("OTHER", ",")
+            ]
+            wishlist = picks + extra
+            if not wishlist:
+                st.warning("Please select at least one ticker 😊")
+                st.stop()
 
-        # Append to CSV (replace with DB in prod)
-        row = {
-            "timestamp": datetime.datetime.utcnow().isoformat(),
-            "user": st.session_state.get("user_id", "anon"),
-            "ticker": wishlist
-        }
-        # Flatten into one row per ticker
-        df = pd.DataFrame(
-            [{"timestamp": row["timestamp"], "user": row["user"], "ticker": t}
-            for t in row["ticker"]]
-        )
-        df.to_csv(DATAFILE, mode="a",
-                header=not os.path.exists(DATAFILE), index=False)
-
-        st.success("Thanks for the feedback! 🎉")
-
-    # ---- 4. OPTIONAL: DASHBOARD -----------------------------------------------
-    if st.checkbox("Show live vote counts"):
-        if os.path.exists(DATAFILE):
-            counts = (pd.read_csv(DATAFILE)
-                        .groupby("ticker").size().sort_values(ascending=False))
-            counts = pd.DataFrame(counts).reset_index()
-            counts.rename(columns={0: 'votes'}, inplace=True)
-
-            chart = alt.Chart(counts).mark_bar(color='#FF4B4B').encode(
-                x=alt.X('ticker:O', title=None),
-                y='votes'
+            # Append to CSV (replace with DB in prod)
+            row = {
+                "timestamp": datetime.datetime.utcnow().isoformat(),
+                "user": st.session_state.get("user_id", "anon"),
+                "ticker": wishlist
+            }
+            # Flatten into one row per ticker
+            df = pd.DataFrame(
+                [{"timestamp": row["timestamp"], "user": row["user"], "ticker": t}
+                for t in row["ticker"]]
             )
-            st.altair_chart(chart, use_container_width=True)
-        else:
-            st.info("No votes yet.")
+            df.to_csv(DATAFILE, mode="a",
+                    header=not os.path.exists(DATAFILE), index=False)
+
+            st.success("Thanks for the feedback! 🎉")
+
+    if False:
+        # ---- 4. OPTIONAL: DASHBOARD -----------------------------------------------
+        if st.checkbox("Show live vote counts"):
+            if os.path.exists(DATAFILE):
+                counts = (pd.read_csv(DATAFILE)
+                            .groupby("ticker").size().sort_values(ascending=False))
+                counts = pd.DataFrame(counts).reset_index()
+                counts.rename(columns={0: 'votes'}, inplace=True)
+
+                chart = alt.Chart(counts).mark_bar(color='#FF4B4B').encode(
+                    x=alt.X('ticker:O', title=None),
+                    y='votes'
+                )
+                st.altair_chart(chart, use_container_width=True)
+            else:
+                st.info("No votes yet.")

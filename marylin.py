@@ -81,7 +81,7 @@ all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "har
 
 
 # Make Tabs
-tab0, tab1, tab2, tab3 = st.tabs(["Asset Analyzer", "Select Companies", "Select Scores", "Wishlist"])
+tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Select Companies", "Select Scores"])
 
 
 with tab0:
@@ -119,6 +119,9 @@ with tab0:
     )
 
     st.altair_chart(chart, use_container_width=True)
+
+    # Wishlist
+    wishlist()
 
 
 with tab1:
@@ -234,10 +237,6 @@ with tab2:
 
         st.altair_chart(chart, use_container_width=True)
 
-
-# Wishlist
-with tab3:
-    wishlist()
 
 
 # Wikifolio Performance
