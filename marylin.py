@@ -193,9 +193,10 @@ with tab2:
     make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
 
     # Heatmap with PCA
-    st.header("Principal Component Analysis")
 
-    if True:
+    if len(scores) > 1:
+        st.header("Principal Component Analysis")
+
         # 1) Select only numeric score columns (drop 'w' and 'hard-sell')
         pca_features = df_filtered.drop(columns=["Rank"]).columns.tolist()
         X = df_filtered[pca_features].dropna().copy()
