@@ -12,8 +12,8 @@ from wishlist import wishlist
 st.title("PrettyModels AI")
 st.write(
     """
-    This app visualizes data from [Marylin](https://docs.prettymodels.ai/public-investment-ai/marylin).
-    It shows 100% AI-powered assessments of many assets. 
+    Our [Model Foundry](https://docs.prettymodels.ai) provides you with 100% AI-powered assessments of many assets.
+    Explore!
     """
 )
 
