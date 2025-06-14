@@ -12,8 +12,7 @@ from wishlist import wishlist
 st.title("PrettyModels AI")
 st.write(
     """
-    Our [Model Foundry](https://docs.prettymodels.ai) provides you with 100% AI-powered assessments of many assets.
-    Explore!
+    Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide you with 100% AI-powered assessments of many assets.
     """
 )
 
