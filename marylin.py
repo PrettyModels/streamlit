@@ -9,10 +9,10 @@ from wishlist import wishlist
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
 
-st.title("PrettyModels AI")
+st.title("PrettyModels AI (Demo)")
 st.write(
     """
-    Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide you with 100% AI-powered assessments of many assets.
+    Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.
     """
 )
 
