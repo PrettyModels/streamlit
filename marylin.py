@@ -8,23 +8,93 @@ from wishlist import wishlist
 
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
-
-st.title("PrettyModels AI (Demo)")
-st.write(
-    """
-    Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.
-    """
-)
-
 st.logo("images/logo.png", size="large")
 
+#st.title("PrettyModels AI")
+st.markdown("# PrettyModels AI")
+st.header("Advanced AI models for public markets.")
+
+col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+
+with col1:
+    #st.markdown("**Allocate your assets intelligently**")
+    #st.markdown("**Forge your own Allocation Intelligence model**")
+    #st.markdown("**Outperform your benchmark with AI-powered portfolios**")
+
+    st.markdown("""
+    ## **Allocate your investments intelligently**
+    """)
+
+with col3:
+    st.markdown("""
+    **Outperform your benchmark with AI-powered portfolios**
+    ---
+    """)
+
+with col2:
+    st.image("images/sisters4.png", use_container_width=True)
+
+
+#st.markdown("## **Forge your own Allocation Intelligence model**")
+col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+
+with col2:
+    st.markdown("# ALLOCATION INTELLIGENCE")
+
+col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+
+with col2:
+    st.markdown("### PrettyModels AI develops proprietary Allocation Intelligence algorithms to extract superior investment strategies and signals from the vast amount of financial knowledge (data + reasoning) embedded in leading AI models.")
+    st.markdown("### Our fundamental idea is to use LLMs to transform chaotic qualitative information into robust quantitative strategies for the public stock market.")
+
+with col2:
+    st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
+    st.markdown("""### Model Principles:""")
+    st.markdown("#### 🔥 **100% AI-powered models (LLMs)**")
+    st.markdown("#### 🔥 **Prompted for outperformance**")
+    st.markdown("#### 🔥 **Quantitative model output**")
+    st.markdown("#### 🔥 **Statistical approach**")
+
+
+#  MARYLIN
+
+
+if True:
+    #st.balloons()
+    #st.toast('Thank you for investing!', icon='😍')
+    st.divider()
+    st.markdown("# MARYLIN PORTFOLIO")
+    #st.header("Wikifolio Performance", divider=False)
+
+    col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+    with col2:
+        st.image("images/marylin2.png", use_container_width=True)
+    with col1:
+        st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market. She is willing to take high risks to kick-start her wealth generation in young years.")
+        st.markdown("##### We track Marylin's live performance by our Wikifolio.")
+        #st.markdown("##### Visit her now!")
+        st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1")
+
+    # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
+
+    col3.metric("Alpha (since Inception)", "3.8%", "6% (May-June 2025)", border=True)
+    col3.metric("Number of Holdings", "9", "-10 (May-June 2025)", border=True)
+    col3.metric("Number of Trades", "122", "12 (May-June 2025)", border=True)
+
+
+# DATA
+
+
+#st.divider()
+#st.write("Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.")
+st.markdown("# MODEL DATA")
 
 # Load the data from a CSV. We're caching this so it doesn't reload every time the app
 # reruns (e.g. if the user interacts with the widgets).
 @st.cache_data
 def load_data():
     # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-    df = pd.read_csv("data/full_weights - full.csv")
+    df = pd.read_csv("data/full_weights - raw - June.csv")
     df.set_index("Asset", inplace=True, drop=True)
     df = df.sort_values("w", ascending=False)
     df['Rank'] = df['w'].rank(ascending=False)
@@ -38,7 +108,13 @@ def load_data():
     df['Bankruptcy'] = df["Bankruptcy"].rank(pct=True)
     cols2drop = ['Tenbagger Probability100', "Growth Rate100", "Return100", "iKelly-weight", "t-value"]
     df.drop(cols2drop, axis=1, inplace=True)
-    df.rename(columns={"Alpha": "Alpha (vs. Tech)"}, inplace=True)
+    dict_rename = {"Alpha": "Alpha (vs. Tech)",
+                   "Market Disruptor": "Disruptor",
+                   "Good Governance": "Governance",
+                   "Good Business": "Business",
+                   "Future Moat": "Moat",
+                   }
+    df.rename(columns=dict_rename, inplace=True)
     df = df[df["w"] > 0]
 
     return df
@@ -120,7 +196,7 @@ with tab0:
     st.altair_chart(chart, use_container_width=True)
 
     # Wishlist
-    wishlist()
+    # wishlist()
 
 
 with tab1:
@@ -239,27 +315,15 @@ with tab2:
 
 
 
-# Wikifolio Performance
-# with st.expander("Click to see Wikifolio"):
-show_section = st.checkbox("Check real-world portfolio")
 
-if show_section:
-    #st.balloons()
-    st.toast('Thank you for investing!', icon='😍')
-    st.header("Wikifolio Performance")
 
-    st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    a, b, c = st.columns(3)
-    a.metric("Alpha (since Inception)", "1%", "1% (April-May 2025)", border=True)
-    b.metric("Number of Holdings", "19", "6 (April-May 2025)", border=True)
-    c.metric("Number of Trades", "110", "19 (April-May 2025)", border=True)
 
 # Disclaimer
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.2 (as of 2025-05-04)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.3 (as of 2025-07-01)", icon=None, color="green")
 
 st.caption(
     """
@@ -280,4 +344,23 @@ st.caption(
 
     """
 )
+
+if False:
+    st.markdown("""
+    <a href="https://www.linkedin.com/company/prettymodels-ai" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30">
+    </a>
+    """, unsafe_allow_html=True)
+
+st.markdown("""
+© PrettyModels.ai 2025. All rights reserved. 
+_Further information and legal notices can be found here:_
+""")
+#st.markdown("Further information and legal notices can be found here:")
+
+c1, c2, c3 = st.columns([1, 1, 8])
+with c1:
+    st.link_button("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai")
+with c2:
+    st.link_button("More Info", "https://docs.prettymodels.ai")
 

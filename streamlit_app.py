@@ -1,7 +1,7 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-
+# streamlit run streamlit_app.py
 
 marylin_page = st.Page("marylin.py", title="PrettyModels AI")
 test_page = st.Page("test_page.py", title="Test Page")
