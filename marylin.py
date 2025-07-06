@@ -44,16 +44,15 @@ with col2:
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
-    st.markdown("### PrettyModels AI develops proprietary Allocation Intelligence algorithms to extract superior investment strategies and signals from the vast amount of financial knowledge (data + reasoning) embedded in leading AI models.")
-    st.markdown("### Our fundamental idea is to use LLMs to transform chaotic qualitative information into robust quantitative strategies for the public stock market.")
-
-with col2:
-    st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
+    st.markdown("### PrettyModels AI builds proprietary Allocation Intelligence algorithms that unlock superior investment strategies from the vast financial knowledge—data and reasoning—embedded in the world’s most powerful AI models.")
+    st.markdown("### We use advanced LLMs to transform chaotic qualitative information into robust, quantitative strategies for the public stock market—delivering high-return potential over long investment horizons.")
+    #st.markdown("### Our approach is inspired by the academic ideal of the growth-optimal portfolio.")
+    #st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
     st.markdown("""### Model Principles:""")
-    st.markdown("#### 🔥 **100% AI-powered models (LLMs)**")
-    st.markdown("#### 🔥 **Prompted for outperformance**")
-    st.markdown("#### 🔥 **Quantitative model output**")
-    st.markdown("#### 🔥 **Statistical approach**")
+    st.markdown("#### 🔥 **100% AI-Powered Models (LLMs)**")
+    st.markdown("#### 🔥 **Prompted for Outperformance**")
+    st.markdown("#### 🔥 **Quantitative Model Output**")
+    st.markdown("#### 🔥 **Statistical Approach**")
 
 
 #  MARYLIN
@@ -70,7 +69,7 @@ if True:
     with col2:
         st.image("images/marylin2.png", use_container_width=True)
     with col1:
-        st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market. She is willing to take high risks to kick-start her wealth generation in young years.")
+        st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### We track Marylin's live performance by our Wikifolio.")
         #st.markdown("##### Visit her now!")
         st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1")
@@ -117,10 +116,25 @@ def load_data():
     df.rename(columns=dict_rename, inplace=True)
     df = df[df["w"] > 0]
 
+    # Final Filter
+    cols = [c for c in df.columns if "Cat-" in c] + ["w", "Rank"]
+    df = df[cols]
+    dict_rename = {c: c.replace("Cat-","") for c in df.columns if "Cat-" in c}
+    df = df.rename(columns=dict_rename)
+
     return df
 
 
 df_data = load_data()
+
+d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_data.columns}
+
+# Dataframe
+st.dataframe(
+    df_data.drop(columns=["Rank", "w"]).style.highlight_max(axis=0, color="green"),
+    use_container_width=True,
+    column_config=d_column_config,
+)
 
 def make_bar_chart(df, scores, id_vars):
     # Altair Chart Approach
@@ -137,14 +151,14 @@ def make_bar_chart(df, scores, id_vars):
 
     # Melt the DataFrame to long format for Altair
     df_long = df.melt(id_vars=id_vars, value_vars=scores,
-                    var_name='Score', value_name='Sum of Scores')
+                    var_name='Score', value_name='Score Value')
 
     # Altair bar chart with fixed x-axis order
     order = df['Asset'].tolist()
 
     chart = alt.Chart(df_long).mark_bar().encode(
         x=alt.X('Asset:N', sort=order, axis=alt.Axis(title=None)),
-        y=alt.Y('Sum of Scores:Q', axis=alt.Axis(title=None)),
+        y=alt.Y('Score Value:Q', axis=alt.Axis(title=None)),
         color='Score:N'
     ).properties(width=600)
 
@@ -152,11 +166,11 @@ def make_bar_chart(df, scores, id_vars):
 
 
 # Define all scores available in the dataset.
-all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank", "hard-sell"]))
+all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank"]))
 
 
 # Make Tabs
-tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Select Companies", "Select Scores"])
+tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Compare Companies", "Select Scores"])
 
 
 with tab0:
@@ -165,8 +179,7 @@ with tab0:
     sorted(set(df_data.index)),
     ) 
 
-    cols = set(df_data.columns).symmetric_difference({"w", "Rank", "hard-sell", "Alpha (vs. Tech)"})
-    s = df_data.loc[company, list(cols)].copy()
+    s = df_data.loc[company,all_scores].copy()
 
     # Convert Series to DataFrame
     df1 = s.reset_index()
@@ -211,17 +224,18 @@ with tab1:
 
     # Filter the dataframe based on the widget input and reshape it.
     df_filtered = df_data.loc[companies, :].copy()
-    df_filtered.drop(columns=["w", "Rank", "hard-sell"], inplace=True)
+    df_filtered.drop(columns=["w", "Rank"], inplace=True)
 
-    # Display the data as a table using `st.dataframe`.
-    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
+    if False:
+        # Display the data as a table using `st.dataframe`.
+        d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
 
-    # Dataframe
-    st.dataframe(
-        df_filtered.style.highlight_max(axis=0, subset=all_scores, color="green"),
-        use_container_width=True,
-        column_config=d_column_config,
-    )
+        # Dataframe
+        st.dataframe(
+            df_filtered.style.highlight_max(axis=0, subset=all_scores, color="green"),
+            use_container_width=True,
+            column_config=d_column_config,
+        )
 
     # Cumulative Score Chart
     st.header("Cumulative Score")
@@ -237,7 +251,7 @@ with tab2:
     scores = st.multiselect(
         "Scores",
         all_scores,
-        ["Alpha (vs. Tech)", "Valuation", "Risk"],
+        all_scores,
     )
 
     # Show a slider widget with the years using `st.slider`.
@@ -249,16 +263,17 @@ with tab2:
     df_filtered = df_data.loc[df_data["Rank"].between(ranks[0], ranks[1]), cols]
 
 
-    # Display the data as a table using `st.dataframe`.
-    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
-    d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
+    if False:
+        # Display the data as a table using `st.dataframe`.
+        d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
+        d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
 
-    # Dataframe
-    st.dataframe(
-        df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
-        use_container_width=True,
-        column_config=d_column_config,
-    )
+        # Dataframe
+        st.dataframe(
+            df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
+            use_container_width=True,
+            column_config=d_column_config,
+        )
 
     # Cumulative Score Chart
     st.header("Cumulative Score")
