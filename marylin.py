@@ -12,7 +12,7 @@ st.logo("images/logo.png", size="large")
 
 #st.title("PrettyModels AI")
 st.markdown("# PrettyModels AI")
-st.header("Advanced AI models for public markets.")
+# st.header("Advanced AI models for public markets.")
 
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
@@ -22,13 +22,12 @@ with col1:
     #st.markdown("**Outperform your benchmark with AI-powered portfolios**")
 
     st.markdown("""
-    ## **Allocate your investments intelligently**
+    ## Advanced AI models for public markets.
     """)
 
 with col3:
     st.markdown("""
-    **Outperform your benchmark with AI-powered portfolios**
-    ---
+    ## Start outperforming with AI.
     """)
 
 with col2:
@@ -49,7 +48,7 @@ with col2:
     #st.markdown("### Our approach is inspired by the academic ideal of the growth-optimal portfolio.")
     #st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
     st.markdown("""### Model Principles:""")
-    st.markdown("#### 🔥 **100% AI-Powered Models (LLMs)**")
+    st.markdown("#### 🔥 **100% AI-Powered (LLMs)**")
     st.markdown("#### 🔥 **Prompted for Outperformance**")
     st.markdown("#### 🔥 **Quantitative Model Output**")
     st.markdown("#### 🔥 **Statistical Approach**")
@@ -80,6 +79,51 @@ if True:
     col3.metric("Number of Holdings", "9", "-10 (May-June 2025)", border=True)
     col3.metric("Number of Trades", "122", "12 (May-June 2025)", border=True)
 
+    # Marylin's Out-Performance
+
+    @st.cache_data
+    def load_perf_data():
+        df = pd.read_csv(
+            "data/2025-07-06 marylin_performance.csv",
+            sep=";",
+            decimal=",",
+            parse_dates=["Date"],
+            dayfirst=True
+        )
+        df.set_index("Date", inplace=True)
+        return df
+
+
+    df_mape = load_perf_data()
+
+    # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
+    # they’ll all be melted into a single 'Metric' + 'Value' column.
+    perf_cols = df_mape.columns.tolist()
+    chart_df = (
+        df_mape
+        .reset_index()
+        .melt(id_vars=["Date"], value_vars=perf_cols,
+              var_name="Metric", value_name="Value")
+    )
+
+    # Build the Altair chart:
+    chart = (
+        alt.Chart(chart_df)
+        .mark_line(point=True)
+        .encode(
+            x=alt.X("Date:T", title=""),
+            y=alt.Y("Value:Q", axis=alt.Axis(format="%"), title=""),
+            color=alt.Color("Metric:N", title="Alpha vs. ETFs:"),
+            tooltip=[
+                alt.Tooltip("Date:T", title="Date"),
+                alt.Tooltip("Metric:N", title="Benchmark"),
+                alt.Tooltip("Value:Q", format=".1%", title="Alpha")
+            ]
+        )
+        .properties(width=700, height=400)
+    )
+
+    st.altair_chart(chart, use_container_width=True)
 
 # DATA
 
@@ -96,10 +140,6 @@ def load_data():
     df = pd.read_csv("data/full_weights - raw - June.csv")
     df.set_index("Asset", inplace=True, drop=True)
     df = df.sort_values("w", ascending=False)
-    df['Rank'] = df['w'].rank(ascending=False)
-    cols = df.columns.tolist()                     # get current column order
-    cols.insert(0, cols.pop(cols.index("Rank")))   # remove "Rank" and re-insert at pos 2
-    df = df[cols]                                  # reindex the DataFrame’s columns
     df.columns = df.columns.str.replace(' Score100', '', regex=False)
     df['Tenbagger'] = df['Tenbagger Probability100'].rank(pct=True)
     df['Growth'] = df["Growth Rate100"].rank(pct=True)
@@ -114,7 +154,9 @@ def load_data():
                    "Future Moat": "Moat",
                    }
     df.rename(columns=dict_rename, inplace=True)
-    df = df[df["w"] > 0]
+    # df = df[df["w"] > 0]
+    df.dropna(axis=0, how='any', inplace=True)
+    df['Rank'] = df['w'].rank(ascending=False)
 
     # Final Filter
     cols = [c for c in df.columns if "Cat-" in c] + ["w", "Rank"]
@@ -131,7 +173,7 @@ d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for
 
 # Dataframe
 st.dataframe(
-    df_data.drop(columns=["Rank", "w"]).style.highlight_max(axis=0, color="green"),
+    df_data.drop(columns=["Rank", "w"]).sort_index().style.highlight_max(axis=0, color="green"),
     use_container_width=True,
     column_config=d_column_config,
 )
@@ -330,6 +372,26 @@ with tab2:
 
 
 
+# Contact Form
+col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+
+
+with col2:
+    st.markdown("# Wanna talk to us?")
+    st.markdown("""
+    ### We always can have a chat about models, data, customization and more!
+    """)
+
+    # Crisp Chatbot Integration
+    chat_url = "https://go.crisp.chat/chat/embed/?website_id=4a5016c9-b741-4e78-a0df-793321048d6b"
+
+    if st.button("Open Live Chat"):
+        st.components.v1.iframe(
+            src=chat_url,
+            height=400,
+            scrolling=True,
+            #sandbox="allow-scripts allow-same-origin"
+        )
 
 
 
@@ -373,9 +435,22 @@ _Further information and legal notices can be found here:_
 """)
 #st.markdown("Further information and legal notices can be found here:")
 
-c1, c2, c3 = st.columns([1, 1, 8])
+c1, c2, c3, c4 = st.columns([1, 1, 2, 6])
 with c1:
     st.link_button("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai")
 with c2:
     st.link_button("More Info", "https://docs.prettymodels.ai")
 
+if False:
+    with c3:
+        # Load the PDF file
+        with open("data/2025-07-01-marylin_report.pdf", "rb") as f:
+            pdf_data = f.read()
+
+        # Create a download button
+        st.download_button(
+            label="📄 Download PDF",
+            data=pdf_data,
+            file_name="marylin_report.pdf",
+            mime="application/pdf"
+        )

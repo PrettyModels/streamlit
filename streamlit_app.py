@@ -3,13 +3,14 @@ import pandas as pd
 import streamlit as st
 # streamlit run streamlit_app.py
 
+# Show the page title and description.
+st.set_page_config(page_title="PrettyModels AI", page_icon="images/logo.png", layout="wide")
+
 marylin_page = st.Page("marylin.py", title="PrettyModels AI")
-test_page = st.Page("test_page.py", title="Test Page")
+# test_page = st.Page("test_page.py", title="Test Page")
 
 pg = st.navigation([marylin_page])
 
-# Show the page title and description.
-st.set_page_config(page_title="PrettyModels AI", page_icon="images/logo.png", layout="wide")
 
 if False:
     with st.sidebar:
