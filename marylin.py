@@ -400,7 +400,7 @@ with col2:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.3 (as of 2025-07-01)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.4 (as of 2025-08-01)", icon=None, color="green")
 
 st.caption(
     """
