@@ -75,9 +75,9 @@ if True:
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Alpha (since Inception)", "3.8%", "6% (May-June 2025)", border=True)
-    col3.metric("Number of Holdings", "9", "-10 (May-June 2025)", border=True)
-    col3.metric("Number of Trades", "122", "12 (May-June 2025)", border=True)
+    col3.metric("Alpha (since Inception)", "4.9%", "1.1% (June-July 2025)", border=True)
+    col3.metric("Number of Holdings", "10", "+1 (June-July 2025)", border=True)
+    col3.metric("Number of Trades", "131", "9 (June-July 2025)", border=True)
 
     # Marylin's Out-Performance
 
@@ -137,7 +137,7 @@ st.markdown("# MODEL DATA")
 @st.cache_data
 def load_data():
     # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-    df = pd.read_csv("data/full_weights - raw - June.csv")
+    df = pd.read_csv("data/full_weights - raw - July.csv")
     df.set_index("Asset", inplace=True, drop=True)
     df = df.sort_values("w", ascending=False)
     df.columns = df.columns.str.replace(' Score100', '', regex=False)
