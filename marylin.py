@@ -31,8 +31,8 @@ with col3:
     """)
 
 with col2:
-    st.image("images/sisters4.png", use_container_width=True)
-
+    st.image("images/sisters8.png", use_container_width=True)
+    #st.image("images/3ladies.gif", use_container_width=True)
 
 #st.markdown("## **Forge your own Allocation Intelligence model**")
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
@@ -43,15 +43,15 @@ with col2:
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
-    st.markdown("### PrettyModels AI builds proprietary Allocation Intelligence algorithms that unlock superior investment strategies from the vast financial knowledge—data and reasoning—embedded in the world’s most powerful AI models.")
-    st.markdown("### We use advanced LLMs to transform chaotic qualitative information into robust, quantitative strategies for the public stock market—delivering high-return potential over long investment horizons.")
+    st.markdown("### PrettyModels AI builds proprietary Allocation Intelligence algorithms that unlock superior investment strategies from the vast financial knowledge embedded in the world’s most powerful AI models.")
+    st.markdown("### We use advanced LLMs to transform chaotic qualitative information into robust, quantitative strategies for the public stock market.")
     #st.markdown("### Our approach is inspired by the academic ideal of the growth-optimal portfolio.")
     #st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
     st.markdown("""### Model Principles:""")
     st.markdown("#### 🔥 **100% AI-Powered (LLMs)**")
     st.markdown("#### 🔥 **Prompted for Outperformance**")
     st.markdown("#### 🔥 **Quantitative Model Output**")
-    st.markdown("#### 🔥 **Statistical Approach**")
+    #st.markdown("#### 🔥 **Statistical Approach**")
 
 
 #  MARYLIN
@@ -371,27 +371,27 @@ with tab2:
         st.altair_chart(chart, use_container_width=True)
 
 
+if False:
+    # Contact Form
+    col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
-# Contact Form
-col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
+    with col2:
+        st.markdown("# Wanna talk to us?")
+        st.markdown("""
+        ### We always can have a chat about models, data, customization and more!
+        """)
 
-with col2:
-    st.markdown("# Wanna talk to us?")
-    st.markdown("""
-    ### We always can have a chat about models, data, customization and more!
-    """)
+        # Crisp Chatbot Integration
+        chat_url = "https://go.crisp.chat/chat/embed/?website_id=4a5016c9-b741-4e78-a0df-793321048d6b"
 
-    # Crisp Chatbot Integration
-    chat_url = "https://go.crisp.chat/chat/embed/?website_id=4a5016c9-b741-4e78-a0df-793321048d6b"
-
-    if st.button("Open Live Chat"):
-        st.components.v1.iframe(
-            src=chat_url,
-            height=400,
-            scrolling=True,
-            #sandbox="allow-scripts allow-same-origin"
-        )
+        if st.button("Open Live Chat"):
+            st.components.v1.iframe(
+                src=chat_url,
+                height=400,
+                scrolling=True,
+                #sandbox="allow-scripts allow-same-origin"
+            )
 
 
 
