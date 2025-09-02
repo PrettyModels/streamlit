@@ -12,42 +12,26 @@ st.logo("images/logo.png", size="large")
 
 #st.title("PrettyModels AI")
 st.markdown("# PrettyModels AI")
-# st.header("Advanced AI models for public markets.")
+st.header("Advanced AI models for public equity investors.")
+st.markdown("### ✅ Outperform your public benchmark")
+st.markdown("### ✅ Based on tailored AI-driven strategies")
+st.markdown("### ✅ With proven real-world track records")
+
 
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
-with col1:
-    #st.markdown("**Allocate your assets intelligently**")
-    #st.markdown("**Forge your own Allocation Intelligence model**")
-    #st.markdown("**Outperform your benchmark with AI-powered portfolios**")
-
-    st.markdown("""
-    ## Advanced AI models for asset managers.
-    """)
-
-with col3:
-    st.markdown("""
-    ## Start outperforming with AI.
-    """)
-
 with col2:
     st.image("images/sisters8.png", use_container_width=True)
-    #st.image("images/3ladies.gif", use_container_width=True)
 
 #st.markdown("## **Forge your own Allocation Intelligence model**")
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
     # Mission
-    st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
     #st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
-    #st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
-    #st.markdown("<h1 style='text-align: center; color: white;'>BEAT</h1>", unsafe_allow_html=True)
-    #st.markdown("<h1 style='text-align: center; color: white;'>THE</h1>", unsafe_allow_html=True)
-    #st.markdown("<h1 style='text-align: center; color: white;'>MARKET</h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center; color: white;'>BEAT THE MARKET WITH AI</h1>", unsafe_allow_html=True)
-    #st.markdown("<h1 style='text-align: center; color: white;'>With AI</h1>", unsafe_allow_html=True)
-    #st.markdown("<h5 style='text-align: center; color: white;'>(if helpful)</h5>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>BEAT THE MARKET WITH AI</h1>", unsafe_allow_html=True)
+    st.markdown("# Our mission is simple.")
+    st.markdown("# BEAT THE MARKET WITH AI")
 
     st.divider()
 
@@ -148,7 +132,7 @@ if True:
         .properties(width=700, height=400)
     )
 
-    st.markdown("### Marylin's Proven Track Record (looking very good so far)")
+    st.markdown("### Marylin's Track Record")
     st.altair_chart(chart, use_container_width=True)
 
 # DATA
