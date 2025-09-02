@@ -22,7 +22,7 @@ with col1:
     #st.markdown("**Outperform your benchmark with AI-powered portfolios**")
 
     st.markdown("""
-    ## Advanced AI models for public markets.
+    ## Advanced AI models for asset managers.
     """)
 
 with col3:
@@ -38,20 +38,41 @@ with col2:
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
-    st.markdown("# ALLOCATION INTELLIGENCE")
+    # Mission
+    st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>BEAT</h1>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>THE</h1>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>MARKET</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: white;'>BEAT THE MARKET WITH AI</h1>", unsafe_allow_html=True)
+    #st.markdown("<h1 style='text-align: center; color: white;'>With AI</h1>", unsafe_allow_html=True)
+    #st.markdown("<h5 style='text-align: center; color: white;'>(if helpful)</h5>", unsafe_allow_html=True)
+
+    st.divider()
+
+    # ALL IN
+    # st.markdown("# ALLOCATION INTELLIGENCE")
 
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
-    st.markdown("### PrettyModels AI builds proprietary Allocation Intelligence algorithms that unlock superior investment strategies from the vast financial knowledge embedded in the world’s most powerful AI models.")
-    st.markdown("### We use advanced LLMs to transform chaotic qualitative information into robust, quantitative strategies for the public stock market.")
-    #st.markdown("### Our approach is inspired by the academic ideal of the growth-optimal portfolio.")
+    st.markdown("#### We build proprietary AI algorithms to unlock superior investment strategies.")
+    st.markdown("#### We transform chaotic qualitative information into robust quantitative signals.")
+    st.markdown("#### We explore different AI models to assess what really beats the market in the long run.")
     #st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
-    st.markdown("""### Model Principles:""")
-    st.markdown("#### 🔥 **100% AI-Powered (LLMs)**")
+    st.markdown("### Our Principles:")
     st.markdown("#### 🔥 **Prompted for Outperformance**")
-    st.markdown("#### 🔥 **Quantitative Model Output**")
-    #st.markdown("#### 🔥 **Statistical Approach**")
+    st.markdown("#### 🔥 **100% AI-Powered (LLMs)**")
+    st.markdown("#### 🔥 **Quantitative Output**")
+    st.markdown("#### 🔥 **Statistical Approach**")
+    st.markdown("#### 🔥 **High Conviction**")
+
+    #st.markdown("### We combine expertise:")
+    #st.markdown("### ☑️ GenAI & Machine Learning")
+    #st.markdown("### ☑️ Econometrics & Statistics")
+    #st.markdown("### ☑️ Financial Economics")
+
 
 
 #  MARYLIN
@@ -66,18 +87,21 @@ if True:
 
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
     with col2:
-        st.image("images/marylin2.png", use_container_width=True)
+        st.image("images/marylin3.png", use_container_width=True)
     with col1:
-        st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
+        # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
+        st.markdown("##### Marylin is our first **PrettyModels AI** release.")
+        st.markdown("##### She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way.")
+        st.markdown("##### She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### We track Marylin's live performance by our Wikifolio.")
         #st.markdown("##### Visit her now!")
         st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1")
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Alpha (since Inception)", "4.9%", "1.1% (June-July 2025)", border=True)
-    col3.metric("Number of Holdings", "10", "+1 (June-July 2025)", border=True)
-    col3.metric("Number of Trades", "131", "9 (June-July 2025)", border=True)
+    col3.metric("Alpha (since Inception)", "7.1%", "2.2% (July-August 2025)", border=True)
+    col3.metric("Number of Holdings", "11", "1 (July-August 2025)", border=True)
+    col3.metric("Number of Trades", "136", "5 (July-August 2025)", border=True)
 
     # Marylin's Out-Performance
 
@@ -88,7 +112,8 @@ if True:
             sep=";",
             decimal=",",
             parse_dates=["Date"],
-            dayfirst=True
+            dayfirst=True,
+            date_format="%d.%m.%y",
         )
         df.set_index("Date", inplace=True)
         return df
@@ -123,6 +148,7 @@ if True:
         .properties(width=700, height=400)
     )
 
+    st.markdown("### Marylin's Proven Track Record (looking very good so far)")
     st.altair_chart(chart, use_container_width=True)
 
 # DATA
@@ -137,7 +163,7 @@ st.markdown("# MODEL DATA")
 @st.cache_data
 def load_data():
     # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-    df = pd.read_csv("data/full_weights - raw - July.csv")
+    df = pd.read_csv("data/full_weights - raw - August.csv")
     df.set_index("Asset", inplace=True, drop=True)
     df = df.sort_values("w", ascending=False)
     df.columns = df.columns.str.replace(' Score100', '', regex=False)
@@ -400,7 +426,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.4 (as of 2025-08-01)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.5 (as of 2025-09-01)", icon=None, color="green")
 
 st.caption(
     """
