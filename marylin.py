@@ -32,7 +32,6 @@ with col2:
     #st.markdown("<h1 style='text-align: center; color: white;'>BEAT THE MARKET WITH AI</h1>", unsafe_allow_html=True)
     st.markdown("# Our mission is simple.")
     st.markdown("# BEAT THE MARKET WITH AI")
-
     st.divider()
 
     # ALL IN
@@ -75,7 +74,8 @@ if True:
     with col1:
         # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### Marylin is our first **PrettyModels AI** release.")
-        st.markdown("##### She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way.")
+        st.markdown("##### She pursues a bold, growth-aggressive investment style.")
+        st.markdown("##### Her goal is to outperform the market in a _growth-optimal_ way.")
         st.markdown("##### She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### We track Marylin's live performance by our Wikifolio.")
         #st.markdown("##### Visit her now!")
@@ -141,6 +141,15 @@ if True:
 #st.divider()
 #st.write("Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.")
 st.markdown("# MODEL DATA")
+st.markdown("This dataset is the ❤️ of all PrettyModels AI strategies.")
+st.markdown("""
+We use AI to estimate scores for all stocks in our universe on a monthly basis.
+
+Our scores fall into five categories: 
+ 💞 Integrity, 📈 Market, ✨ Quality, ⛓️ Resilience, 🚀 Upside. 
+ 
+ Feel free to take a look! You can analyze the data here via interactive charts or simply download the data table. ⬇️
+""")
 
 # Load the data from a CSV. We're caching this so it doesn't reload every time the app
 # reruns (e.g. if the user interacts with the widgets).
