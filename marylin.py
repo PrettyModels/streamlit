@@ -13,12 +13,13 @@ st.logo("images/logo.png", size="large")
 #st.title("PrettyModels AI")
 st.markdown("# PrettyModels AI")
 st.header("Advanced AI models for public equity investors.")
-st.markdown("### ✅ Outperform your public benchmark")
-st.markdown("### ✅ Based on tailored AI-driven strategies")
-st.markdown("### ✅ With proven real-world track records")
-
 
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+
+with col1:
+    st.markdown("#### ✅ Outperform your public benchmark")
+    st.markdown("#### ✅ Based on tailored AI-driven strategies")
+    st.markdown("#### ✅ With a proven real-world track record")
 
 with col2:
     st.image("images/sisters8.png", use_container_width=True)
