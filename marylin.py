@@ -62,10 +62,10 @@ with col2:
 #  MARYLIN
 
 
-if True:
+with st.expander("Real-world performance", icon="🚀", expanded=True):
     #st.balloons()
     #st.toast('Thank you for investing!', icon='😍')
-    st.divider()
+    #st.divider()
     st.markdown("# MARYLIN PORTFOLIO")
     #st.header("Wikifolio Performance", divider=False)
 
@@ -136,259 +136,260 @@ if True:
     st.markdown("### Marylin's Track Record")
     st.altair_chart(chart, use_container_width=True)
 
-# DATA
+
+with st.expander("Secret model data", icon="🚨"):
+    # DATA
+
+    #st.divider()
+    #st.write("Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.")
+    st.markdown("# MODEL DATA")
+    st.markdown("This dataset is the ❤️ of all PrettyModels AI strategies.")
+    st.markdown("""
+    We use AI to estimate scores for all stocks in our universe on a monthly basis.
+    
+    Our scores fall into five categories: 
+     💞 Integrity, 📈 Market, ✨ Quality, ⛓️ Resilience, 🚀 Upside. 
+     
+     Feel free to take a look! You can analyze the data here via interactive charts or simply download the data table. ⬇️
+    """)
+
+    # Load the data from a CSV. We're caching this so it doesn't reload every time the app
+    # reruns (e.g. if the user interacts with the widgets).
+    @st.cache_data
+    def load_data():
+        # data contains AI-generated scores for stocks to support high-alpha portfolio creation
+        df = pd.read_csv("data/full_weights - raw - August.csv")
+        df.set_index("Asset", inplace=True, drop=True)
+        df = df.sort_values("w", ascending=False)
+        df.columns = df.columns.str.replace(' Score100', '', regex=False)
+        df['Tenbagger'] = df['Tenbagger Probability100'].rank(pct=True)
+        df['Growth'] = df["Growth Rate100"].rank(pct=True)
+        df['Return'] = df["Return100"].rank(pct=True)
+        df['Bankruptcy'] = df["Bankruptcy"].rank(pct=True)
+        cols2drop = ['Tenbagger Probability100', "Growth Rate100", "Return100", "iKelly-weight", "t-value"]
+        df.drop(cols2drop, axis=1, inplace=True)
+        dict_rename = {"Alpha": "Alpha (vs. Tech)",
+                       "Market Disruptor": "Disruptor",
+                       "Good Governance": "Governance",
+                       "Good Business": "Business",
+                       "Future Moat": "Moat",
+                       }
+        df.rename(columns=dict_rename, inplace=True)
+        # df = df[df["w"] > 0]
+        df.dropna(axis=0, how='any', inplace=True)
+        df['Rank'] = df['w'].rank(ascending=False)
+
+        # Final Filter
+        cols = [c for c in df.columns if "Cat-" in c] + ["w", "Rank"]
+        df = df[cols]
+        dict_rename = {c: c.replace("Cat-","") for c in df.columns if "Cat-" in c}
+        df = df.rename(columns=dict_rename)
+
+        return df
 
 
-#st.divider()
-#st.write("Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.")
-st.markdown("# MODEL DATA")
-st.markdown("This dataset is the ❤️ of all PrettyModels AI strategies.")
-st.markdown("""
-We use AI to estimate scores for all stocks in our universe on a monthly basis.
+    df_data = load_data()
 
-Our scores fall into five categories: 
- 💞 Integrity, 📈 Market, ✨ Quality, ⛓️ Resilience, 🚀 Upside. 
- 
- Feel free to take a look! You can analyze the data here via interactive charts or simply download the data table. ⬇️
-""")
+    d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_data.columns}
 
-# Load the data from a CSV. We're caching this so it doesn't reload every time the app
-# reruns (e.g. if the user interacts with the widgets).
-@st.cache_data
-def load_data():
-    # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-    df = pd.read_csv("data/full_weights - raw - August.csv")
-    df.set_index("Asset", inplace=True, drop=True)
-    df = df.sort_values("w", ascending=False)
-    df.columns = df.columns.str.replace(' Score100', '', regex=False)
-    df['Tenbagger'] = df['Tenbagger Probability100'].rank(pct=True)
-    df['Growth'] = df["Growth Rate100"].rank(pct=True)
-    df['Return'] = df["Return100"].rank(pct=True)
-    df['Bankruptcy'] = df["Bankruptcy"].rank(pct=True)
-    cols2drop = ['Tenbagger Probability100', "Growth Rate100", "Return100", "iKelly-weight", "t-value"]
-    df.drop(cols2drop, axis=1, inplace=True)
-    dict_rename = {"Alpha": "Alpha (vs. Tech)",
-                   "Market Disruptor": "Disruptor",
-                   "Good Governance": "Governance",
-                   "Good Business": "Business",
-                   "Future Moat": "Moat",
-                   }
-    df.rename(columns=dict_rename, inplace=True)
-    # df = df[df["w"] > 0]
-    df.dropna(axis=0, how='any', inplace=True)
-    df['Rank'] = df['w'].rank(ascending=False)
-
-    # Final Filter
-    cols = [c for c in df.columns if "Cat-" in c] + ["w", "Rank"]
-    df = df[cols]
-    dict_rename = {c: c.replace("Cat-","") for c in df.columns if "Cat-" in c}
-    df = df.rename(columns=dict_rename)
-
-    return df
-
-
-df_data = load_data()
-
-d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_data.columns}
-
-# Dataframe
-st.dataframe(
-    df_data.drop(columns=["Rank", "w"]).sort_index().style.highlight_max(axis=0, color="green"),
-    use_container_width=True,
-    column_config=d_column_config,
-)
-
-def make_bar_chart(df, scores, id_vars):
-    # Altair Chart Approach
-    # df = df_filtered.copy()
-
-    df["Asset"] = df.index
-    if len(scores) == 0:
-        scores = ["Rank"]
-        df["Rank"] = 1 / df["Rank"]
-
-    # Compute row sums and sort
-    df['row_sum'] = df[scores].sum(axis=1)
-    df = df.sort_values('row_sum', ascending=False)
-
-    # Melt the DataFrame to long format for Altair
-    df_long = df.melt(id_vars=id_vars, value_vars=scores,
-                    var_name='Score', value_name='Score Value')
-
-    # Altair bar chart with fixed x-axis order
-    order = df['Asset'].tolist()
-
-    chart = alt.Chart(df_long).mark_bar().encode(
-        x=alt.X('Asset:N', sort=order, axis=alt.Axis(title=None)),
-        y=alt.Y('Score Value:Q', axis=alt.Axis(title=None)),
-        color='Score:N'
-    ).properties(width=600)
-
-    st.altair_chart(chart, use_container_width=True)
-
-
-# Define all scores available in the dataset.
-all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank"]))
-
-
-# Make Tabs
-tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Compare Companies", "Select Scores"])
-
-
-with tab0:
-    company = st.selectbox(
-    "Which asset do you want to analyze?",
-    sorted(set(df_data.index)),
-    ) 
-
-    s = df_data.loc[company,all_scores].copy()
-
-    # Convert Series to DataFrame
-    df1 = s.reset_index()
-    company = company.replace(",", " ").replace(".", "-")
-    df1.columns = ['Score', company]
-    df1.sort_values(by=company, ascending=False, inplace=True)
-
-    # compute min/max (optional if you know the domain already)
-    min_score, max_score = df1[company].min(), df1[company].max()
-    min_score = 0
-    max_score = 1
-
-    # Create Altair chart with color gradient
-    chart = alt.Chart(df1).mark_bar().encode(
-        x=alt.X('Score:N', sort='-y', axis=alt.Axis(title=None)),
-        y=alt.Y(f'{company}:Q', axis=alt.Axis(title=None), scale=alt.Scale(domain=[0, 1])),
-        color=alt.Color(
-            f'{company}:Q',
-            scale=alt.Scale(
-                domain=[min_score, max_score],     # data range
-                range=['red', 'green']             # low→high colors
-            ),
-            legend=alt.Legend(title=None)
-        )
+    # Dataframe
+    st.dataframe(
+        df_data.drop(columns=["Rank", "w"]).sort_index().style.highlight_max(axis=0, color="green"),
+        use_container_width=True,
+        column_config=d_column_config,
     )
 
-    st.altair_chart(chart, use_container_width=True)
+    def make_bar_chart(df, scores, id_vars):
+        # Altair Chart Approach
+        # df = df_filtered.copy()
 
-    # Wishlist
-    # wishlist()
+        df["Asset"] = df.index
+        if len(scores) == 0:
+            scores = ["Rank"]
+            df["Rank"] = 1 / df["Rank"]
+
+        # Compute row sums and sort
+        df['row_sum'] = df[scores].sum(axis=1)
+        df = df.sort_values('row_sum', ascending=False)
+
+        # Melt the DataFrame to long format for Altair
+        df_long = df.melt(id_vars=id_vars, value_vars=scores,
+                        var_name='Score', value_name='Score Value')
+
+        # Altair bar chart with fixed x-axis order
+        order = df['Asset'].tolist()
+
+        chart = alt.Chart(df_long).mark_bar().encode(
+            x=alt.X('Asset:N', sort=order, axis=alt.Axis(title=None)),
+            y=alt.Y('Score Value:Q', axis=alt.Axis(title=None)),
+            color='Score:N'
+        ).properties(width=600)
+
+        st.altair_chart(chart, use_container_width=True)
 
 
-with tab1:
-    # Show a multiselect widget with the genres using `st.multiselect`.
-    default_companies = df_data.nlargest(6, 'w').sort_index().index
+    # Define all scores available in the dataset.
+    all_scores = sorted(set(df_data.columns).symmetric_difference(["w", "Rank"]))
 
-    companies = st.multiselect(
-        "Companies",
+
+    # Make Tabs
+    tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Compare Companies", "Select Scores"])
+
+
+    with tab0:
+        company = st.selectbox(
+        "Which asset do you want to analyze?",
         sorted(set(df_data.index)),
-        default_companies,
-    )
-
-    # Filter the dataframe based on the widget input and reshape it.
-    df_filtered = df_data.loc[companies, :].copy()
-    df_filtered.drop(columns=["w", "Rank"], inplace=True)
-
-    if False:
-        # Display the data as a table using `st.dataframe`.
-        d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
-
-        # Dataframe
-        st.dataframe(
-            df_filtered.style.highlight_max(axis=0, subset=all_scores, color="green"),
-            use_container_width=True,
-            column_config=d_column_config,
         )
 
-    # Cumulative Score Chart
-    st.header("Cumulative Score")
+        s = df_data.loc[company,all_scores].copy()
 
-    # Bar Chart
-    # st.bar_chart(data=df_filtered, y=list(scores))
-    scores1 = sorted(set(df_filtered.columns))
-    make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
+        # Convert Series to DataFrame
+        df1 = s.reset_index()
+        company = company.replace(",", " ").replace(".", "-")
+        df1.columns = ['Score', company]
+        df1.sort_values(by=company, ascending=False, inplace=True)
 
+        # compute min/max (optional if you know the domain already)
+        min_score, max_score = df1[company].min(), df1[company].max()
+        min_score = 0
+        max_score = 1
 
-with tab2:
-    # Show a multiselect widget with the genres using `st.multiselect`.
-    scores = st.multiselect(
-        "Scores",
-        all_scores,
-        all_scores,
-    )
-
-    # Show a slider widget with the years using `st.slider`.
-    max_rank = df_data["Rank"].max()
-    ranks = st.slider("Rank", 1, min(500, int(max_rank)), (1, 10))
-
-    # Filter the dataframe based on the widget input and reshape it.
-    cols = ["Rank"] + list(scores)
-    df_filtered = df_data.loc[df_data["Rank"].between(ranks[0], ranks[1]), cols]
-
-
-    if False:
-        # Display the data as a table using `st.dataframe`.
-        d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
-        d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
-
-        # Dataframe
-        st.dataframe(
-            df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
-            use_container_width=True,
-            column_config=d_column_config,
-        )
-
-    # Cumulative Score Chart
-    st.header("Cumulative Score")
-
-    # Bar Chart
-    # st.bar_chart(data=df_filtered, y=list(scores))
-    make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
-
-    # Heatmap with PCA
-
-    if len(scores) > 1:
-        st.header("Principal Component Analysis")
-
-        # 1) Select only numeric score columns (drop 'w' and 'hard-sell')
-        pca_features = df_filtered.drop(columns=["Rank"]).columns.tolist()
-        X = df_filtered[pca_features].dropna().copy()
-
-        # 2) Standardize
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
-
-        # 3) Fit PCA (one component per feature)
-        n_comp = min(len(df_filtered), len(pca_features))
-
-        n_comp = st.slider("Number of Principal Components", 1, n_comp, n_comp)
-
-        pca = PCA(n_components=n_comp)
-        pca.fit(X_scaled)
-
-        # 4) Build loadings DataFrame (index=original features, columns=PC1, PC2, ...)
-        pcs = [f"PC {i+1}" for i in range(n_comp)]
-        loadings = pd.DataFrame(
-            pca.components_.T,
-            index=pca_features,
-            columns=pcs,
-        )
-
-        # 5) Altair Heatmap
-        df_long = loadings.reset_index().melt(id_vars='index')
-        df_long.columns = ['Scores', 'PCAs', 'Value']
-
-        # Create Altair heatmap chart
-        chart = alt.Chart(df_long).mark_rect().encode(
-            x=alt.X('PCAs:O', title=None),
-            y=alt.Y('Scores:O', title=None),
-            color=alt.Color('Value:Q', scale=alt.Scale(scheme='reds')),
-            tooltip=['PCAs', 'Scores', 'Value']
-        ).properties(
-            width=300,
-            height=300
+        # Create Altair chart with color gradient
+        chart = alt.Chart(df1).mark_bar().encode(
+            x=alt.X('Score:N', sort='-y', axis=alt.Axis(title=None)),
+            y=alt.Y(f'{company}:Q', axis=alt.Axis(title=None), scale=alt.Scale(domain=[0, 1])),
+            color=alt.Color(
+                f'{company}:Q',
+                scale=alt.Scale(
+                    domain=[min_score, max_score],     # data range
+                    range=['red', 'green']             # low→high colors
+                ),
+                legend=alt.Legend(title=None)
+            )
         )
 
         st.altair_chart(chart, use_container_width=True)
+
+        # Wishlist
+        # wishlist()
+
+
+    with tab1:
+        # Show a multiselect widget with the genres using `st.multiselect`.
+        default_companies = df_data.nlargest(6, 'w').sort_index().index
+
+        companies = st.multiselect(
+            "Companies",
+            sorted(set(df_data.index)),
+            default_companies,
+        )
+
+        # Filter the dataframe based on the widget input and reshape it.
+        df_filtered = df_data.loc[companies, :].copy()
+        df_filtered.drop(columns=["w", "Rank"], inplace=True)
+
+        if False:
+            # Display the data as a table using `st.dataframe`.
+            d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in df_filtered.columns}
+
+            # Dataframe
+            st.dataframe(
+                df_filtered.style.highlight_max(axis=0, subset=all_scores, color="green"),
+                use_container_width=True,
+                column_config=d_column_config,
+            )
+
+        # Cumulative Score Chart
+        st.header("Cumulative Score")
+
+        # Bar Chart
+        # st.bar_chart(data=df_filtered, y=list(scores))
+        scores1 = sorted(set(df_filtered.columns))
+        make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
+
+
+    with tab2:
+        # Show a multiselect widget with the genres using `st.multiselect`.
+        scores = st.multiselect(
+            "Scores",
+            all_scores,
+            all_scores,
+        )
+
+        # Show a slider widget with the years using `st.slider`.
+        max_rank = df_data["Rank"].max()
+        ranks = st.slider("Rank", 1, min(500, int(max_rank)), (1, 10))
+
+        # Filter the dataframe based on the widget input and reshape it.
+        cols = ["Rank"] + list(scores)
+        df_filtered = df_data.loc[df_data["Rank"].between(ranks[0], ranks[1]), cols]
+
+
+        if False:
+            # Display the data as a table using `st.dataframe`.
+            d_column_config = {col: st.column_config.NumberColumn(col, format="percent") for col in scores}
+            d_column_config["Rank"] = st.column_config.NumberColumn("Rank", format="plain")
+
+            # Dataframe
+            st.dataframe(
+                df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
+                use_container_width=True,
+                column_config=d_column_config,
+            )
+
+        # Cumulative Score Chart
+        st.header("Cumulative Score")
+
+        # Bar Chart
+        # st.bar_chart(data=df_filtered, y=list(scores))
+        make_bar_chart(df=df_filtered.copy(), scores=scores, id_vars=["Asset"])
+
+        # Heatmap with PCA
+
+        if len(scores) > 1:
+            st.header("Principal Component Analysis")
+
+            # 1) Select only numeric score columns (drop 'w' and 'hard-sell')
+            pca_features = df_filtered.drop(columns=["Rank"]).columns.tolist()
+            X = df_filtered[pca_features].dropna().copy()
+
+            # 2) Standardize
+            scaler = StandardScaler()
+            X_scaled = scaler.fit_transform(X)
+
+            # 3) Fit PCA (one component per feature)
+            n_comp = min(len(df_filtered), len(pca_features))
+
+            n_comp = st.slider("Number of Principal Components", 1, n_comp, n_comp)
+
+            pca = PCA(n_components=n_comp)
+            pca.fit(X_scaled)
+
+            # 4) Build loadings DataFrame (index=original features, columns=PC1, PC2, ...)
+            pcs = [f"PC {i+1}" for i in range(n_comp)]
+            loadings = pd.DataFrame(
+                pca.components_.T,
+                index=pca_features,
+                columns=pcs,
+            )
+
+            # 5) Altair Heatmap
+            df_long = loadings.reset_index().melt(id_vars='index')
+            df_long.columns = ['Scores', 'PCAs', 'Value']
+
+            # Create Altair heatmap chart
+            chart = alt.Chart(df_long).mark_rect().encode(
+                x=alt.X('PCAs:O', title=None),
+                y=alt.Y('Scores:O', title=None),
+                color=alt.Color('Value:Q', scale=alt.Scale(scheme='reds')),
+                tooltip=['PCAs', 'Scores', 'Value']
+            ).properties(
+                width=300,
+                height=300
+            )
+
+            st.altair_chart(chart, use_container_width=True)
 
 
 if False:
