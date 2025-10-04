@@ -84,9 +84,9 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Alpha (since Inception)", "7.1%", "2.2% (July-August 2025)", border=True)
-    col3.metric("Number of Holdings", "11", "1 (July-August 2025)", border=True)
-    col3.metric("Number of Trades", "136", "5 (July-August 2025)", border=True)
+    col3.metric("Alpha (since Inception)", "10.7%", "3.6% (Aug-Sept 2025)", border=True)
+    col3.metric("Number of Holdings", "11", "0 (Aug-Sept 2025)", border=True)
+    col3.metric("Number of Trades", "144", "8 (Aug-Sept 2025)", border=True)
 
     # Marylin's Out-Performance
 
