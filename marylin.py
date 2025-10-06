@@ -158,7 +158,7 @@ with st.expander("Secret model data", icon="🚨"):
     @st.cache_data
     def load_data():
         # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-        df = pd.read_csv("data/full_weights - raw - August.csv")
+        df = pd.read_csv("data/full_weights - raw - October.csv")
         df.set_index("Asset", inplace=True, drop=True)
         df = df.sort_values("w", ascending=False)
         df.columns = df.columns.str.replace(' Score100', '', regex=False)
@@ -421,7 +421,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.5 (as of 2025-09-01)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.7 (as of 2025-10-06)", icon=None, color="green")
 
 st.caption(
     """
