@@ -93,7 +93,7 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
     @st.cache_data
     def load_perf_data():
         df = pd.read_csv(
-            "data/2025-07-06 marylin_performance.csv",
+            "data/2025-10-06 marylin_performance.csv",
             sep=";",
             decimal=",",
             parse_dates=["Date"],
