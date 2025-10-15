@@ -22,7 +22,7 @@ with col1:
     st.markdown("#### ✅ With a proven real-world track record")
 
 with col2:
-    st.image("images/sisters8.png", use_container_width=True)
+    st.image("images/sisters8.png", width='stretch')
 
 #st.markdown("## **Forge your own Allocation Intelligence model**")
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
@@ -32,7 +32,16 @@ with col2:
     #st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
     #st.markdown("<h1 style='text-align: center; color: white;'>BEAT THE MARKET WITH AI</h1>", unsafe_allow_html=True)
     st.markdown("# Our mission is simple.")
-    st.markdown("# BEAT THE MARKET WITH AI")
+    st.markdown("# Beat the market with AI.")
+
+    st.markdown("### Our Principles:")
+    st.markdown("##### 🔥 **Prompted for Outperformance**")
+    st.markdown("##### 🔥 **100% AI-Powered (LLMs)**")
+    st.markdown("##### 🔥 **Quantitative Output**")
+    st.markdown("##### 🔥 **Statistical Approach**")
+    st.markdown("##### 🔥 **High Conviction**")
+
+
     st.divider()
 
     # ALL IN
@@ -41,16 +50,12 @@ with col2:
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
-    st.markdown("#### We build proprietary AI algorithms to unlock superior investment strategies.")
+
+    st.markdown("#### We build proprietary AI algorithms to unlock new investment strategies.")
     st.markdown("#### We transform chaotic qualitative information into robust quantitative signals.")
     st.markdown("#### We explore different AI models to assess what really beats the market in the long run.")
-    #st.markdown("### Allocation Intelligence strategies aim at high return expectations over long investment horizons inspired by the academic idea of the growth optimal portfolio.")
-    st.markdown("### Our Principles:")
-    st.markdown("#### 🔥 **Prompted for Outperformance**")
-    st.markdown("#### 🔥 **100% AI-Powered (LLMs)**")
-    st.markdown("#### 🔥 **Quantitative Output**")
-    st.markdown("#### 🔥 **Statistical Approach**")
-    st.markdown("#### 🔥 **High Conviction**")
+    st.markdown("#### We aim at high-risk, high-return strategies to build wealth faster.")
+    st.markdown("""#### We track our performance by real exchange-traded portfolios (*real money*). ⬇⬇⬇""")
 
     #st.markdown("### We combine expertise:")
     #st.markdown("### ☑️ GenAI & Machine Learning")
@@ -71,7 +76,7 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
 
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
     with col2:
-        st.image("images/marylin3.png", use_container_width=True)
+        st.image("images/marylin3.png", width='stretch')
     with col1:
         # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### Marylin is our first **PrettyModels AI** release.")
@@ -195,7 +200,7 @@ with st.expander("Secret model data", icon="🚨"):
     # Dataframe
     st.dataframe(
         df_data.drop(columns=["Rank", "w"]).sort_index().style.highlight_max(axis=0, color="green"),
-        use_container_width=True,
+        width='stretch',
         column_config=d_column_config,
     )
 
@@ -296,7 +301,7 @@ with st.expander("Secret model data", icon="🚨"):
             # Dataframe
             st.dataframe(
                 df_filtered.style.highlight_max(axis=0, subset=all_scores, color="green"),
-                use_container_width=True,
+                width='stretch',
                 column_config=d_column_config,
             )
 
@@ -334,7 +339,7 @@ with st.expander("Secret model data", icon="🚨"):
             # Dataframe
             st.dataframe(
                 df_filtered.style.highlight_max(axis=0, subset=scores, color="green"),
-                use_container_width=True,
+                width='stretch',
                 column_config=d_column_config,
             )
 
@@ -414,8 +419,8 @@ if False:
                 #sandbox="allow-scripts allow-same-origin"
             )
 
-
-
+# with st.expander("Slides", icon="📂"):
+#     st.pdf("2025 PM Slides.pdf", height=500)
 
 # Disclaimer
 
