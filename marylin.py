@@ -19,10 +19,74 @@ col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 with col1:
     st.markdown("#### ✅ Outperform your public benchmark")
     st.markdown("#### ✅ Based on tailored AI-driven strategies")
-    st.markdown("#### ✅ With a proven real-world track record")
+    st.markdown("#### ✅ With real public market track record")
 
 with col2:
-    st.image("images/sisters8.png", width='stretch')
+    # st.image("images/sisters14.png", width='stretch')
+    # Marylin's Out-Performance
+
+    @st.cache_data
+    def load_perf_data():
+        df = pd.read_csv(
+            "data/2025-11-01 marylin_performance.csv",
+            sep=";",
+            decimal=",",
+            parse_dates=["Date"],
+            dayfirst=True,
+            date_format="%d.%m.%y",
+        )
+        df.set_index("Date", inplace=True)
+        df = df[(df.index.is_month_end) + (df.index == pd.to_datetime('2024-12-27'))]
+        return df
+
+
+    df_mape = load_perf_data()
+
+    # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
+    # they’ll all be melted into a single 'Metric' + 'Value' column.
+    perf_cols = df_mape.columns.tolist()
+    chart_df = (
+        df_mape
+        .reset_index()
+        .melt(id_vars=["Date"], value_vars=perf_cols,
+              var_name="Metric", value_name="Value")
+    )
+
+    # Build the Altair chart:
+    chart = (
+        alt.Chart(chart_df)
+        .mark_line(point=alt.OverlayMarkDef(size=10), strokeWidth=6, strokeCap="round", color="red")
+        .encode(
+            x=alt.X("Date:T", axis=alt.Axis(labels=False, grid=False), title=""),
+            y=alt.Y("Value:Q", axis=alt.Axis(format="%", labels=False, grid=False), title=""),
+            color=alt.Color("Metric:N",
+                            legend=None,
+                            scale=alt.Scale(
+                                range=["#00FFC6", "#ff1fc7", "#483ae0"],
+                                #range=["#FB0A26", "#F50A1C", "#E60000"],
+                                #range=["#007BFF", "#0057D8", "#1E9CE6"]
+                                )
+                            ),
+            tooltip=[
+                alt.Tooltip("Date:T", title="Date"),
+                alt.Tooltip("Metric:N", title="Benchmark"),
+                alt.Tooltip("Value:Q", format=".1%", title="Alpha")
+            ]
+        )
+        .properties(width=700, height=400)
+    )
+
+    # Add a dashed grey horizontal line at y = 0
+    zero_line = (
+        alt.Chart(pd.DataFrame({"y": [0]}))
+        .mark_rule(color="grey", strokeDash=[4, 4], strokeWidth=4)
+        .encode(y="y:Q")
+    )
+
+    # Combine the two layers
+    final_chart = chart
+
+    st.altair_chart(final_chart, use_container_width=True)
 
 #st.markdown("## **Forge your own Allocation Intelligence model**")
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
@@ -34,7 +98,7 @@ with col2:
     st.markdown("# Our mission is simple.")
     st.markdown("# Beat the market with AI.")
 
-    st.markdown("### Our Principles:")
+    st.markdown("## Our Principles:")
     st.markdown("##### 🔥 **Prompted for Outperformance**")
     st.markdown("##### 🔥 **100% AI-Powered (LLMs)**")
     st.markdown("##### 🔥 **Quantitative Output**")
@@ -55,7 +119,7 @@ with col2:
     st.markdown("#### We transform chaotic qualitative information into robust quantitative signals.")
     st.markdown("#### We explore different AI models to assess what really beats the market in the long run.")
     st.markdown("#### We aim at high-risk, high-return strategies to build wealth faster.")
-    st.markdown("""#### We track our performance by real exchange-traded portfolios (*real money*). ⬇⬇⬇""")
+    st.markdown("""#### We track our performance by publicly traded portfolios (*real money*, after fees). ⬇⬇⬇""")
 
     #st.markdown("### We combine expertise:")
     #st.markdown("### ☑️ GenAI & Machine Learning")
@@ -76,7 +140,7 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
 
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
     with col2:
-        st.image("images/marylin3.png", width='stretch')
+        st.image("images/marylin6.png", width='stretch')
     with col1:
         # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### Marylin is our first **PrettyModels AI** release.")
@@ -89,27 +153,11 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Alpha (since Inception)", "10.7%", "3.6% (Aug-Sept 2025)", border=True)
-    col3.metric("Number of Holdings", "11", "0 (Aug-Sept 2025)", border=True)
-    col3.metric("Number of Trades", "144", "8 (Aug-Sept 2025)", border=True)
+    col3.metric("Alpha (since Inception)", "19.0%", "8.3% (Sept-Oct 2025)", border=True)
+    col3.metric("Number of Holdings", "13", "2 (Sept-Oct 2025)", border=True)
+    col3.metric("Number of Trades", "156", "12 (Sept-Oct 2025)", border=True)
 
     # Marylin's Out-Performance
-
-    @st.cache_data
-    def load_perf_data():
-        df = pd.read_csv(
-            "data/2025-10-06 marylin_performance.csv",
-            sep=";",
-            decimal=",",
-            parse_dates=["Date"],
-            dayfirst=True,
-            date_format="%d.%m.%y",
-        )
-        df.set_index("Date", inplace=True)
-        return df
-
-
-    df_mape = load_perf_data()
 
     # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
     # they’ll all be melted into a single 'Metric' + 'Value' column.
@@ -124,11 +172,15 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
     # Build the Altair chart:
     chart = (
         alt.Chart(chart_df)
-        .mark_line(point=True)
+        .mark_line(point=alt.OverlayMarkDef(size=70), strokeWidth=4, strokeCap="round")
         .encode(
             x=alt.X("Date:T", title=""),
             y=alt.Y("Value:Q", axis=alt.Axis(format="%"), title=""),
-            color=alt.Color("Metric:N", title="Alpha vs. ETFs:"),
+            color=alt.Color("Metric:N", title="Alpha vs. ETFs:",
+                            scale=alt.Scale(
+                                range=["#00FFC6", "#ff1fc7", "#483ae0"],
+                                )
+                            ),
             tooltip=[
                 alt.Tooltip("Date:T", title="Date"),
                 alt.Tooltip("Metric:N", title="Benchmark"),
@@ -138,11 +190,21 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
         .properties(width=700, height=400)
     )
 
+    # Add a dashed grey horizontal line at y = 0
+    zero_line = (
+        alt.Chart(pd.DataFrame({"y": [0]}))
+        .mark_rule(color="grey", strokeDash=[4, 4], strokeWidth=4)
+        .encode(y="y:Q")
+    )
+
+    # Combine the two layers
+    final_chart = chart + zero_line
+
     st.markdown("### Marylin's Track Record")
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(final_chart, use_container_width=True)
 
 
-with st.expander("Secret model data", icon="🚨"):
+with st.expander("Proprietary model data", icon="⚙️"):
     # DATA
 
     #st.divider()
@@ -163,7 +225,7 @@ with st.expander("Secret model data", icon="🚨"):
     @st.cache_data
     def load_data():
         # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-        df = pd.read_csv("data/full_weights - raw - October.csv")
+        df = pd.read_csv("data/full_weights - raw - November.csv")
         df.set_index("Asset", inplace=True, drop=True)
         df = df.sort_values("w", ascending=False)
         df.columns = df.columns.str.replace(' Score100', '', regex=False)
@@ -426,7 +488,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.7 (as of 2025-10-06)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.8 (as of 2025-11-03)", icon=None, color="green")
 
 st.caption(
     """
