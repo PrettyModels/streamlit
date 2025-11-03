@@ -19,7 +19,7 @@ col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 with col1:
     st.markdown("#### ✅ Outperform your public benchmark")
     st.markdown("#### ✅ Based on tailored AI-driven strategies")
-    st.markdown("#### ✅ With real public market track record")
+    st.markdown("#### ✅ Proven public market track record")
 
 with col2:
     # st.image("images/sisters14.png", width='stretch')
@@ -144,18 +144,20 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
     with col1:
         # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### Marylin is our first **PrettyModels AI** release.")
-        st.markdown("##### She pursues a bold, growth-aggressive investment style.")
+        st.markdown("##### She pursues a bold and opportunistic investment style.")
         st.markdown("##### Her goal is to outperform the market in a _growth-optimal_ way.")
-        st.markdown("##### She is willing to take high risks to kick-start her wealth generation in young years.")
-        st.markdown("##### We track Marylin's live performance by our Wikifolio.")
+        # st.markdown("##### She is willing to take high risks to kick-start her wealth generation in young years.")
+        st.markdown("##### We track Marylin's performance by a Wikifolio since December 27, 2024.")
+        st.markdown("##### Wikifolio index certificate issued at September 2, 2025.")
         #st.markdown("##### Visit her now!")
         st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1")
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Alpha (since Inception)", "19.0%", "8.3% (Sept-Oct 2025)", border=True)
-    col3.metric("Number of Holdings", "13", "2 (Sept-Oct 2025)", border=True)
-    col3.metric("Number of Trades", "156", "12 (Sept-Oct 2025)", border=True)
+    col3.metric("Performance (Dec 2024 - Oct 2025)", "31.6%", "12.9% (Sept-Oct 2025)", border=True)
+    col3.metric("Alpha (Dec 2024 - Oct 2025)", "19.0%", "8.3% (Sept-Oct 2025)", border=True)
+    #col3.metric("Number of Holdings", "13", "2 (Sept-Oct 2025)", border=True)
+    col3.metric("Number of Trades (Total)", "156", "12 (Sept-Oct 2025)", border=True)
 
     # Marylin's Out-Performance
 
@@ -200,7 +202,7 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
     # Combine the two layers
     final_chart = chart + zero_line
 
-    st.markdown("### Marylin's Track Record")
+    st.markdown("### Marylin's Alpha vs. ETFs")
     st.altair_chart(final_chart, use_container_width=True)
 
 
