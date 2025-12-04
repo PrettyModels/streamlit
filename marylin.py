@@ -154,10 +154,9 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Performance (Dec 2024 - Oct 2025)", "31.6%", "12.9% (Sept-Oct 2025)", border=True)
-    col3.metric("Alpha (Dec 2024 - Oct 2025)", "19.0%", "8.3% (Sept-Oct 2025)", border=True)
-    #col3.metric("Number of Holdings", "13", "2 (Sept-Oct 2025)", border=True)
-    col3.metric("Number of Trades (Total)", "156", "12 (Sept-Oct 2025)", border=True)
+    col3.metric("Performance (Dec 2024 - Nov 2025)", "35.8%", "4.2% (Oct-Nov 2025)", border=True)
+    col3.metric("Alpha (Dec 2024 - Nov 2025)", "28.5%", "9.5% (Oct-Nov 2025)", border=True)
+    col3.metric("Number of Trades (Total)", "166", "10 (Oct-Nov 2025)", border=True)
 
     # Marylin's Out-Performance
 
@@ -227,7 +226,7 @@ with st.expander("Proprietary model data", icon="⚙️"):
     @st.cache_data
     def load_data():
         # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-        df = pd.read_csv("data/full_weights - raw - November.csv")
+        df = pd.read_csv("data/full_weights - raw - December.csv")
         df.set_index("Asset", inplace=True, drop=True)
         df = df.sort_values("w", ascending=False)
         df.columns = df.columns.str.replace(' Score100', '', regex=False)
@@ -490,7 +489,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.8 (as of 2025-11-03)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.9 (as of 2025-12-04)", icon=None, color="green")
 
 st.caption(
     """
