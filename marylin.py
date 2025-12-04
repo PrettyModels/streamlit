@@ -28,7 +28,7 @@ with col2:
     @st.cache_data
     def load_perf_data():
         df = pd.read_csv(
-            "data/2025-11-01 marylin_performance.csv",
+            "data/2025-12-01 marylin_performance.csv",
             sep=";",
             decimal=",",
             parse_dates=["Date"],
