@@ -1,13 +1,16 @@
+import os
 import altair as alt
 import pandas as pd
 import streamlit as st
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-from wishlist import wishlist
+# streamlit run marylin.py
 
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
+st.set_page_config(page_title="PrettyModels AI", page_icon="images/logo.png", layout="wide")
+
 st.logo("images/logo.png", size="large")
 
 #st.title("PrettyModels AI")
@@ -28,7 +31,7 @@ with col2:
     @st.cache_data
     def load_perf_data():
         df = pd.read_csv(
-            "data/2025-12-01 marylin_performance.csv",
+            "data/2025-12-31 marylin_performance.csv",
             sep=";",
             decimal=",",
             parse_dates=["Date"],
@@ -77,16 +80,38 @@ with col2:
     )
 
     # Add a dashed grey horizontal line at y = 0
-    zero_line = (
-        alt.Chart(pd.DataFrame({"y": [0]}))
-        .mark_rule(color="grey", strokeDash=[4, 4], strokeWidth=4)
+    zero_line_data = pd.DataFrame({"y": [0], "label": ["market"]})
+
+    # 2. Define the Rule (The grey dashed line)
+    rule = (
+        alt.Chart(zero_line_data)
+        .mark_rule(color="grey", strokeWidth=2)
         .encode(y="y:Q")
     )
 
-    # Combine the two layers
-    final_chart = chart
+    # 3. Define the Text (The label on the right)
+    text = (
+        alt.Chart(zero_line_data)
+        .mark_text(
+            align="right",  # Anchors the text to its right edge
+            dx=-5,  # Nudges it 5 pixels to the left so it's not touching the border
+            dy=14,  # Nudges it 10 pixels above the line
+            fontSize=20,
+            fontWeight="bold",
+            color="grey"
+        )
+        .encode(
+            y="y:Q",
+            x=alt.value(510),  # Positions it at the 700px mark (your chart width)
+            text="label:N"
+        )
+    )
+
+    # Combine the main chart with the combined zero elements
+    final_chart = chart + rule + text
 
     st.altair_chart(final_chart, use_container_width=True)
+
 
 #st.markdown("## **Forge your own Allocation Intelligence model**")
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
@@ -98,15 +123,15 @@ with col2:
     st.markdown("# Our mission is simple.")
     st.markdown("# Beat the market with AI.")
 
-    st.markdown("## Our Principles:")
-    st.markdown("##### 🔥 **Prompted for Outperformance**")
-    st.markdown("##### 🔥 **100% AI-Powered (LLMs)**")
-    st.markdown("##### 🔥 **Quantitative Output**")
-    st.markdown("##### 🔥 **Statistical Approach**")
-    st.markdown("##### 🔥 **High Conviction**")
+    if False:
+        st.markdown("## Our Principles:")
+        st.markdown("##### 🔥 **Prompted for Outperformance**")
+        st.markdown("##### 🔥 **100% AI-Powered (LLMs)**")
+        st.markdown("##### 🔥 **Quantitative Output**")
+        st.markdown("##### 🔥 **Statistical Approach**")
+        st.markdown("##### 🔥 **High Conviction**")
 
-
-    st.divider()
+        st.divider()
 
     # ALL IN
     # st.markdown("# ALLOCATION INTELLIGENCE")
@@ -114,24 +139,29 @@ with col2:
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
 with col2:
+    st.image("images/info2-bg.png", width='stretch')
 
-    st.markdown("#### We build proprietary AI algorithms to unlock new investment strategies.")
-    st.markdown("#### We transform chaotic qualitative information into robust quantitative signals.")
-    st.markdown("#### We explore different AI models to assess what really beats the market in the long run.")
-    st.markdown("#### We aim at high-risk, high-return strategies to build wealth faster.")
-    st.markdown("""#### We track our performance by publicly traded portfolios (*real money*, after fees). ⬇⬇⬇""")
+with col2:
+
+    st.markdown("##### We build proprietary AI-powered algorithms to unlock new investment strategies.")
+    st.markdown("##### We transform chaotic qualitative information into robust quantitative signals.")
+    st.markdown("##### We explore different AI models to assess what really beats the market in the long run.")
+    st.markdown("##### We aim at high-conviction strategies to create wealth faster.")
+    st.markdown("##### We track our performance by publicly traded portfolios.")
+    #st.markdown("##### Take a look. ⬇⬇⬇")
 
     #st.markdown("### We combine expertise:")
     #st.markdown("### ☑️ GenAI & Machine Learning")
     #st.markdown("### ☑️ Econometrics & Statistics")
     #st.markdown("### ☑️ Financial Economics")
 
+    st.image("images/info-bg.png", width='stretch')
 
 
 #  MARYLIN
 
 
-with st.expander("Real-world performance", icon="🚀", expanded=True):
+with st.expander("Real-World Performance", icon="🚀", expanded=True):
     #st.balloons()
     #st.toast('Thank you for investing!', icon='😍')
     #st.divider()
@@ -151,61 +181,135 @@ with st.expander("Real-world performance", icon="🚀", expanded=True):
         st.markdown("##### Wikifolio index certificate issued at September 2, 2025.")
         #st.markdown("##### Visit her now!")
         st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1")
+        st.link_button("Read Full Story", "https://quant-unit.com/the-story-of-marylin-pt-1/")
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Performance (Dec 2024 - Nov 2025)", "35.8%", "4.2% (Oct-Nov 2025)", border=True)
-    col3.metric("Alpha (Dec 2024 - Nov 2025)", "28.5%", "9.5% (Oct-Nov 2025)", border=True)
-    col3.metric("Number of Trades (Total)", "166", "10 (Oct-Nov 2025)", border=True)
+    col3.metric("Performance (Dec 2024 - Dec 2025)", "32.8%", "14.9% (Q4 2025)", border=True)
+    col3.metric("Alpha (Dec 2024 - Dec 2025)", "26.5%", "15.8% (Q4 2025)", border=True)
+    col3.metric("Number of Trades (Total)", "177", "43 (Q4 2025)", border=True)
 
-    # Marylin's Out-Performance
+    col1, col2 = st.columns([1, 1])
 
-    # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
-    # they’ll all be melted into a single 'Metric' + 'Value' column.
-    perf_cols = df_mape.columns.tolist()
-    chart_df = (
-        df_mape
-        .reset_index()
-        .melt(id_vars=["Date"], value_vars=perf_cols,
-              var_name="Metric", value_name="Value")
-    )
+    with col1:
+        # Wikifolio Chart
+        @st.cache_data
+        def load_wikifolio_data():
+            df = pd.read_csv(
+                "data/WFMARYLIN1-PriceData.csv",
+                sep=";",
+                decimal=",",  # <-- IMPORTANT: your file uses comma decimals
+            )
 
-    # Build the Altair chart:
-    chart = (
-        alt.Chart(chart_df)
-        .mark_line(point=alt.OverlayMarkDef(size=70), strokeWidth=4, strokeCap="round")
-        .encode(
-            x=alt.X("Date:T", title=""),
-            y=alt.Y("Value:Q", axis=alt.Axis(format="%"), title=""),
-            color=alt.Color("Metric:N", title="Alpha vs. ETFs:",
-                            scale=alt.Scale(
-                                range=["#00FFC6", "#ff1fc7", "#483ae0"],
-                                )
-                            ),
-            tooltip=[
-                alt.Tooltip("Date:T", title="Date"),
-                alt.Tooltip("Metric:N", title="Benchmark"),
-                alt.Tooltip("Value:Q", format=".1%", title="Alpha")
-            ]
+            # Parse the timestamp explicitly (your file is like: 27.12.24 00:00)
+            df["Begin date"] = pd.to_datetime(df["Begin date"], format="%d.%m.%y %H:%M")
+
+            df.rename(columns={"Begin date": "Date", "Close": "Marylin Index"}, inplace=True)
+            df = df[["Date", "Marylin Index"]].sort_values("Date")
+            return df
+
+        df_wiki = load_wikifolio_data()
+
+        perf_cols = df_wiki.columns.drop("Date").tolist()
+        chart_df = df_wiki.melt(
+            id_vars=["Date"],
+            value_vars=perf_cols,
+            var_name="Metric",
+            value_name="Value",
         )
-        .properties(width=700, height=400)
-    )
 
-    # Add a dashed grey horizontal line at y = 0
-    zero_line = (
-        alt.Chart(pd.DataFrame({"y": [0]}))
-        .mark_rule(color="grey", strokeDash=[4, 4], strokeWidth=4)
-        .encode(y="y:Q")
-    )
+        # y-axis minimum = minimum of the time series (and include baseline if you want it visible)
+        y_min = float(chart_df["Value"].min()) - 5
+        baseline = 100.0
+        y_domain_min = min(y_min, baseline)  # use y_min if you don't need the baseline line
 
-    # Combine the two layers
-    final_chart = chart + zero_line
+        chart = (
+            alt.Chart(chart_df)
+            .mark_line(strokeWidth=3, strokeCap="round")  # <-- line only, no points
+            .encode(
+                x=alt.X("Date:T", title=""),
+                y=alt.Y(
+                    "Value:Q",
+                    title="",
+                    axis=alt.Axis(format=",.2f"),
+                    scale=alt.Scale(domainMin=y_domain_min, nice=False, zero=False),
+                ),
+                color=alt.Color("Metric:N", legend=None),
+                tooltip=[
+                    alt.Tooltip("Date:T", title="Date"),
+                    alt.Tooltip("Metric:N", title="Series"),
+                    alt.Tooltip("Value:Q", format=",.2f", title="Index level"),
+                ],
+            )
+            .properties(height=400)
+        )
 
-    st.markdown("### Marylin's Alpha vs. ETFs")
-    st.altair_chart(final_chart, use_container_width=True)
+        zero_line = (
+            alt.Chart(pd.DataFrame({"Value": [baseline]}))
+            .mark_rule(color="grey", strokeDash=[4, 4], strokeWidth=2)
+            .encode(y="Value:Q")
+        )
+
+        final_chart = (
+            alt.layer(zero_line, chart)
+            .properties(
+                height=400,
+                padding={"bottom": 40, "left": 10, "right": 10, "top": 10},
+            )
+        )
+
+        st.markdown("### Marylin Wikifolio Index")
+        st.altair_chart(final_chart, use_container_width=True)
+
+    with col2:
+        # Marylin's Out-Performance
+
+        # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
+        # they’ll all be melted into a single 'Metric' + 'Value' column.
+        perf_cols = df_mape.columns.tolist()
+        chart_df = (
+            df_mape
+            .reset_index()
+            .melt(id_vars=["Date"], value_vars=perf_cols,
+                  var_name="Metric", value_name="Value")
+        )
+
+        # Build the Altair chart:
+        chart = (
+            alt.Chart(chart_df)
+            .mark_line(point=alt.OverlayMarkDef(size=70), strokeWidth=3, strokeCap="round")
+            .encode(
+                x=alt.X("Date:T", title=""),
+                y=alt.Y("Value:Q", axis=alt.Axis(format="%"), title=""),
+                color=alt.Color("Metric:N", title="Alpha vs. ETFs:",
+                                scale=alt.Scale(
+                                    range=["#00FFC6", "#ff1fc7", "#483ae0"],
+                                    )
+                                ),
+                tooltip=[
+                    alt.Tooltip("Date:T", title="Date"),
+                    alt.Tooltip("Metric:N", title="Benchmark"),
+                    alt.Tooltip("Value:Q", format=".1%", title="Alpha")
+                ]
+            )
+            .properties(width=700, height=400)
+        )
+
+        # Add a dashed grey horizontal line at y = 0
+        zero_line = (
+            alt.Chart(pd.DataFrame({"y": [0]}))
+            .mark_rule(color="grey", strokeDash=[4, 4], strokeWidth=4)
+            .encode(y="y:Q")
+        )
+
+        # Combine the two layers
+        final_chart = chart + zero_line
+
+        st.markdown("### Marylin's Alpha vs. ETFs")
+        st.altair_chart(final_chart, use_container_width=True)
 
 
-with st.expander("Proprietary model data", icon="⚙️"):
+with st.expander("Proprietary Model Data", icon="⚙️"):
     # DATA
 
     #st.divider()
@@ -226,7 +330,7 @@ with st.expander("Proprietary model data", icon="⚙️"):
     @st.cache_data
     def load_data():
         # data contains AI-generated scores for stocks to support high-alpha portfolio creation
-        df = pd.read_csv("data/full_weights - raw - December.csv")
+        df = pd.read_csv("data/full_weights - raw.csv")
         df.set_index("Asset", inplace=True, drop=True)
         df = df.sort_values("w", ascending=False)
         df.columns = df.columns.str.replace(' Score100', '', regex=False)
@@ -249,6 +353,7 @@ with st.expander("Proprietary model data", icon="⚙️"):
 
         # Final Filter
         cols = [c for c in df.columns if "Cat-" in c] + ["w", "Rank"]
+        cols = [c for c in cols if "Cat-XXX" not in c]
         df = df[cols]
         dict_rename = {c: c.replace("Cat-","") for c in df.columns if "Cat-" in c}
         df = df.rename(columns=dict_rename)
@@ -485,11 +590,38 @@ if False:
 # with st.expander("Slides", icon="📂"):
 #     st.pdf("2025 PM Slides.pdf", height=500)
 
+# The Poetry of Kong
+
+# File path
+file_path = "data/hong.txt"
+
+# Check if file exists and read it
+if os.path.exists(file_path):
+
+    try:
+        # Read the file content
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+
+        # Display content in expander with code formatting
+        #with st.expander("📖 The Poetry of Kong", expanded=True):
+        #    st.code(content, language=None, line_numbers=True)
+
+        # Optional: Display without line numbers
+        with st.expander("The Poetry of Kong", icon="📄"):
+            st.markdown("#### Example of the AI going crazy... or poetic.")
+            st.markdown("Instead of estimating the **Upside Score** for Alibaba, Qwen crafted this modern poem about her mother. 😁")
+            st.code(content, language=None, line_numbers=False)
+            st.markdown("##### I guess that when we no longer have to care about money, we all become poets. 👩‍🎨")
+
+    except Exception as e:
+        st.error(f"❌ Error reading file: {str(e)}")
+
 # Disclaimer
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.9 (as of 2025-12-04)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.1.9 (as of 2025-12-31)", icon=None, color="green")
 
 st.caption(
     """
@@ -519,7 +651,7 @@ if False:
     """, unsafe_allow_html=True)
 
 st.markdown("""
-© PrettyModels.ai 2025. All rights reserved. 
+© PrettyModels.ai 2026. All rights reserved. 
 _Further information and legal notices can be found here:_
 """)
 #st.markdown("Further information and legal notices can be found here:")
