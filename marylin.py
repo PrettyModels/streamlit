@@ -9,13 +9,35 @@ from sklearn.decomposition import PCA
 
 # Show the page title and description.
 # st.set_page_config(page_title="Marylin", page_icon="images/logo.png", layout="wide")
-st.set_page_config(page_title="PrettyModels AI", page_icon="images/logo.png", layout="wide")
+# st.set_page_config(page_title="PrettyModels AI", page_icon="images/logo.png", layout="wide")
+
+# 1. Page Configuration
+st.set_page_config(
+    page_title="PrettyModels AI | Beat the Market",
+    page_icon="📈",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# Custom CSS to make it look more like a landing page and less like a data app
+st.markdown("""
+<style>
+    .main-header {font-size: 3rem; font-weight: 700; color: #1E1E1E; margin-bottom: 0px;}
+    .sub-header {font-size: 1.5rem; color: #4F4F4F; margin-bottom: 2rem;}
+    .highlight {color: #FF4B4B; font-weight: bold;}
+    .block-container {padding-top: 2rem; padding-bottom: 5rem;}
+</style>
+""", unsafe_allow_html=True)
 
 st.logo("images/logo.png", size="large")
 
-#st.title("PrettyModels AI")
-st.markdown("# PrettyModels AI")
-st.header("Advanced AI models for public equity investors.")
+st.title("PrettyModels AI")
+#st.header("Advanced AI models for public equity investors.")
+#st.markdown('<div class="main-header">Advanced AI models for asset management.</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">Don’t Settle for Average Returns.</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="sub-header">Beat the market with an AI investment manager that compounds your wealth faster than ETFs.</div>',
+    unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
 
@@ -112,56 +134,27 @@ with col2:
 
     st.altair_chart(final_chart, use_container_width=True)
 
-
-#st.markdown("## **Forge your own Allocation Intelligence model**")
-col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
-
-with col2:
-    # Mission
-    #st.markdown("<h1 style='text-align: center; color: white;'>Our mission is simple.</h1>", unsafe_allow_html=True)
-    #st.markdown("<h1 style='text-align: center; color: white;'>BEAT THE MARKET WITH AI</h1>", unsafe_allow_html=True)
+col1, col2, = st.columns([1, 1])
+with col1:
     st.markdown("# Our mission is simple.")
+with col2:
     st.markdown("# Beat the market with AI.")
 
-    if False:
-        st.markdown("## Our Principles:")
-        st.markdown("##### 🔥 **Prompted for Outperformance**")
-        st.markdown("##### 🔥 **100% AI-Powered (LLMs)**")
-        st.markdown("##### 🔥 **Quantitative Output**")
-        st.markdown("##### 🔥 **Statistical Approach**")
-        st.markdown("##### 🔥 **High Conviction**")
+st.markdown("##### _Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself._")
 
-        st.divider()
-
-    # ALL IN
-    # st.markdown("# ALLOCATION INTELLIGENCE")
-
-col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
-
-with col2:
+col1, col2, = st.columns([1, 1])
+with col1:
     st.image("images/info2-bg.png", width='stretch')
-
 with col2:
-
-    st.markdown("##### We build proprietary AI-powered algorithms to unlock new investment strategies.")
-    st.markdown("##### We transform chaotic qualitative information into robust quantitative signals.")
-    st.markdown("##### We explore different AI models to assess what really beats the market in the long run.")
-    st.markdown("##### We aim at high-conviction strategies to create wealth faster.")
-    st.markdown("##### We track our performance by publicly traded portfolios.")
-    #st.markdown("##### Take a look. ⬇⬇⬇")
-
-    #st.markdown("### We combine expertise:")
-    #st.markdown("### ☑️ GenAI & Machine Learning")
-    #st.markdown("### ☑️ Econometrics & Statistics")
-    #st.markdown("### ☑️ Financial Economics")
-
     st.image("images/info-bg.png", width='stretch')
+
+
 
 
 #  MARYLIN
 
 
-with st.expander("Real-World Performance", icon="🚀", expanded=True):
+with st.expander("Real-World Performance", icon="📈", expanded=True):
     #st.balloons()
     #st.toast('Thank you for investing!', icon='😍')
     #st.divider()
@@ -174,13 +167,13 @@ with st.expander("Real-World Performance", icon="🚀", expanded=True):
     with col1:
         # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### Marylin is our first **PrettyModels AI** release.")
-        st.markdown("##### She pursues a bold and opportunistic investment style.")
+        st.markdown("##### She pursues a high-conviction investment style.")
         st.markdown("##### Her goal is to outperform the market in a _growth-optimal_ way.")
         # st.markdown("##### She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### We track Marylin's performance by a Wikifolio since December 27, 2024.")
-        st.markdown("##### Wikifolio index certificate issued at September 2, 2025.")
+        #st.markdown("##### Wikifolio index certificate issued at September 2, 2025.")
         #st.markdown("##### Visit her now!")
-        st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1")
+        st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1", type="primary")
         st.link_button("Read Full Story", "https://quant-unit.com/the-story-of-marylin-pt-1/")
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
@@ -308,6 +301,52 @@ with st.expander("Real-World Performance", icon="🚀", expanded=True):
         st.markdown("### Marylin's Alpha vs. ETFs")
         st.altair_chart(final_chart, use_container_width=True)
 
+
+with st.expander("Manifesto", icon="📄", expanded=True):
+    st.markdown("""
+    ## Pretty, Models, AI
+    
+    True elegance in finance is rare because it requires the absolute removal of the ego. For centuries, men have tried to beat markets with gut instinct, confusing their luck with genius and their anxiety with insight. The result is always the same: a chaotic, ugly portfolio where emotions erode returns. At PrettyModels AI, we hold a different view. We believe that a financial model is only "pretty" when it is stripped of human folly, leaving behind nothing but the raw, unvarnished probability of Alpha.
+
+    The modern financial industry has convinced the world that mediocrity is a virtue. You are told to buy the index, accept average returns, and be grateful. This is excellent advice for the fearful, the financially illiterate, and the wealthy who merely wish to stay wealthy. But for the ambitious individual with limited capital, the safety of the herd is a mathematical trap. You cannot compound a fortune by mimicking the average; to build life-changing wealth, you must deviate from the mean. You must be right when the consensus is wrong.
+
+    The tragedy of the active investor has always been biology. We are flawed hardware, plagued by cognitive biases that no amount of discipline can fully erase. But we are currently standing at the precipice of a new epoch. We are witnessing the rise of Large Language Models—not merely as chat bots, but as the first truly "smart" statistical engines in history. These are systems that digest the chaotic noise of the world and organize it into reasoning. As we accelerate toward superintelligence, the edge in markets will no longer belong to the person who can read the most annual reports, but to the person who commands the superior statistical mind.
+
+    The question you must ask yourself regarding the next twenty years is uncomfortable but necessary: Who is the better steward of your future? Is it "I," with all my doubts and erratic impulses? Or is it "AI," a system capable of cold, relentless execution? A pretty model does not hope, and it does not panic. It does not care about market sentiment or media narratives. It cares only about Alpha. It hunts for asymmetry with a precision no human brain can match.
+
+    At PrettyModels AI, our philosophy is simple: the era of the gut feeling is over. We are building the architecture for high-conviction, automated intelligence because we know that the greatest risk to your wealth is your own interference. The smartest investment decision you will ever make is to stop trying to be the genius, and instead, align yourself with one. The future belongs to those who recognize that the most beautiful model is the one that simply, quietly, and ruthlessly outperforms.
+    """)
+
+    if False:
+        st.markdown("""
+        # Our mission is simple.
+        # Beat the market with AI.
+
+        Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself.
+
+        If you have high ambitions and less than one million Euro/Dollar, typically ETFs won't do the trick to make you rich.
+        You have to consistently outperform diversified ETFs to achieve meaningful compounding of returns.
+        In the long run, is outperforming ETFs an easier task for you or an AI-powered algorithm?
+        In other words, who will be the better active investment manager for the next 10 or 20 years? I or AI?
+
+        Given the current progress with LLMs, a properly designed AI-driven algorithm can help you stay committed to faster wealth generation without losing money due to human biases or emotions.
+        To achieve extraordinary investment success, you presumably want to spend your time identifying the most capable AI systems than trying to pick stocks on your own.
+        The smartest way to manage your wealth in the future will be to use the AI that is most aligned with you investment goals (and simply let it work for you).
+
+        # ALLOCATION INTELLIGENCE
+        ##### We build proprietary AI-powered algorithms to unlock new investment strategies.
+        ##### We transform chaotic qualitative information into robust quantitative signals.
+        ##### We explore different AI models to assess what really beats the market in the long run.
+        ##### We aim at high-conviction strategies to create wealth faster.
+        ##### We track our performance by publicly traded portfolios.
+
+        ## Our Principles:
+        ##### 🔥 **Prompted for Outperformance**
+        ##### 🔥 **100% AI-Powered (LLMs)**
+        ##### 🔥 **Quantitative Output**
+        ##### 🔥 **Statistical Approach**
+        ##### 🔥 **High Conviction**
+        """)
 
 with st.expander("Proprietary Model Data", icon="⚙️"):
     # DATA
@@ -590,32 +629,33 @@ if False:
 # with st.expander("Slides", icon="📂"):
 #     st.pdf("2025 PM Slides.pdf", height=500)
 
-# The Poetry of Kong
+if False:
+    # The Poetry of Kong
 
-# File path
-file_path = "data/hong.txt"
+    # File path
+    file_path = "data/hong.txt"
 
-# Check if file exists and read it
-if os.path.exists(file_path):
+    # Check if file exists and read it
+    if os.path.exists(file_path):
 
-    try:
-        # Read the file content
-        with open(file_path, 'r', encoding='utf-8') as file:
-            content = file.read()
+        try:
+            # Read the file content
+            with open(file_path, 'r', encoding='utf-8') as file:
+                content = file.read()
 
-        # Display content in expander with code formatting
-        #with st.expander("📖 The Poetry of Kong", expanded=True):
-        #    st.code(content, language=None, line_numbers=True)
+            # Display content in expander with code formatting
+            #with st.expander("📖 The Poetry of Kong", expanded=True):
+            #    st.code(content, language=None, line_numbers=True)
 
-        # Optional: Display without line numbers
-        with st.expander("The Poetry of Kong", icon="📄"):
-            st.markdown("#### Example of the AI going crazy... or poetic.")
-            st.markdown("Instead of estimating the **Upside Score** for Alibaba, Qwen crafted this modern poem about her mother. 😁")
-            st.code(content, language=None, line_numbers=False)
-            st.markdown("##### I guess that when we no longer have to care about money, we all become poets. 👩‍🎨")
+            # Optional: Display without line numbers
+            with st.expander("The Poetry of Kong", icon="📄"):
+                st.markdown("#### Example of the AI going crazy... or poetic.")
+                st.markdown("Instead of estimating the **Upside Score** for Alibaba, Qwen crafted this modern poem about her mother. 😁")
+                st.code(content, language=None, line_numbers=False)
+                st.markdown("##### I guess that when we no longer have to care about money, we all become poets. 👩‍🎨")
 
-    except Exception as e:
-        st.error(f"❌ Error reading file: {str(e)}")
+        except Exception as e:
+            st.error(f"❌ Error reading file: {str(e)}")
 
 # Disclaimer
 
@@ -625,36 +665,25 @@ st.badge(label="**Version:** Marylin 1.1.9 (as of 2025-12-31)", icon=None, color
 
 st.caption(
     """
-    This content has been generated using artificial intelligence (AI) models and is intended for informational purposes only.
-    While every effort has been made to ensure the accuracy and reliability of the information provided, PrettyModels.ai and its affiliates make no representations or warranties, either express or implied, about the completeness, timeliness, or suitability of the information contained herein.
+    #### Disclaimer
     
-    The investment strategies and recommendations outlined in this report are based on proprietary algorithms and data inputs from leading large language models (LLMs).
-    However, past performance is not indicative of future results, and all investments carry inherent risks, including potential loss of principal.
-    Readers should not consider this content as personalized investment advice or as an endorsement of any specific securities or strategies.
-
-    PrettyModels.ai disclaims any responsibility or liability for any actions taken based on the information contained in this report.
-    PrettyModels.ai disclaims any responsibility or liability for any actions taken based on the information contained in this report.
-    Investors are strongly advised to conduct their own research, consult with financial professionals, and carefully consider their own financial circumstances before making any investment decisions.
-
-    This content is confidential and intended solely for the recipient's internal use.
-    Unauthorized distribution, replication, or use of this content in whole or in part is strictly prohibited.
-    By accessing or using this content, the recipient acknowledges and accepts these terms.
-
+    **1. General Information & AI Nature** This content is generated by artificial intelligence (AI) and is for informational purposes only. While PrettyModels.ai strives for accuracy, the "strategies" and "scorings" are outputs of probabilistic models and large language models (LLMs). These may contain errors, hallucinations, or biases. Do not rely on this content as a definitive source of truth.
+    
+    **2. No Investment Advice** Nothing contained herein constitutes financial, legal, tax, or investment advice. This content is not a recommendation to buy, sell, or hold any security or to adopt any investment strategy. It does not take into account your specific financial situation, objectives, or risk tolerance. Always consult a qualified financial professional before making investment decisions.
+    
+    **3. No Offer or Solicitation** This material is not an offer to sell or a solicitation of an offer to buy any securities, investment products, or services in any jurisdiction where such offer or solicitation would be unlawful.
+    
+    **4. Risk Warning** Past performance is not indicative of future results. All investments involve significant risk, including the total loss of principal. AI-driven models are experimental; hypothetical or back-tested results presented may not reflect actual trading and have inherent limitations.
+    
+    **5. Conflict of Interest** PrettyModels.ai, its affiliates, and their respective officers or employees may hold positions in, or trade, the securities or instruments mentioned herein. Our proprietary algorithms may generate outputs that align with or contradict these internal positions.
+    
+    **6. Limitation of Liability** The content is provided on an "as is" and "as available" basis without warranties of any kind, express or implied. PrettyModels.ai expressly disclaims liability for any direct, indirect, consequential, or incidental damages arising from the use of, or reliance on, this information. You assume full responsibility for your use of this content.
+    
+    **7. Confidentiality & Use** This material is strictly confidential and intended solely for the recipient’s internal use. Unauthorized reproduction, distribution, or public display of this content, in whole or in part, is strictly prohibited. By accessing this content, you agree to these terms.
+    
+    © PrettyModels.ai 2026. All rights reserved. _Further information and legal notices can be found here:_
     """
 )
-
-if False:
-    st.markdown("""
-    <a href="https://www.linkedin.com/company/prettymodels-ai" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30">
-    </a>
-    """, unsafe_allow_html=True)
-
-st.markdown("""
-© PrettyModels.ai 2026. All rights reserved. 
-_Further information and legal notices can be found here:_
-""")
-#st.markdown("Further information and legal notices can be found here:")
 
 c1, c2, c3, c4 = st.columns([1, 1, 2, 6])
 with c1:
