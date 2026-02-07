@@ -1,4 +1,5 @@
 import os
+import time
 import altair as alt
 import pandas as pd
 import streamlit as st
@@ -22,7 +23,7 @@ st.set_page_config(
 # Custom CSS to make it look more like a landing page and less like a data app
 st.markdown("""
 <style>
-    .main-header {font-size: 3rem; font-weight: 700; color: #1E1E1E; margin-bottom: 0px;}
+    .main-header {font-size: 3rem; font-weight: 700; color: #483ae0; margin-bottom: 0px;}
     .sub-header {font-size: 1.5rem; color: #4F4F4F; margin-bottom: 2rem;}
     .highlight {color: #FF4B4B; font-weight: bold;}
     .block-container {padding-top: 2rem; padding-bottom: 5rem;}
@@ -39,100 +40,136 @@ st.markdown(
     '<div class="sub-header">Beat the market with an AI investment manager that compounds your wealth faster than ETFs.</div>',
     unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
+if False:
+    text = "Don’t Settle for Average Returns."
 
-with col1:
-    st.markdown("#### ✅ Outperform your public benchmark")
-    st.markdown("#### ✅ Based on tailored AI-driven strategies")
-    st.markdown("#### ✅ Proven public market track record")
+    placeholder = st.empty()
+    rendered = ""
 
-with col2:
-    # st.image("images/sisters14.png", width='stretch')
-    # Marylin's Out-Performance
-
-    @st.cache_data
-    def load_perf_data():
-        df = pd.read_csv(
-            "data/2025-12-31 marylin_performance.csv",
-            sep=";",
-            decimal=",",
-            parse_dates=["Date"],
-            dayfirst=True,
-            date_format="%d.%m.%y",
+    for ch in text:
+        rendered += ch
+        placeholder.markdown(
+            f'<div class="main-header">{rendered}</div>',
+            unsafe_allow_html=True
         )
-        df.set_index("Date", inplace=True)
-        df = df[(df.index.is_month_end) + (df.index == pd.to_datetime('2024-12-27'))]
-        return df
+        time.sleep(0.03)  # adjust speed
 
+    text = "Beat the market with an AI investment manager that compounds your wealth faster than ETFs."
 
-    df_mape = load_perf_data()
+    placeholder = st.empty()
+    rendered = ""
 
-    # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
-    # they’ll all be melted into a single 'Metric' + 'Value' column.
-    perf_cols = df_mape.columns.tolist()
-    chart_df = (
-        df_mape
-        .reset_index()
-        .melt(id_vars=["Date"], value_vars=perf_cols,
-              var_name="Metric", value_name="Value")
-    )
-
-    # Build the Altair chart:
-    chart = (
-        alt.Chart(chart_df)
-        .mark_line(point=alt.OverlayMarkDef(size=10), strokeWidth=6, strokeCap="round", color="red")
-        .encode(
-            x=alt.X("Date:T", axis=alt.Axis(labels=False, grid=False), title=""),
-            y=alt.Y("Value:Q", axis=alt.Axis(format="%", labels=False, grid=False), title=""),
-            color=alt.Color("Metric:N",
-                            legend=None,
-                            scale=alt.Scale(
-                                range=["#00FFC6", "#ff1fc7", "#483ae0"],
-                                #range=["#FB0A26", "#F50A1C", "#E60000"],
-                                #range=["#007BFF", "#0057D8", "#1E9CE6"]
-                                )
-                            ),
-            tooltip=[
-                alt.Tooltip("Date:T", title="Date"),
-                alt.Tooltip("Metric:N", title="Benchmark"),
-                alt.Tooltip("Value:Q", format=".1%", title="Alpha")
-            ]
+    for ch in text:
+        rendered += ch
+        placeholder.markdown(
+            f'<div class="sub-header">{rendered}</div>',
+            unsafe_allow_html=True
         )
-        .properties(width=700, height=400)
+        time.sleep(0.01)
+
+
+
+@st.cache_data
+def load_perf_data():
+    df = pd.read_csv(
+        "data/2026-01-31 marylin_performance.csv",
+        sep=";",
+        decimal=",",
+        parse_dates=["Date"],
+        dayfirst=True,
+        date_format="%d.%m.%y",
     )
+    df.set_index("Date", inplace=True)
+    df = df[(df.index.is_month_end) + (df.index == pd.to_datetime('2024-12-27'))]
+    return df
 
-    # Add a dashed grey horizontal line at y = 0
-    zero_line_data = pd.DataFrame({"y": [0], "label": ["market"]})
 
-    # 2. Define the Rule (The grey dashed line)
-    rule = (
-        alt.Chart(zero_line_data)
-        .mark_rule(color="grey", strokeWidth=2)
-        .encode(y="y:Q")
-    )
+df_mape = load_perf_data()
 
-    # 3. Define the Text (The label on the right)
-    text = (
-        alt.Chart(zero_line_data)
-        .mark_text(
-            align="right",  # Anchors the text to its right edge
-            dx=-5,  # Nudges it 5 pixels to the left so it's not touching the border
-            dy=14,  # Nudges it 10 pixels above the line
-            fontSize=20,
-            fontWeight="bold",
-            color="grey"
+if True:
+    col1, col2 = st.columns([1, 1])  # Adjust the ratios if needed
+
+    if True:
+        with col2:
+            st.markdown("#### ✔️ Outperform your public benchmark")
+            st.markdown("#### ✔️ Based on tailored AI-driven strategies")
+            st.markdown("#### ✔️ With proven public market track record")
+
+    with col1:
+        # st.image("images/sisters14.png", width='stretch')
+        # Marylin's Out-Performance
+
+        # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
+        # they’ll all be melted into a single 'Metric' + 'Value' column.
+        perf_cols = df_mape.columns.tolist()
+        chart_df = (
+            df_mape
+            .reset_index()
+            .melt(id_vars=["Date"], value_vars=perf_cols,
+                  var_name="Metric", value_name="Value")
         )
-        .encode(
-            y="y:Q",
-            x=alt.value(510),  # Positions it at the 700px mark (your chart width)
-            text="label:N"
+
+        # Build the Altair chart:
+        chart = (
+            alt.Chart(chart_df)
+            .mark_line(point=alt.OverlayMarkDef(size=10), strokeWidth=6, strokeCap="round", color="red")
+            .encode(
+                x=alt.X("Date:T", axis=alt.Axis(labels=False, grid=False), title=""),
+                y=alt.Y("Value:Q", axis=alt.Axis(format="%", labels=False, grid=False), title=""),
+                color=alt.Color("Metric:N",
+                                legend=None,
+                                scale=alt.Scale(
+                                    range=["#00FFC6", "#ff1fc7", "#483ae0"],
+                                    #range=["#FB0A26", "#F50A1C", "#E60000"],
+                                    #range=["#007BFF", "#0057D8", "#1E9CE6"]
+                                    )
+                                ),
+                tooltip=[
+                    alt.Tooltip("Date:T", title="Date"),
+                    alt.Tooltip("Metric:N", title="Benchmark"),
+                    alt.Tooltip("Value:Q", format=".1%", title="Alpha")
+                ]
+            )
+            .properties(width=700, height=400)
         )
-    )
 
-    # Combine the main chart with the combined zero elements
-    final_chart = chart + rule + text
+        # Add a dashed grey horizontal line at y = 0
+        zero_line_data = pd.DataFrame({"y": [0], "label": ["market"]})
 
-    st.altair_chart(final_chart, use_container_width=True)
+        # 2. Define the Rule (The grey dashed line)
+        rule = (
+            alt.Chart(zero_line_data)
+            .mark_rule(color="grey", strokeWidth=2)
+            .encode(y="y:Q")
+        )
+
+        # 3. Define the Text (The label on the right)
+        text = (
+            alt.Chart(zero_line_data)
+            .mark_text(
+                align="right",  # Anchors the text to its right edge
+                dx=-5,  # Nudges it 5 pixels to the left so it's not touching the border
+                dy=14,  # Nudges it 10 pixels above the line
+                fontSize=20,
+                fontWeight="bold",
+                color="grey"
+            )
+            .encode(
+                y="y:Q",
+                x=alt.value(510),  # Positions it at the 700px mark (your chart width)
+                text="label:N"
+            )
+        )
+
+        # Combine the main chart with the combined zero elements
+        final_chart = chart + rule + text
+
+        st.altair_chart(final_chart, use_container_width=True)
+
+
+
+# Text
+
 
 col1, col2, = st.columns([1, 1])
 with col1:
@@ -178,9 +215,9 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Performance (Dec 2024 - Dec 2025)", "32.8%", "14.9% (Q4 2025)", border=True)
-    col3.metric("Alpha (Dec 2024 - Dec 2025)", "26.5%", "15.8% (Q4 2025)", border=True)
-    col3.metric("Number of Trades (Total)", "177", "43 (Q4 2025)", border=True)
+    col3.metric("Performance (Dec 2024 - Jan 2026)", "37.2%", "4.4% (Jan 2026)", border=True)
+    col3.metric("Alpha (Dec 2024 - Jan 2026)", "34.7%", "8.2% (Jan 2026)", border=True)
+    col3.metric("Number of Trades (Total)", "191", "14 (Jan 2026)", border=True)
 
     col1, col2 = st.columns([1, 1])
 
@@ -270,7 +307,7 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
         # Build the Altair chart:
         chart = (
             alt.Chart(chart_df)
-            .mark_line(point=alt.OverlayMarkDef(size=70), strokeWidth=3, strokeCap="round")
+            .mark_line(point=alt.OverlayMarkDef(size=10), strokeWidth=3, strokeCap="round")
             .encode(
                 x=alt.X("Date:T", title=""),
                 y=alt.Y("Value:Q", axis=alt.Axis(format="%"), title=""),
@@ -661,7 +698,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.1.9 (as of 2025-12-31)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.2.0 (as of 2026-01-31)", icon=None, color="green")
 
 st.caption(
     """
