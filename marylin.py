@@ -72,7 +72,7 @@ if False:
 @st.cache_data
 def load_perf_data():
     df = pd.read_csv(
-        "data/2026-01-31 marylin_performance.csv",
+        "data/2026-03-31 marylin_performance.csv",
         sep=";",
         decimal=",",
         parse_dates=["Date"],
@@ -215,9 +215,9 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Performance (Dec 2024 - Jan 2026)", "37.2%", "4.4% (Jan 2026)", border=True)
-    col3.metric("Alpha (Dec 2024 - Jan 2026)", "34.7%", "8.2% (Jan 2026)", border=True)
-    col3.metric("Number of Trades (Total)", "191", "14 (Jan 2026)", border=True)
+    col3.metric("Performance (Dec 2024 - March 2026)", "22.0%", "-5.3% (March 2026)", border=True)
+    col3.metric("Alpha (Dec 2024 - March 2026)", "29.0%", "-3.3% (March 2026)", border=True)
+    col3.metric("Number of Trades (Total)", "220", "5 (March 2026)", border=True)
 
     col1, col2 = st.columns([1, 1])
 
@@ -698,7 +698,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.2.0 (as of 2026-01-31)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.2.2 (as of 2026-03-31)", icon=None, color="green")
 
 st.caption(
     """
