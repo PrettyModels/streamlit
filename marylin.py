@@ -72,7 +72,7 @@ if False:
 @st.cache_data
 def load_perf_data():
     df = pd.read_csv(
-        "data/2026-03-31 marylin_performance.csv",
+        "data/marylin_performance.csv",
         sep=";",
         decimal=",",
         parse_dates=["Date"],
@@ -179,11 +179,12 @@ with col2:
 
 st.markdown("##### _Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself._")
 
-col1, col2, = st.columns([1, 1])
-with col1:
-    st.image("images/info2-bg.png", width='stretch')
-with col2:
-    st.image("images/info-bg.png", width='stretch')
+if True:
+    col1, col2, = st.columns([1, 1])
+    with col1:
+        st.image("images/info2-bg.png", width='stretch')
+    with col2:
+        st.image("images/info-bg.png", width='stretch')
 
 
 
@@ -215,9 +216,25 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
 
     # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
 
-    col3.metric("Performance (Dec 2024 - March 2026)", "22.0%", "-5.3% (March 2026)", border=True)
-    col3.metric("Alpha (Dec 2024 - March 2026)", "29.0%", "-3.3% (March 2026)", border=True)
-    col3.metric("Number of Trades (Total)", "220", "5 (March 2026)", border=True)
+    # Calc annualized alpha of the df_mape Internet column for the total period and the difference to the previous period
+    start_date = df_mape.index[0]
+    end_date = df_mape.index[-1]
+    prev_date = df_mape.index[-2]
+
+    days_end = (end_date - start_date).days
+    days_prev = (prev_date - start_date).days
+
+    cum_alpha_end = df_mape["Internet"].iloc[-1]
+    cum_alpha_prev = df_mape["Internet"].iloc[-2]
+
+    ann_alpha_end = (1 + cum_alpha_end) ** (365.25 / days_end) - 1
+    ann_alpha_prev = (1 + cum_alpha_prev) ** (365.25 / days_prev) - 1
+    ann_alpha_diff = ann_alpha_end - ann_alpha_prev
+
+    col3.metric("Performance (Dec 2024 - April 2026)", "37.2", "+15.2% (April 2026)", border=True)
+    col3.metric("Alpha (Dec 2024 - April 2026)", "29.7%", "0.7% (April 2026)", border=True)
+    #col3.metric("Number of Trades (Total)", "220", "5 (March 2026)", border=True)
+    col3.metric("Alpha (Annualized)", f"{ann_alpha_end:.1%}", f"{ann_alpha_diff:+.1%} ({end_date.strftime('%B %Y')})", border=True)
 
     col1, col2 = st.columns([1, 1])
 
@@ -698,7 +715,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.2.2 (as of 2026-03-31)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.2.3 (as of 2026-04-30)", icon=None, color="green")
 
 st.caption(
     """
