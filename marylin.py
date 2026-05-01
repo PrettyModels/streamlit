@@ -231,7 +231,7 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
     ann_alpha_prev = (1 + cum_alpha_prev) ** (365.25 / days_prev) - 1
     ann_alpha_diff = ann_alpha_end - ann_alpha_prev
 
-    col3.metric("Performance (Dec 2024 - April 2026)", "37.2", "+15.2% (April 2026)", border=True)
+    col3.metric("Performance (Dec 2024 - April 2026)", "37.2%", "+15.2% (April 2026)", border=True)
     col3.metric("Alpha (Dec 2024 - April 2026)", "29.7%", "0.7% (April 2026)", border=True)
     #col3.metric("Number of Trades (Total)", "220", "5 (March 2026)", border=True)
     col3.metric("Alpha (Annualized)", f"{ann_alpha_end:.1%}", f"{ann_alpha_diff:+.1%} ({end_date.strftime('%B %Y')})", border=True)
