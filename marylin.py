@@ -243,7 +243,7 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
         @st.cache_data
         def load_wikifolio_data():
             df = pd.read_csv(
-                "data/WFMARYLIN1-PriceData.csv",
+                "data/WFMARYLIN1-PriceData-April2026.csv",
                 sep=";",
                 decimal=",",  # <-- IMPORTANT: your file uses comma decimals
             )
