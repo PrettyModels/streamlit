@@ -5,8 +5,6 @@ Layout is an "academic paper": a numbered, single-scroll essay. Copy lives in
 content.py, data loaders/metrics in data.py, and the design system (theme + render
 helpers) in components.py. This module only orchestrates.
 """
-import os
-
 import altair as alt
 import pandas as pd
 import streamlit as st
@@ -41,7 +39,6 @@ with hero_l:
     c.lead(T.HERO_LEAD)
 with hero_r:
     st.image("images/marylin6.png", width="stretch")
-    c.figure_caption(T.HERO_PLATE_CAPTION)
 
 c.stat_strip([
     (str(stats["n_assets"]), "companies scored monthly"),
@@ -103,7 +100,7 @@ def _bar_chart(df: pd.DataFrame, scores: list[str], id_vars: list[str]) -> None:
     st.altair_chart(chart, use_container_width=True)
 
 
-# score table (Figure 2)
+# score table
 col_cfg = {col: st.column_config.NumberColumn(col, format="percent")
            for col in df_scores.columns if col not in ("w", "Rank")}
 st.dataframe(
@@ -254,18 +251,6 @@ c.hairline()
 c.section_header("philosophy", "5", "Philosophy", T.PHILOSOPHY_SUBTITLE)
 c.body(T.PHILOSOPHY_BODY)
 c.pull_quote(T.PHILOSOPHY_PULLQUOTE)
-
-# small on-brand easter egg: when the model gets poetic instead of quantitative
-_poem_path = "data/hong.txt"
-if os.path.exists(_poem_path):
-    with st.expander("Footnote — when the model gets poetic", icon="📄"):
-        st.markdown(
-            "Asked to estimate an upside score for one company, the model instead "
-            "returned a poem. We keep it as a reminder that these systems are strange, "
-            "and that the lab's job is to make them measurable."
-        )
-        with open(_poem_path, "r", encoding="utf-8") as fh:
-            st.code(fh.read(), language=None)
 
 # =============================================================================
 # Footer

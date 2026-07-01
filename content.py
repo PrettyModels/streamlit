@@ -10,8 +10,9 @@ BRAND = "PrettyModels AI"
 TAGLINE = "Independent AI Research Lab"
 PAGE_TITLE = "PrettyModels AI — Independent AI Research Lab"
 PAGE_DESCRIPTION = (
-    "PrettyModels AI is an independent research lab building AI-driven algorithms "
-    "that turn frontier language models into quantitative, public-market signals."
+    "PrettyModels AI is an independent research lab studying whether large language "
+    "models can evaluate public companies consistently enough to inform investment "
+    "decisions, validated on a live public index."
 )
 
 NAV = [
@@ -26,86 +27,85 @@ NAV = [
 HERO_EYEBROW = "PrettyModels AI · Independent Research Lab"
 HERO_HEADLINE = "Turning frontier AI into public-market investment signals."
 HERO_LEAD = (
-    "PrettyModels AI is an independent research lab. We build algorithms that let "
-    "frontier language models read the qualitative world — filings, disclosures, the "
-    "narrative of a business — and distil it into quantitative conviction. Then we "
-    "test that conviction the only honest way: out-of-sample, on a live, publicly "
-    "traded index."
+    "PrettyModels AI is an independent research lab. We study whether large language "
+    "models can evaluate public companies with enough consistency to inform investment "
+    "decisions. Our process converts the qualitative record of a business — filings, "
+    "disclosures, management commentary — into structured scores, combines those scores "
+    "into a portfolio, and measures the result on a live, publicly traded index."
 )
-HERO_PLATE_CAPTION = "Plate 1 — “Marylin”, the lab’s flagship AI strategy."
 
 # --- §1 Thesis ---------------------------------------------------------------
-THESIS_SUBTITLE = "Why an AI lab for public markets"
+THESIS_SUBTITLE = "The premise of the research"
 THESIS_BODY = [
-    "For a century, active investing has been limited by biology. Human analysts are "
-    "flawed hardware — anchored, over-confident, moved by fear and narrative. No amount "
-    "of discipline fully removes the bias, and the bias quietly erodes returns.",
+    "Active investing has long depended on human judgment, which is subject to "
+    "well-documented behavioral biases — anchoring, overconfidence, loss aversion. "
+    "These biases are difficult to remove through discipline alone, and they impose a "
+    "persistent, measurable cost on returns.",
 
-    "Large language models change the terms of the problem. For the first time we have "
-    "statistical engines that can digest the chaotic, qualitative noise of the world — "
-    "annual reports, transcripts, news — and organise it into structured reasoning. The "
-    "edge in markets is no longer held by whoever reads the most; it is held by whoever "
-    "commands the superior statistical mind.",
+    "Large language models are the first systems able to read the unstructured "
+    "information that surrounds a company — annual reports, earnings calls, news flow — "
+    "and return a structured, repeatable assessment. This does not make their judgments "
+    "correct. It makes them consistent, and consistency is what can be measured.",
 
-    "This lab exists to build that mind for public markets, and to hold it to account. "
-    "We turn language into scores, scores into conviction, and conviction into a signal "
-    "that can be measured — in public, against the market, over time.",
+    "Our research program follows from that distinction. We translate model assessments "
+    "into scores, scores into portfolio weights, and weights into positions, then "
+    "evaluate the outcome against public benchmarks, out-of-sample and in the open.",
 ]
 THESIS_PULLQUOTE = (
-    "The edge is shifting from the analyst who reads the most to the model that reasons "
-    "the best."
+    "A model’s judgment is not an answer. It is a hypothesis, to be tested against the "
+    "market."
 )
 
 # --- §2 Method ---------------------------------------------------------------
-METHOD_SUBTITLE = "How the lab turns language into signal"
+METHOD_SUBTITLE = "From source material to portfolio"
 METHOD_INTRO = (
-    "Every month the same pipeline runs end to end. Each stage is deterministic in "
-    "structure and transparent in output, so a signal can be traced back from a "
-    "portfolio weight all the way to the sentence that produced it."
+    "The same process runs each month, end to end. It is designed to be fully "
+    "traceable: every position in the portfolio can be followed back through its factor "
+    "weights and scores to the source material the model was asked to evaluate."
 )
 METHOD_STEPS = [
-    ("01", "Qualitative", "The raw material",
-     "The unstructured world of a company: filings, disclosures, transcripts, news — "
-     "the narrative that no spreadsheet captures."),
-    ("02", "Prompts → AI", "Frontier models, guided",
-     "Large language models read that material through structured research prompts, "
-     "each posing a precise, repeatable question about the business."),
-    ("03", "Scores", "Language becomes numbers",
-     "Every company is rated 0–100 on 31 dimensions — valuation, moat, governance, "
-     "disruption, ten-bagger odds and more — refreshed monthly."),
-    ("04", "Weights", "Conviction, sized",
-     "Scores are combined into five composite factors, ranked across the universe, and "
-     "translated into growth-optimal conviction weights."),
-    ("05", "Signal", "A testable portfolio",
-     "The result is a fully specified target portfolio — the lab’s monthly signal, ready "
-     "to be validated out-of-sample."),
+    ("01", "Qualitative", "Source material",
+     "The unstructured record of a company: annual reports, earnings-call transcripts, "
+     "regulatory disclosures, and current news."),
+    ("02", "Prompts → AI", "Structured prompting",
+     "A fixed set of prompts is applied to that material by large language models — the "
+     "same questions, asked identically across every company and every month."),
+    ("03", "Scores", "Quantification",
+     "Each response is converted into a numeric score. Every company is rated from 0 to "
+     "100 on 31 dimensions, spanning valuation, competitive position, governance, and "
+     "return potential."),
+    ("04", "Weights", "Aggregation & sizing",
+     "The 31 dimensions are aggregated into five composite factors, ranked across the "
+     "universe, and translated into portfolio weights."),
+    ("05", "Signal", "Monthly output",
+     "The result is a fully specified target portfolio — the month’s signal — carried "
+     "forward for out-of-sample evaluation."),
 ]
 
 # --- §3 Scoring Engine -------------------------------------------------------
-SCORING_SUBTITLE = "Every month, our models score the investable universe"
+SCORING_SUBTITLE = "Scores across the investable universe, updated monthly"
 SCORING_INTRO = (
-    "The tables and tools below are the lab’s live output, not a static screenshot. "
-    "Each company is distilled into five composite factors — themselves built from 31 "
-    "underlying AI scores. Explore the universe, compare companies, or take one apart "
-    "factor by factor."
+    "The tables below present the current month’s output — the scores the portfolio is "
+    "constructed from. Each company is summarized by five composite factors, each "
+    "derived from the 31 underlying scores. The universe can be sorted, companies "
+    "compared, and any single company examined factor by factor."
 )
 # Five composite factors surfaced in the interactive tools.
 GLOSSARY_SUBTITLE = "The five composite factors"
 GLOSSARY = [
-    ("Integrity", "Governance, management quality and clean, honest earnings — is the "
-                  "business run for its owners?"),
-    ("Market", "Momentum, sentiment and mispricing — what the market is currently "
-               "saying about the name."),
-    ("Quality", "Durability of the business: moat, scalability and competitive "
-                "advantage that compounds."),
+    ("Integrity", "Governance quality, management conduct, and the reliability of "
+                  "reported earnings."),
+    ("Market", "Momentum, sentiment, and indications of mispricing in the current "
+               "market."),
+    ("Quality", "Durability of the business model: competitive moat, scalability, and "
+                "pricing power."),
     ("Resilience", "Downside protection: defensiveness and distance from financial "
-                   "distress when conditions turn."),
-    ("Upside", "Asymmetric return potential: growth, disruption and the odds of an "
-               "outsized long-run outcome."),
+                   "distress."),
+    ("Upside", "Asymmetric return potential: growth, disruption, and the probability of "
+               "an outsized outcome."),
 ]
 SCORING_TABLE_CAPTION = (
-    "Figure 2 — Composite-factor scores across the universe (green marks the top-ranked "
-    "company on each factor)."
+    "Highlighted cells indicate the top-scoring company on each factor."
 )
 TAB_EXPLORE = "Explore scores"
 TAB_COMPARE = "Compare companies"
@@ -114,53 +114,52 @@ TAB_ANALYZE = "Analyze a company"
 # --- §4 Live Validation ------------------------------------------------------
 VALIDATION_SUBTITLE = "Out-of-sample, in public"
 VALIDATION_INTRO = (
-    "A backtest can always be fit to the past. To test the research honestly, we deploy "
-    "the signal into a real, publicly traded index and track it forward. Since "
-    "27 December 2024 the Marylin strategy has traded live as a Wikifolio index — every "
-    "position public, every day marked to market."
+    "A back-test can be fitted to historical data; a forward test cannot. Since "
+    "27 December 2024 the Marylin strategy has been implemented as a live, publicly "
+    "traded Wikifolio index, with every position disclosed and priced daily. The results "
+    "below are therefore out-of-sample."
 )
-VALIDATION_INDEX_CAPTION = (
-    "Figure 3 — Marylin Wikifolio index level (base 100 at inception)."
-)
+VALIDATION_INDEX_CAPTION = "Marylin index level, indexed to 100 at inception."
 VALIDATION_ALPHA_CAPTION = (
-    "Figure 4 — Cumulative alpha of the signal versus three public benchmarks."
+    "Cumulative alpha of the strategy relative to three public benchmarks."
 )
 VALIDATION_NOTE = (
-    "The Marylin index is operated by Until Singularity Asset Management "
-    "([tausch.capital](https://tausch.capital)). Figures are shown for research "
-    "transparency only. Past performance does not indicate future results and nothing "
-    "here is investment advice or an offer of any product."
+    "These figures are presented for research transparency. Past performance is not "
+    "indicative of future results, and nothing on this page constitutes investment "
+    "advice or an offer of any product."
 )
-VALIDATION_VERIFY = "Verify the live index on Wikifolio ↗"
+VALIDATION_VERIFY = "View the live index on Wikifolio ↗"
 WIKIFOLIO_URL = "https://www.wikifolio.com/en/int/w/wfmarylin1"
 
 # --- §5 Philosophy -----------------------------------------------------------
-PHILOSOPHY_SUBTITLE = "Why we call them pretty models"
+PHILOSOPHY_SUBTITLE = "The principle behind the name"
 PHILOSOPHY_BODY = [
-    "True elegance in finance is rare, because it requires the removal of the ego. For "
-    "centuries people have tried to beat markets on gut instinct, confusing luck with "
-    "genius and anxiety with insight. The result is usually the same: a chaotic, ugly "
-    "portfolio where emotion erodes returns.",
+    "In statistical modeling, elegance is not decoration. A model that must be supported "
+    "by special cases, manual overrides, and the modeler’s conviction is fragile; a "
+    "model that reaches the same conclusion from the evidence alone is robust. We use "
+    "the word *pretty* in that narrower, technical sense: a model reduced to what the "
+    "data supports, and no more.",
 
-    "We hold a different view. A model is only *pretty* when it is stripped of human "
-    "folly — when nothing is left but the raw, unvarnished probability of an edge. A "
-    "pretty model does not hope and does not panic. It does not care about sentiment or "
-    "the narrative of the day. It weighs the evidence and it ranks.",
+    "The same principle governs the behavior a model removes. Human investors carry "
+    "biases that are difficult to suppress — attachment to existing positions, the need "
+    "to be proven right, the impulse to sell under pressure. A model carries none of "
+    "them. It evaluates the available evidence and ranks it, and the discipline this "
+    "imposes is the point of the exercise.",
 
-    "So the work of the lab is not to be the genius. It is to build the quiet, "
-    "disciplined system that can be measured, questioned and improved — and to let the "
-    "most beautiful model be the one that simply, and transparently, does its job.",
+    "The lab is therefore not organized around a single insight or forecast. It is "
+    "organized to produce models that can be examined, challenged, and improved, and to "
+    "let performance be settled in public rather than asserted. Marylin, the strategy we "
+    "run live, is the current expression of that approach.",
 ]
 PHILOSOPHY_PULLQUOTE = (
-    "A pretty model does not hope, and it does not panic. It weighs the evidence and it "
-    "ranks."
+    "Elegance, in a model, is the absence of everything the evidence does not require."
 )
 
 # --- Footer ------------------------------------------------------------------
+# NOTE: rendered inside an HTML container, so the link is an <a> tag, not markdown.
 ENTITY_NOTE = (
-    "PrettyModels AI is an independent research lab. It does not manage money or offer "
-    "investment products. The Marylin index referenced on this site is operated "
-    "separately by Until Singularity Asset Management (tausch.capital)."
+    "PrettyModels AI conducts the research and develops the models.<br> The Marylin strategy "
+    "is operated as a live portfolio by <a href=\"https://tausch.capital\">tausch.capital</a>."
 )
 DISCLAIMER = """
 **Disclaimer**

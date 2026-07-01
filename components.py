@@ -82,7 +82,7 @@ def inject_theme() -> None:
 [data-testid="stToolbar"] {{ right: 0.5rem; }}
 
 .stApp {{ background: var(--paper); }}
-.block-container {{ max-width: 1080px; padding-top: 0.5rem; padding-bottom: 5rem; }}
+.block-container {{ max-width: 1080px; padding-top: 1rem; padding-bottom: 5rem; }}
 
 html, body, [class*="st-"], .stMarkdown, p, li {{
   font-family: var(--sans); color: var(--ink);
@@ -96,7 +96,7 @@ a:hover {{ text-decoration: underline; }}
 .pm-masthead {{
   position: sticky; top: 0; z-index: 999; background: var(--paper);
   display: flex; align-items: center; gap: 0.9rem;
-  padding: 0.7rem 0 0.7rem; margin-bottom: 1.2rem;
+  padding: 0.7rem 0 0.7rem; margin-bottom: 2.8rem;
   border-bottom: 1px solid var(--hairline);
 }}
 .pm-mark {{
@@ -124,7 +124,7 @@ a:hover {{ text-decoration: underline; }}
 
 /* ---- hero ---- */
 .pm-hero-h1 {{ font-family: var(--serif); font-weight: 500; font-size: 3rem;
-  line-height: 1.08; letter-spacing: -0.02em; margin: 0.2rem 0 1.1rem; }}
+  line-height: 1.08; letter-spacing: -0.02em; margin: 0.55rem 0 1.1rem; }}
 .pm-lead {{ font-size: 1.16rem; line-height: 1.6; color: #2b2b2b; max-width: 40em; }}
 
 /* ---- section header ---- */
