@@ -202,6 +202,7 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
     with col2:
         st.image("images/marylin6.png", width='stretch')
+        #st.image("images/image5.png")
     with col1:
         # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
         st.markdown("##### Marylin is our first **PrettyModels AI** release.")
@@ -243,7 +244,7 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
         @st.cache_data
         def load_wikifolio_data():
             df = pd.read_csv(
-                "data/WFMARYLIN1-PriceData-April2026.csv",
+                "data/WFMARYLIN1-PriceData-20260701150456.csv",
                 sep=";",
                 decimal=",",  # <-- IMPORTANT: your file uses comma decimals
             )
@@ -356,66 +357,16 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
         st.altair_chart(final_chart, use_container_width=True)
 
 
-with st.expander("Manifesto", icon="📄", expanded=True):
-    st.markdown("""
-    ## Pretty, Models, AI
-    
-    True elegance in finance is rare because it requires the absolute removal of the ego. For centuries, men have tried to beat markets with gut instinct, confusing their luck with genius and their anxiety with insight. The result is always the same: a chaotic, ugly portfolio where emotions erode returns. At PrettyModels AI, we hold a different view. We believe that a financial model is only "pretty" when it is stripped of human folly, leaving behind nothing but the raw, unvarnished probability of Alpha.
 
-    The modern financial industry has convinced the world that mediocrity is a virtue. You are told to buy the index, accept average returns, and be grateful. This is excellent advice for the fearful, the financially illiterate, and the wealthy who merely wish to stay wealthy. But for the ambitious individual with limited capital, the safety of the herd is a mathematical trap. You cannot compound a fortune by mimicking the average; to build life-changing wealth, you must deviate from the mean. You must be right when the consensus is wrong.
-
-    The tragedy of the active investor has always been biology. We are flawed hardware, plagued by cognitive biases that no amount of discipline can fully erase. But we are currently standing at the precipice of a new epoch. We are witnessing the rise of Large Language Models—not merely as chat bots, but as the first truly "smart" statistical engines in history. These are systems that digest the chaotic noise of the world and organize it into reasoning. As we accelerate toward superintelligence, the edge in markets will no longer belong to the person who can read the most annual reports, but to the person who commands the superior statistical mind.
-
-    The question you must ask yourself regarding the next twenty years is uncomfortable but necessary: Who is the better steward of your future? Is it "I," with all my doubts and erratic impulses? Or is it "AI," a system capable of cold, relentless execution? A pretty model does not hope, and it does not panic. It does not care about market sentiment or media narratives. It cares only about Alpha. It hunts for asymmetry with a precision no human brain can match.
-
-    At PrettyModels AI, our philosophy is simple: the era of the gut feeling is over. We are building the architecture for high-conviction, automated intelligence because we know that the greatest risk to your wealth is your own interference. The smartest investment decision you will ever make is to stop trying to be the genius, and instead, align yourself with one. The future belongs to those who recognize that the most beautiful model is the one that simply, quietly, and ruthlessly outperforms.
-    """)
-
-    if False:
-        st.markdown("""
-        # Our mission is simple.
-        # Beat the market with AI.
-
-        Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself.
-
-        If you have high ambitions and less than one million Euro/Dollar, typically ETFs won't do the trick to make you rich.
-        You have to consistently outperform diversified ETFs to achieve meaningful compounding of returns.
-        In the long run, is outperforming ETFs an easier task for you or an AI-powered algorithm?
-        In other words, who will be the better active investment manager for the next 10 or 20 years? I or AI?
-
-        Given the current progress with LLMs, a properly designed AI-driven algorithm can help you stay committed to faster wealth generation without losing money due to human biases or emotions.
-        To achieve extraordinary investment success, you presumably want to spend your time identifying the most capable AI systems than trying to pick stocks on your own.
-        The smartest way to manage your wealth in the future will be to use the AI that is most aligned with you investment goals (and simply let it work for you).
-
-        # ALLOCATION INTELLIGENCE
-        ##### We build proprietary AI-powered algorithms to unlock new investment strategies.
-        ##### We transform chaotic qualitative information into robust quantitative signals.
-        ##### We explore different AI models to assess what really beats the market in the long run.
-        ##### We aim at high-conviction strategies to create wealth faster.
-        ##### We track our performance by publicly traded portfolios.
-
-        ## Our Principles:
-        ##### 🔥 **Prompted for Outperformance**
-        ##### 🔥 **100% AI-Powered (LLMs)**
-        ##### 🔥 **Quantitative Output**
-        ##### 🔥 **Statistical Approach**
-        ##### 🔥 **High Conviction**
-        """)
-
-with st.expander("Proprietary Model Data", icon="⚙️"):
+with st.expander("Investment Universe", icon="✨", expanded=True):
     # DATA
 
     #st.divider()
     #st.write("Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.")
-    st.markdown("# MODEL DATA")
-    st.markdown("This dataset is the ❤️ of all PrettyModels AI strategies.")
+    st.markdown("# WATCHLIST")
+    # st.markdown("This dataset is the ❤️ of all PrettyModels AI strategies.")
     st.markdown("""
-    We use AI to estimate scores for all stocks in our universe on a monthly basis.
-    
-    Our scores fall into five categories: 
-     💞 Integrity, 📈 Market, ✨ Quality, ⛓️ Resilience, 🚀 Upside. 
-     
-     Feel free to take a look! You can analyze the data here via interactive charts or simply download the data table. ⬇️
+    We use AI to estimate scores for all stocks in our universe on a monthly basis.    
     """)
 
     # Load the data from a CSV. We're caching this so it doesn't reload every time the app
@@ -499,10 +450,10 @@ with st.expander("Proprietary Model Data", icon="⚙️"):
 
 
     # Make Tabs
-    tab0, tab1, tab2 = st.tabs(["Asset Analyzer", "Compare Companies", "Select Scores"])
+    tab0, tab1, tab2 = st.tabs([ "Select Scores", "Compare Companies", "Asset Analyzer"])
 
 
-    with tab0:
+    with tab2:
         company = st.selectbox(
         "Which asset do you want to analyze?",
         sorted(set(df_data.index)),
@@ -575,7 +526,7 @@ with st.expander("Proprietary Model Data", icon="⚙️"):
         make_bar_chart(df=df_filtered.copy(), scores=scores1, id_vars=["Asset"])
 
 
-    with tab2:
+    with tab0:
         # Show a multiselect widget with the genres using `st.multiselect`.
         scores = st.multiselect(
             "Scores",
@@ -658,6 +609,52 @@ with st.expander("Proprietary Model Data", icon="⚙️"):
             st.altair_chart(chart, use_container_width=True)
 
 
+with st.expander("Manifesto", icon="📄", expanded=False):
+    st.markdown("""
+    ## Pretty, Models, AI
+
+    True elegance in finance is rare because it requires the absolute removal of the ego. For centuries, men have tried to beat markets with gut instinct, confusing their luck with genius and their anxiety with insight. The result is always the same: a chaotic, ugly portfolio where emotions erode returns. At PrettyModels AI, we hold a different view. We believe that a financial model is only "pretty" when it is stripped of human folly, leaving behind nothing but the raw, unvarnished probability of Alpha.
+
+    The modern financial industry has convinced the world that mediocrity is a virtue. You are told to buy the index, accept average returns, and be grateful. This is excellent advice for the fearful, the financially illiterate, and the wealthy who merely wish to stay wealthy. But for the ambitious individual with limited capital, the safety of the herd is a mathematical trap. You cannot compound a fortune by mimicking the average; to build life-changing wealth, you must deviate from the mean. You must be right when the consensus is wrong.
+
+    The tragedy of the active investor has always been biology. We are flawed hardware, plagued by cognitive biases that no amount of discipline can fully erase. But we are currently standing at the precipice of a new epoch. We are witnessing the rise of Large Language Models—not merely as chat bots, but as the first truly "smart" statistical engines in history. These are systems that digest the chaotic noise of the world and organize it into reasoning. As we accelerate toward superintelligence, the edge in markets will no longer belong to the person who can read the most annual reports, but to the person who commands the superior statistical mind.
+
+    The question you must ask yourself regarding the next twenty years is uncomfortable but necessary: Who is the better steward of your future? Is it "I," with all my doubts and erratic impulses? Or is it "AI," a system capable of cold, relentless execution? A pretty model does not hope, and it does not panic. It does not care about market sentiment or media narratives. It cares only about Alpha. It hunts for asymmetry with a precision no human brain can match.
+
+    At PrettyModels AI, our philosophy is simple: the era of the gut feeling is over. We are building the architecture for high-conviction, automated intelligence because we know that the greatest risk to your wealth is your own interference. The smartest investment decision you will ever make is to stop trying to be the genius, and instead, align yourself with one. The future belongs to those who recognize that the most beautiful model is the one that simply, quietly, and ruthlessly outperforms.
+    """)
+
+    if False:
+        st.markdown("""
+        # Our mission is simple.
+        # Beat the market with AI.
+
+        Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself.
+
+        If you have high ambitions and less than one million Euro/Dollar, typically ETFs won't do the trick to make you rich.
+        You have to consistently outperform diversified ETFs to achieve meaningful compounding of returns.
+        In the long run, is outperforming ETFs an easier task for you or an AI-powered algorithm?
+        In other words, who will be the better active investment manager for the next 10 or 20 years? I or AI?
+
+        Given the current progress with LLMs, a properly designed AI-driven algorithm can help you stay committed to faster wealth generation without losing money due to human biases or emotions.
+        To achieve extraordinary investment success, you presumably want to spend your time identifying the most capable AI systems than trying to pick stocks on your own.
+        The smartest way to manage your wealth in the future will be to use the AI that is most aligned with you investment goals (and simply let it work for you).
+
+        # ALLOCATION INTELLIGENCE
+        ##### We build proprietary AI-powered algorithms to unlock new investment strategies.
+        ##### We transform chaotic qualitative information into robust quantitative signals.
+        ##### We explore different AI models to assess what really beats the market in the long run.
+        ##### We aim at high-conviction strategies to create wealth faster.
+        ##### We track our performance by publicly traded portfolios.
+
+        ## Our Principles:
+        ##### 🔥 **Prompted for Outperformance**
+        ##### 🔥 **100% AI-Powered (LLMs)**
+        ##### 🔥 **Quantitative Output**
+        ##### 🔥 **Statistical Approach**
+        ##### 🔥 **High Conviction**
+        """)
+
 if False:
     # Contact Form
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
@@ -715,7 +712,7 @@ if False:
 
 st.divider()  # 👈 Draws a horizontal rule
 
-st.badge(label="**Version:** Marylin 1.2.3 (as of 2026-04-30)", icon=None, color="green")
+st.badge(label="**Version:** Marylin 1.2.5 (as of 2026-06-30)", icon=None, color="green")
 
 st.caption(
     """
