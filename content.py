@@ -208,8 +208,167 @@ incidental damages arising from use of, or reliance on, this information.
 """
 
 LINK_LINKEDIN = ("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai")
-LINK_DOCS = ("Research notes", "https://docs.prettymodels.ai")
-LINK_STORY = ("The story of Marylin", "https://quant-unit.com/the-story-of-marylin-pt-1/")
+LINK_STORY = ("The Story of Marylin", "https://quant-unit.com/the-story-of-marylin-pt-1/")
+
+# Internal legal pages (registered in streamlit_app.py). Footer links to these
+# via st.page_link, replacing the retired docs.prettymodels.ai subdomain.
+LINK_IMPRINT = "Legal Notice"
+LINK_PRIVACY = "Privacy"
+
+
+# --- Legal pages =============================================================
+# The docs.prettymodels.ai subdomain is retired; its legal notice (German
+# Impressum, § 5 TMG) and privacy policy now live here as native pages that
+# inherit the paper design system.
+LEGAL_BACK = "← Back to the research"
+
+# --- Legal notice / Impressum ------------------------------------------------
+IMPRINT_PAGE_TITLE = "Legal Notice — PrettyModels AI"
+IMPRINT_EYEBROW = "PrettyModels AI · Legal"
+IMPRINT_TITLE = "Legal Notice"
+IMPRINT_INTRO = (
+    "Information pursuant to § 5 TMG (German Telemedia Act) and § 18(2) MStV."
+)
+IMPRINT_SECTIONS = [
+    ("Operator", [
+        "Christian Tausch — PrettyModels AI<br>"
+        "Ben-Chorin-Str. 1<br>80339 Munich<br>Germany",
+        "Contact: <a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>",
+    ]),
+    ("Responsible for content", [
+        "Responsible for editorial content pursuant to § 18(2) MStV: "
+        "Christian Tausch (address as above).",
+    ]),
+    ("Liability for content", [
+        "As a service provider we are responsible for our own content on these "
+        "pages under general law, in accordance with § 7(1) TMG. Under §§ 8 to 10 "
+        "TMG, however, we are not obliged to monitor transmitted or stored "
+        "third-party information, or to investigate circumstances that indicate "
+        "unlawful activity.",
+        "Obligations to remove or block the use of information under general law "
+        "remain unaffected. Any liability in this respect is only possible from "
+        "the point in time at which we become aware of a specific infringement. "
+        "Upon notification of such violations, we will remove the content "
+        "concerned without delay.",
+    ]),
+    ("Liability for links", [
+        "Our site contains links to external third-party websites over whose "
+        "content we have no influence. We therefore accept no liability for this "
+        "external content. The respective provider or operator of the linked "
+        "pages is always responsible for their content.",
+        "The linked pages were checked for possible legal violations at the time "
+        "of linking; no unlawful content was recognizable. A permanent monitoring "
+        "of the content of the linked pages is not reasonable without concrete "
+        "evidence of an infringement. Upon notification of violations, we will "
+        "remove such links without delay.",
+    ]),
+    ("Copyright", [
+        "The content and works created by the operator on these pages are subject "
+        "to German copyright law. Reproduction, editing, distribution and any form "
+        "of commercial exploitation beyond the scope of copyright law require the "
+        "prior written consent of the operator. Downloads and copies of this site "
+        "are permitted only for private, non-commercial use.",
+        "Insofar as the content on this site was not created by the operator, the "
+        "copyrights of third parties are respected. Should you nevertheless become "
+        "aware of a copyright infringement, please let us know accordingly. Upon "
+        "notification of violations, we will remove such content without delay.",
+    ]),
+    ("Availability & technical disclaimer", [
+        "We assume no liability for the uninterrupted availability of this website "
+        "or for its freedom from technical errors, malware or other harmful "
+        "components. Use of the site is at your own risk.",
+    ]),
+    ("Applicable law & dispute resolution", [
+        "German law applies. We are neither willing nor obliged to participate in "
+        "dispute-resolution proceedings before a consumer arbitration board within "
+        "the meaning of § 36 VSBG.",
+    ]),
+    ("Reporting violations", [
+        "If you believe that content on this site infringes your rights, please "
+        "contact us directly at "
+        "<a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a> before "
+        "instructing a lawyer. This allows us to resolve the matter quickly and "
+        "without unnecessary cost; the costs of a legal warning issued without "
+        "prior contact will not be recognized as justified.",
+    ]),
+]
+
+# --- Privacy policy ----------------------------------------------------------
+PRIVACY_PAGE_TITLE = "Privacy Policy — PrettyModels AI"
+PRIVACY_EYEBROW = "PrettyModels AI · Legal"
+PRIVACY_TITLE = "Privacy Policy"
+PRIVACY_UPDATED = "29 January 2025"
+PRIVACY_INTRO = (
+    "Your privacy is important to us. This Privacy Policy explains how PrettyModels "
+    "AI (“we”, “us” or “our”) collects, uses, discloses "
+    "and safeguards your personal information when you interact with this site. By "
+    "accessing or using our website, services or any contact form, you consent to "
+    "the practices described below."
+)
+PRIVACY_SECTIONS = [
+    ("1. Information we collect", [
+        "<strong>Information you provide.</strong> When you contact us or use a "
+        "form, we may collect personal information such as your full name, email "
+        "address, company name, job title, phone number (if provided) and any "
+        "additional information you choose to submit.",
+        "<strong>Automatically collected information.</strong> We may automatically "
+        "collect your IP address, browser type and version, device information, "
+        "operating system, referral source, pages viewed and time spent on the "
+        "site, and clickstream and user-behaviour analytics.",
+        "<strong>Cookies and tracking technologies.</strong> We use cookies, pixels "
+        "and similar technologies to improve the user experience, analyze trends "
+        "and personalize content. You can manage cookie preferences through your "
+        "browser settings.",
+    ]),
+    ("2. How we use your information", [
+        "We use the information we collect to respond to inquiries and facilitate "
+        "potential business relationships; to send newsletters and promotional "
+        "material and personalize marketing content; to analyze website usage and "
+        "monitor performance and security; and to comply with legal obligations "
+        "and enforce our terms of service.",
+    ]),
+    ("3. How we share your information", [
+        "We do not sell, rent or trade your personal information.",
+        "We may share information with service providers and business partners — "
+        "such as cloud storage providers, email-marketing platforms and analytics "
+        "tools — that are required to maintain its confidentiality. We may also "
+        "disclose information where required by law, to comply with legal "
+        "obligations, or to protect safety and security.",
+    ]),
+    ("4. Your choices and rights", [
+        "<strong>Marketing opt-out.</strong> You can unsubscribe at any time via "
+        "the links in our emails or by contacting us directly.",
+        "<strong>Access, correction and deletion.</strong> Depending on your "
+        "jurisdiction, you may access, correct or request deletion of your "
+        "personal data by contacting "
+        "<a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>.",
+        "<strong>Managing cookies.</strong> You can modify cookie settings in your "
+        "browser, though disabling certain cookies may affect site functionality.",
+    ]),
+    ("5. Data security and retention", [
+        "We implement industry-standard security measures to protect your personal "
+        "information from unauthorized access, disclosure or misuse. We retain "
+        "personal data for as long as necessary to fulfil the purposes described "
+        "here or as required by law.",
+    ]),
+    ("6. International data transfers", [
+        "Your information may be transferred to, stored and processed in the United "
+        "States or other countries where our service providers operate.",
+    ]),
+    ("7. Children’s privacy", [
+        "Our services are not intended for individuals under 18 years of age, and "
+        "we do not knowingly collect personal data from minors.",
+    ]),
+    ("8. Changes to this policy", [
+        "We may update this Privacy Policy from time to time. Material changes will "
+        "be reflected by an updated “Last updated” date and, where "
+        "appropriate, additional notice.",
+    ]),
+    ("9. Contact us", [
+        "PrettyModels AI<br>"
+        "Email: <a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>",
+    ]),
+]
 
 
 # --- weaving computed counts into prose --------------------------------------

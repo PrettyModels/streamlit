@@ -267,10 +267,12 @@ st.badge(
 )
 st.caption(T.DISCLAIMER)
 
-f1, f2, f3, _ = st.columns([1, 1, 1, 3])
+f1, f2, f3, f4, _ = st.columns([1, 1.7, 1.1, 0.9, 1.5])
 with f1:
-    st.link_button(T.LINK_LINKEDIN[0], T.LINK_LINKEDIN[1])
+    st.page_link(T.LINK_LINKEDIN[1], label=T.LINK_LINKEDIN[0])
 with f2:
-    st.link_button(T.LINK_DOCS[0], T.LINK_DOCS[1])
+    st.page_link(T.LINK_STORY[1], label=T.LINK_STORY[0])
 with f3:
-    st.link_button(T.LINK_STORY[0], T.LINK_STORY[1])
+    st.page_link("legal_imprint.py", label=T.LINK_IMPRINT)
+with f4:
+    st.page_link("legal_privacy.py", label=T.LINK_PRIVACY)

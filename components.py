@@ -183,6 +183,11 @@ a:hover {{ text-decoration: underline; }}
   background: var(--paper2); border: 1px solid var(--hairline); border-radius: 4px;
   padding: 0.9rem 1.1rem; margin: 0.5rem 0 1.5rem; }}
 
+/* ---- legal pages ---- */
+.pm-legal-h {{ font-family: var(--serif); font-weight: 600; font-size: 1.28rem;
+  line-height: 1.2; letter-spacing: -0.01em; margin: 2rem 0 0.5rem; }}
+.pm-body a {{ color: var(--accent); }}
+
 @media (max-width: 820px) {{
   .pm-stats, .pm-steps, .pm-gloss {{ grid-template-columns: repeat(2, 1fr); }}
   .pm-hero-h1 {{ font-size: 2.2rem; }}
@@ -284,3 +289,15 @@ def glossary_grid(items: list[tuple[str, str]]) -> None:
 
 def entity_note(text: str) -> None:
     _md(f'<div class="pm-entity">{text}</div>')
+
+
+def legal_title(title: str, updated: str = "") -> None:
+    """Page title for a legal page, styled like a section title."""
+    sub = f'<div class="pm-sec-sub">Last updated {updated}</div>' if updated else ""
+    _md(f'<div class="pm-sec-head"><span class="pm-sec-title">{title}</span></div>{sub}')
+
+
+def legal_section(heading: str, paragraphs: list[str]) -> None:
+    """A heading followed by body paragraphs; paragraphs may contain inline HTML."""
+    inner = "".join(f"<p>{p}</p>" for p in paragraphs)
+    _md(f'<div class="pm-legal-h">{heading}</div><div class="pm-body">{inner}</div>')
