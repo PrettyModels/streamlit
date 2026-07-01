@@ -1,10 +1,28 @@
-# PrettyModels.AI - Marylin
+# PrettyModels AI — Research Lab
 
-A simple Streamlit app showing the Marylin portfolio from [PrettyModels.AI](https://prettymodels.ai/). 
+The public site for **PrettyModels AI**, an independent research lab building
+AI-driven algorithms that turn frontier language models into quantitative,
+public-market signals. The signal is validated out-of-sample on a live Wikifolio
+index ("Marylin").
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://movies-dataset-template.streamlit.app/)
+Live site: [prettymodels.ai](https://prettymodels.ai/)
 
-### How to run it on your own machine
+> Note: PrettyModels AI is a research lab. It does not manage money or offer
+> investment products. The Marylin index is operated separately by
+> Until Singularity Asset Management ([tausch.capital](https://tausch.capital)).
+
+## Structure
+
+| File | Purpose |
+|------|---------|
+| `streamlit_app.py` | Entry point / navigation |
+| `lab.py` | The single-page site; orchestrates the sections |
+| `components.py` | Design system: theme/CSS, Altair chart theme, render helpers |
+| `content.py` | All copy, kept separate from layout |
+| `data.py` | Cached CSV loaders and computed metrics (from `data/`) |
+| `.streamlit/config.toml` | "Academic paper" theme (colors, fonts, chart palette) |
+
+## Run it locally
 
 1. Install the requirements
 

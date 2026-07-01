@@ -1,5 +1,33 @@
-[theme]
-base = "light"   # or "dark"
-
 [client]
 toolbarMode = "minimal"
+
+# ---------------------------------------------------------------------------
+# PrettyModels AI — "academic paper" research-lab theme (Streamlit >= 1.50)
+# Fonts are loaded via an @import in components.inject_theme(); the families
+# below reference those, with system-serif / -sans / -mono fallbacks in CSS.
+# ---------------------------------------------------------------------------
+[theme]
+base = "light"
+
+primaryColor        = "#3A34C0"   # restrained indigo accent
+backgroundColor     = "#FBFAF8"   # off-white "paper"
+secondaryBackgroundColor = "#F3F1EC"
+textColor           = "#1A1A1A"   # ink
+linkColor           = "#3A34C0"
+linkUnderline       = false
+borderColor         = "#E4E1DA"   # hairline
+dataframeBorderColor = "#E4E1DA"
+dataframeHeaderBackgroundColor = "#F3F1EC"
+showWidgetBorder    = true
+showSidebarBorder   = false
+
+baseFontSize = 16
+baseRadius   = "0.25rem"
+
+font        = "Inter"
+headingFont = "Newsreader"
+codeFont    = "IBM Plex Mono"
+
+# Research-figure chart palette: indigo primary + muted neutrals (no neon).
+chartCategoricalColors = ["#3A34C0", "#8A87B8", "#B08968", "#6B6B6B", "#9A9A9A", "#C4B9A6"]
+chartSequentialColors  = ["#EDEBFF", "#CFCBF2", "#A9A3E0", "#7E77CE", "#5A52C4", "#3A34C0"]
