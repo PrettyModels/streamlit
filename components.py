@@ -3,6 +3,9 @@ components.py — the "academic paper" design system: theme/CSS injection, a
 registered Altair theme so charts read as research figures, and small reusable
 render helpers used by lab.py.
 """
+import base64
+from pathlib import Path
+
 import altair as alt
 import streamlit as st
 
@@ -100,9 +103,8 @@ a:hover {{ text-decoration: underline; }}
   border-bottom: 1px solid var(--hairline);
 }}
 .pm-mark {{
-  width: 34px; height: 34px; border-radius: 50%; background: var(--ink);
-  color: #fff; font-family: var(--serif); font-weight: 600; font-size: 15px;
-  display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  width: 36px; height: 36px; border-radius: 50%; flex: 0 0 auto;
+  object-fit: cover; display: block; background: var(--ink);
 }}
 .pm-wordmark {{ font-family: var(--serif); font-size: 1.1rem; font-weight: 600;
   line-height: 1; }}
@@ -190,10 +192,18 @@ a:hover {{ text-decoration: underline; }}
 
 
 # --- render helpers ----------------------------------------------------------
-def masthead(brand: str, tagline: str, nav: list[tuple[str, str]]) -> None:
+@st.cache_data
+def _img_data_uri(path: str) -> str:
+    """Base64-encode a local image so it can be inlined in injected HTML."""
+    b64 = base64.b64encode(Path(path).read_bytes()).decode()
+    return f"data:image/png;base64,{b64}"
+
+
+def masthead(brand: str, tagline: str, nav: list[tuple[str, str]],
+             logo: str = "images/logo.png") -> None:
     links = "".join(f'<a href="#{anchor}">{label}</a>' for label, anchor in nav)
     _md(f"""<div class="pm-masthead">
-  <div class="pm-mark">PM</div>
+  <img class="pm-mark" src="{_img_data_uri(logo)}" alt="{brand} logo">
   <div><div class="pm-wordmark">{brand}</div>
        <div class="pm-word-tag">{tagline}</div></div>
   <nav class="pm-nav">{links}</nav>
