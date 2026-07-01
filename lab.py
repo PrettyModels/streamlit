@@ -30,6 +30,7 @@ c.masthead(T.BRAND, T.TAGLINE, T.NAV)
 # =============================================================================
 stats = D.universe_stats()
 metrics = D.validation_metrics()
+copy = T.fill(stats)  # copy with the universe counts (31 dims, 5 factors) woven in
 
 hero_l, hero_r = st.columns([1.3, 1], vertical_alignment="center")
 with hero_l:
@@ -61,16 +62,16 @@ c.pull_quote(T.THESIS_PULLQUOTE)
 c.hairline()
 c.section_header("method", "2", "Method", T.METHOD_SUBTITLE)
 c.lead(T.METHOD_INTRO)
-c.step_grid(T.METHOD_STEPS)
+c.step_grid(copy["method_steps"])
 
 # =============================================================================
 # §3 — The Scoring Engine
 # =============================================================================
 c.hairline()
 c.section_header("scoring-engine", "3", "The Scoring Engine", T.SCORING_SUBTITLE)
-c.lead(T.SCORING_INTRO)
+c.lead(copy["scoring_intro"])
 
-c.eyebrow(T.GLOSSARY_SUBTITLE)
+c.eyebrow(copy["glossary_subtitle"])
 c.glossary_grid(T.GLOSSARY)
 
 df_scores = D.load_scores()
@@ -240,6 +241,9 @@ with fig_r:
     )
     st.altair_chart(zero + line, use_container_width=True)
     c.figure_caption(T.VALIDATION_ALPHA_CAPTION)
+
+c.eyebrow(T.OPEN_QUESTIONS_SUBTITLE)
+c.body(T.OPEN_QUESTIONS_BODY)
 
 st.markdown(T.VALIDATION_NOTE)
 st.link_button(T.VALIDATION_VERIFY, T.WIKIFOLIO_URL)

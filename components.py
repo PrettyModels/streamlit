@@ -128,10 +128,12 @@ a:hover {{ text-decoration: underline; }}
 .pm-lead {{ font-size: 1.16rem; line-height: 1.6; color: #2b2b2b; max-width: 40em; }}
 
 /* ---- section header ---- */
-.pm-sec-num {{ font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em;
-  color: var(--accent); text-transform: uppercase; }}
+.pm-sec-head {{ display: flex; align-items: baseline; gap: 0.55rem;
+  margin: 0.3rem 0 0.35rem; }}
+.pm-sec-num {{ font-family: var(--mono); font-size: 1.05rem; letter-spacing: 0.16em;
+  color: var(--accent); text-transform: uppercase; flex: 0 0 auto; white-space: nowrap; }}
 .pm-sec-title {{ font-family: var(--serif); font-weight: 500; font-size: 2rem;
-  line-height: 1.12; margin: 0.35rem 0 0.35rem; letter-spacing: -0.015em; }}
+  line-height: 1.12; letter-spacing: -0.015em; }}
 .pm-sec-sub {{ font-family: var(--sans); color: var(--muted); font-size: 1.02rem;
   margin-bottom: 0.4rem; }}
 
@@ -209,8 +211,9 @@ def eyebrow(text: str) -> None:
 def section_header(anchor_id: str, num: str, title: str, subtitle: str = "") -> None:
     anchor(anchor_id)
     sub = f'<div class="pm-sec-sub">{subtitle}</div>' if subtitle else ""
-    _md(f'<div class="pm-sec-num">§{num}</div>'
-        f'<div class="pm-sec-title">{title}</div>{sub}')
+    _md(f'<div class="pm-sec-head">'
+        f'<span class="pm-sec-num">§{num}</span>'
+        f'<span class="pm-sec-title">{title}</span></div>{sub}')
 
 
 def lead(text: str) -> None:

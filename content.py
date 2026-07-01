@@ -30,8 +30,8 @@ HERO_LEAD = (
     "PrettyModels AI is an independent research lab. We study whether large language "
     "models can evaluate public companies with enough consistency to inform investment "
     "decisions. Our process converts the qualitative record of a business — filings, "
-    "disclosures, management commentary — into structured scores, combines those scores "
-    "into a portfolio, and measures the result on a live, publicly traded index."
+    "disclosures, management commentary — into structured scores, builds a portfolio "
+    "from them, and measures the result on a live, publicly traded index."
 )
 
 # --- §1 Thesis ---------------------------------------------------------------
@@ -59,23 +59,23 @@ THESIS_PULLQUOTE = (
 # --- §2 Method ---------------------------------------------------------------
 METHOD_SUBTITLE = "From source material to portfolio"
 METHOD_INTRO = (
-    "The same process runs each month, end to end. It is designed to be fully "
-    "traceable: every position in the portfolio can be followed back through its factor "
-    "weights and scores to the source material the model was asked to evaluate."
+    "The same process runs each month, end to end. It is designed to be auditable: "
+    "every position can be traced back through its factor weights and scores to the "
+    "source material the model evaluated."
 )
 METHOD_STEPS = [
-    ("01", "Qualitative", "Source material",
+    ("01", "Corpus", "Source material",
      "The unstructured record of a company: annual reports, earnings-call transcripts, "
      "regulatory disclosures, and current news."),
-    ("02", "Prompts → AI", "Structured prompting",
+    ("02", "Prompts", "Structured prompting",
      "A fixed set of prompts is applied to that material by large language models — the "
      "same questions, asked identically across every company and every month."),
     ("03", "Scores", "Quantification",
      "Each response is converted into a numeric score. Every company is rated from 0 to "
-     "100 on 31 dimensions, spanning valuation, competitive position, governance, and "
+     "100 on {n_dim} dimensions, spanning valuation, competitive position, governance, and "
      "return potential."),
     ("04", "Weights", "Aggregation & sizing",
-     "The 31 dimensions are aggregated into five composite factors, ranked across the "
+     "The {n_dim} dimensions are aggregated into {n_comp} composite factors, ranked across the "
      "universe, and translated into portfolio weights."),
     ("05", "Signal", "Monthly output",
      "The result is a fully specified target portfolio — the month’s signal — carried "
@@ -86,12 +86,12 @@ METHOD_STEPS = [
 SCORING_SUBTITLE = "Scores across the investable universe, updated monthly"
 SCORING_INTRO = (
     "The tables below present the current month’s output — the scores the portfolio is "
-    "constructed from. Each company is summarized by five composite factors, each "
-    "derived from the 31 underlying scores. The universe can be sorted, companies "
+    "constructed from. Each company is summarized by {n_comp} composite factors, each "
+    "derived from the {n_dim} underlying dimensions. The universe can be sorted, companies "
     "compared, and any single company examined factor by factor."
 )
 # Five composite factors surfaced in the interactive tools.
-GLOSSARY_SUBTITLE = "The five composite factors"
+GLOSSARY_SUBTITLE = "The {n_comp} composite factors"
 GLOSSARY = [
     ("Integrity", "Governance quality, management conduct, and the reliability of "
                   "reported earnings."),
@@ -130,6 +130,20 @@ VALIDATION_NOTE = (
 )
 VALIDATION_VERIFY = "View the live index on Wikifolio ↗"
 WIKIFOLIO_URL = "https://www.wikifolio.com/en/int/w/wfmarylin1"
+
+# Limitations coda to §4 — what the live record does not yet establish. Stated
+# plainly, as a research lab should, and consistent with the no-solicitation stance.
+OPEN_QUESTIONS_SUBTITLE = "Open questions"
+OPEN_QUESTIONS_BODY = [
+    "The live series is short, and a single favorable market cycle is not evidence of a "
+    "durable edge. Consistency is not correctness: a model can be reliably wrong, or "
+    "reliably reproduce the biases embedded in its own training data. And some part of "
+    "the measured alpha may be exposure to factors that academic finance already names, "
+    "rather than anything genuinely new.",
+
+    "These are the questions the lab exists to keep testing — in public and "
+    "out-of-sample — rather than to settle by assertion.",
+]
 
 # --- §5 Philosophy -----------------------------------------------------------
 PHILOSOPHY_SUBTITLE = "The principle behind the name"
@@ -196,3 +210,35 @@ incidental damages arising from use of, or reliance on, this information.
 LINK_LINKEDIN = ("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai")
 LINK_DOCS = ("Research notes", "https://docs.prettymodels.ai")
 LINK_STORY = ("The story of Marylin", "https://quant-unit.com/the-story-of-marylin-pt-1/")
+
+
+# --- weaving computed counts into prose --------------------------------------
+# The universe counts (score dimensions, composite factors) live in the data,
+# not the copy: they are formatted in at render time from data.universe_stats(),
+# so the prose can never drift from the actual score set the way a hard-coded
+# figure would (see how the stale "37.2%" once did). Small counts are spelled
+# out to keep an academic register.
+_NUM_WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six",
+              7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven",
+              12: "twelve"}
+
+
+def num_word(n: int) -> str:
+    """Spell out a small integer; fall back to digits above twelve."""
+    return _NUM_WORDS.get(n, str(n))
+
+
+def fill(stats: dict) -> dict:
+    """Return the number-bearing copy with the universe counts woven in.
+
+    Keeps content.py the single source of copy while letting lab.py supply the
+    counts computed in data.py, so figures like "31 dimensions" stay in sync
+    with the score set instead of being hard-coded.
+    """
+    ctx = {"n_dim": stats["n_dimensions"],
+           "n_comp": num_word(stats["n_composites"])}
+    return {
+        "method_steps": [(n, t, s, d.format(**ctx)) for n, t, s, d in METHOD_STEPS],
+        "scoring_intro": SCORING_INTRO.format(**ctx),
+        "glossary_subtitle": GLOSSARY_SUBTITLE.format(**ctx),
+    }
