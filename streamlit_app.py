@@ -2,7 +2,7 @@ import streamlit as st
 # streamlit run streamlit_app.py
 
 
-marylin_page = st.Page("marylin.py", title="PrettyModels AI")
+marylin_page = st.Page("marylin.py", title="PrettyModels AI Research Lab")
 # test_page = st.Page("test_page.py", title="Test Page")
 
 pg = st.navigation([marylin_page])

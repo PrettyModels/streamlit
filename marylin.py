@@ -1,5 +1,4 @@
 import os
-import time
 import altair as alt
 import pandas as pd
 import streamlit as st
@@ -14,60 +13,252 @@ from sklearn.decomposition import PCA
 
 # 1. Page Configuration
 st.set_page_config(
-    page_title="PrettyModels AI | Beat the Market",
-    page_icon="📈",
+    page_title="PrettyModels AI | Investment Intelligence Lab",
+    page_icon="images/logo.png",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS to make it look more like a landing page and less like a data app
+# Custom CSS to make the research lab positioning feel intentional inside Streamlit.
 st.markdown("""
 <style>
-    .main-header {font-size: 3rem; font-weight: 700; color: #483ae0; margin-bottom: 0px;}
-    .sub-header {font-size: 1.5rem; color: #4F4F4F; margin-bottom: 2rem;}
+    #MainMenu, footer, header[data-testid="stHeader"],
+    [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] {
+        display: none;
+    }
+    .block-container {padding-top: 0.9rem; padding-bottom: 5rem; max-width: 1180px;}
+    h1, h2, h3 {letter-spacing: 0;}
+    div[data-testid="stVerticalBlock"] {gap: 0.8rem;}
+    .top-nav {
+        align-items: center;
+        border-bottom: 1px solid #E6EAF0;
+        color: #667085;
+        display: flex;
+        font-size: 0.95rem;
+        justify-content: space-between;
+        margin-bottom: 1.65rem;
+        padding-bottom: 0.65rem;
+    }
+    .brand-mark {
+        align-items: center;
+        display: flex;
+        gap: 0.6rem;
+    }
+    .brand-dot {
+        align-items: center;
+        background: #0F172A;
+        border-radius: 999px;
+        color: #FFFFFF;
+        display: inline-flex;
+        font-size: 0.76rem;
+        font-weight: 800;
+        height: 2rem;
+        justify-content: center;
+        width: 2rem;
+    }
+    .brand-name {
+        color: #172033;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+    .nav-links {
+        align-items: center;
+        display: flex;
+        gap: 1.2rem;
+        white-space: nowrap;
+    }
+    .nav-links a {
+        color: #526071;
+        text-decoration: none;
+    }
+    .nav-links a:hover {
+        color: #172033;
+        text-decoration: underline;
+    }
+    .eyebrow {
+        color: #FF4B4B;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        margin-bottom: 0.65rem;
+        text-transform: uppercase;
+    }
+    .hero-title {
+        color: #172033;
+        font-size: 2.82rem;
+        font-weight: 800;
+        line-height: 1.05;
+        margin: 0 0 0.8rem 0;
+        max-width: 760px;
+    }
+    .hero-copy {
+        color: #4F5B6D;
+        font-size: 1.06rem;
+        line-height: 1.45;
+        margin-bottom: 0.85rem;
+        max-width: 700px;
+    }
+    .hero-thesis {
+        background: #F7F9FC;
+        border: 1px solid #E6EAF0;
+        border-radius: 8px;
+        color: #526071;
+        font-size: 0.95rem;
+        line-height: 1.45;
+        margin-top: 0.55rem;
+        padding: 0.65rem 0.8rem;
+    }
+    .hero-visual-caption {
+        color: #667085;
+        font-size: 0.82rem;
+        line-height: 1.35;
+        margin-top: 0.35rem;
+    }
+    .proof-strip {
+        border-bottom: 1px solid #E6EAF0;
+        border-top: 1px solid #E6EAF0;
+        display: grid;
+        gap: 0;
+        grid-template-columns: 1.15fr repeat(3, 1fr);
+        margin: 1rem 0 0.25rem 0;
+    }
+    .proof-item {
+        border-right: 1px solid #E6EAF0;
+        padding: 0.72rem 1rem;
+    }
+    .proof-item:last-child {border-right: 0;}
+    .proof-label {
+        color: #667085;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+    }
+    .proof-value {
+        color: #172033;
+        font-size: 1.42rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+    .proof-note {
+        color: #667085;
+        font-size: 0.82rem;
+        line-height: 1.35;
+        margin-top: 0.35rem;
+    }
+    .section-intro {
+        color: #536171;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        max-width: 840px;
+    }
+    .metric-context {
+        color: #667085;
+        font-size: 0.86rem;
+        line-height: 1.35;
+        margin: -0.1rem 0 -0.45rem 0;
+    }
+    .section-title {
+        color: #2B2D38;
+        font-size: 2.25rem;
+        font-weight: 800;
+        line-height: 1.12;
+        margin: 0.85rem 0 0.55rem 0;
+    }
+    .section-title.with-rule {
+        border-top: 1px solid #E6EAF0;
+        margin-top: 1.25rem;
+        padding-top: 1.25rem;
+    }
+    .build-card {
+        background: #F8FAFC;
+        border: 1px solid #E6EAF0;
+        border-radius: 8px;
+        min-height: 140px;
+        padding: 0.82rem;
+    }
+    .build-index {
+        color: #FF4B4B;
+        font-size: 0.78rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+    .build-card h3 {
+        color: #172033;
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+    }
+    .build-card p {
+        color: #536171;
+        font-size: 0.88rem;
+        line-height: 1.45;
+    }
+    .process-map {
+        border-bottom: 1px solid #E6EAF0;
+        border-top: 1px solid #E6EAF0;
+        display: grid;
+        gap: 0;
+        grid-template-columns: repeat(5, 1fr);
+        margin-top: 1.1rem;
+    }
+    .process-step {
+        border-right: 1px solid #E6EAF0;
+        min-height: 155px;
+        padding: 1rem;
+    }
+    .process-step:last-child {border-right: 0;}
+    .process-label {
+        color: #FF4B4B;
+        font-size: 0.74rem;
+        font-weight: 800;
+        margin-bottom: 0.65rem;
+        text-transform: uppercase;
+    }
+    .process-title {
+        color: #172033;
+        font-size: 1.05rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 0.45rem;
+    }
+    .process-copy {
+        color: #536171;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    .process-output {
+        background: #F7F9FC;
+        border: 1px solid #E6EAF0;
+        border-radius: 8px;
+        color: #526071;
+        font-size: 0.92rem;
+        line-height: 1.45;
+        margin-top: 0.9rem;
+        padding: 0.75rem 0.9rem;
+    }
+    .section-kicker {
+        color: #FF4B4B;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+    }
     .highlight {color: #FF4B4B; font-weight: bold;}
-    .block-container {padding-top: 2rem; padding-bottom: 5rem;}
+    @media (max-width: 700px) {
+        .top-nav {display: block;}
+        .nav-links {display: none;}
+        .hero-title {font-size: 2.2rem;}
+        .hero-copy {font-size: 1.05rem;}
+        .section-title {font-size: 1.8rem;}
+        .proof-strip {grid-template-columns: 1fr;}
+        .proof-item {border-bottom: 1px solid #E6EAF0; border-right: 0;}
+        .proof-item:last-child {border-bottom: 0;}
+        .process-map {grid-template-columns: 1fr;}
+        .process-step {border-bottom: 1px solid #E6EAF0; border-right: 0; min-height: auto;}
+        .process-step:last-child {border-bottom: 0;}
+    }
 </style>
 """, unsafe_allow_html=True)
-
-st.logo("images/logo.png", size="large")
-
-st.title("PrettyModels AI")
-#st.header("Advanced AI models for public equity investors.")
-#st.markdown('<div class="main-header">Advanced AI models for asset management.</div>', unsafe_allow_html=True)
-st.markdown('<div class="main-header">Don’t Settle for Average Returns.</div>', unsafe_allow_html=True)
-st.markdown(
-    '<div class="sub-header">Beat the market with an AI investment manager that compounds your wealth faster than ETFs.</div>',
-    unsafe_allow_html=True)
-
-if False:
-    text = "Don’t Settle for Average Returns."
-
-    placeholder = st.empty()
-    rendered = ""
-
-    for ch in text:
-        rendered += ch
-        placeholder.markdown(
-            f'<div class="main-header">{rendered}</div>',
-            unsafe_allow_html=True
-        )
-        time.sleep(0.03)  # adjust speed
-
-    text = "Beat the market with an AI investment manager that compounds your wealth faster than ETFs."
-
-    placeholder = st.empty()
-    rendered = ""
-
-    for ch in text:
-        rendered += ch
-        placeholder.markdown(
-            f'<div class="sub-header">{rendered}</div>',
-            unsafe_allow_html=True
-        )
-        time.sleep(0.01)
-
-
 
 @st.cache_data
 def load_perf_data():
@@ -75,116 +266,254 @@ def load_perf_data():
         "data/marylin_performance.csv",
         sep=";",
         decimal=",",
+        skipinitialspace=True,
         parse_dates=["Date"],
         dayfirst=True,
         date_format="%d.%m.%y",
     )
     df.set_index("Date", inplace=True)
-    df = df[(df.index.is_month_end) + (df.index == pd.to_datetime('2024-12-27'))]
+    df = df[(df.index.is_month_end) | (df.index == pd.to_datetime('2024-12-27'))]
+    return df
+
+
+@st.cache_data
+def load_wikifolio_data():
+    df = pd.read_csv(
+        "data/WFMARYLIN1-PriceData-20260701150456.csv",
+        sep=";",
+        decimal=",",
+        skipinitialspace=True,
+    )
+
+    df["Begin date"] = pd.to_datetime(df["Begin date"], format="%d.%m.%y %H:%M")
+    df.rename(columns={"Begin date": "Date", "Close": "Marylin Index"}, inplace=True)
+    df = df[["Date", "Marylin Index"]].sort_values("Date")
     return df
 
 
 df_mape = load_perf_data()
+df_wiki = load_wikifolio_data()
 
-if True:
-    col1, col2 = st.columns([1, 1])  # Adjust the ratios if needed
+def compute_case_metrics(perf_df, wiki_df):
+    start_date = perf_df.index[0]
+    end_date = perf_df.index[-1]
+    prev_date = perf_df.index[-2]
+    days_end = (end_date - start_date).days
+    days_prev = (prev_date - start_date).days
 
-    if True:
-        with col2:
-            st.markdown("#### ✔️ Outperform your public benchmark")
-            st.markdown("#### ✔️ Based on tailored AI-driven strategies")
-            st.markdown("#### ✔️ With proven public market track record")
+    cum_alpha_end = perf_df["Internet"].iloc[-1]
+    cum_alpha_prev = perf_df["Internet"].iloc[-2]
+    ann_alpha_end = (1 + cum_alpha_end) ** (365.25 / days_end) - 1
+    ann_alpha_prev = (1 + cum_alpha_prev) ** (365.25 / days_prev) - 1
 
-    with col1:
-        # st.image("images/sisters14.png", width='stretch')
-        # Marylin's Out-Performance
+    wiki_case = wiki_df[wiki_df["Date"] <= end_date]
+    latest_wiki_value = wiki_case["Marylin Index"].iloc[-1]
+    prev_wiki_value = wiki_df[wiki_df["Date"] <= prev_date]["Marylin Index"].iloc[-1]
 
-        # If you have multiple performance columns (e.g. 'Rate', 'Growth', ...)
-        # they’ll all be melted into a single 'Metric' + 'Value' column.
-        perf_cols = df_mape.columns.tolist()
-        chart_df = (
-            df_mape
-            .reset_index()
-            .melt(id_vars=["Date"], value_vars=perf_cols,
-                  var_name="Metric", value_name="Value")
-        )
-
-        # Build the Altair chart:
-        chart = (
-            alt.Chart(chart_df)
-            .mark_line(point=alt.OverlayMarkDef(size=10), strokeWidth=6, strokeCap="round", color="red")
-            .encode(
-                x=alt.X("Date:T", axis=alt.Axis(labels=False, grid=False), title=""),
-                y=alt.Y("Value:Q", axis=alt.Axis(format="%", labels=False, grid=False), title=""),
-                color=alt.Color("Metric:N",
-                                legend=None,
-                                scale=alt.Scale(
-                                    range=["#00FFC6", "#ff1fc7", "#483ae0"],
-                                    #range=["#FB0A26", "#F50A1C", "#E60000"],
-                                    #range=["#007BFF", "#0057D8", "#1E9CE6"]
-                                    )
-                                ),
-                tooltip=[
-                    alt.Tooltip("Date:T", title="Date"),
-                    alt.Tooltip("Metric:N", title="Benchmark"),
-                    alt.Tooltip("Value:Q", format=".1%", title="Alpha")
-                ]
-            )
-            .properties(width=700, height=400)
-        )
-
-        # Add a dashed grey horizontal line at y = 0
-        zero_line_data = pd.DataFrame({"y": [0], "label": ["market"]})
-
-        # 2. Define the Rule (The grey dashed line)
-        rule = (
-            alt.Chart(zero_line_data)
-            .mark_rule(color="grey", strokeWidth=2)
-            .encode(y="y:Q")
-        )
-
-        # 3. Define the Text (The label on the right)
-        text = (
-            alt.Chart(zero_line_data)
-            .mark_text(
-                align="right",  # Anchors the text to its right edge
-                dx=-5,  # Nudges it 5 pixels to the left so it's not touching the border
-                dy=14,  # Nudges it 10 pixels above the line
-                fontSize=20,
-                fontWeight="bold",
-                color="grey"
-            )
-            .encode(
-                y="y:Q",
-                x=alt.value(510),  # Positions it at the 700px mark (your chart width)
-                text="label:N"
-            )
-        )
-
-        # Combine the main chart with the combined zero elements
-        final_chart = chart + rule + text
-
-        st.altair_chart(final_chart, use_container_width=True)
+    return {
+        "start_date": start_date,
+        "end_date": end_date,
+        "prev_date": prev_date,
+        "wiki_case": wiki_case,
+        "case_return": latest_wiki_value / 100 - 1,
+        "case_return_delta": latest_wiki_value / prev_wiki_value - 1,
+        "cum_alpha_end": cum_alpha_end,
+        "cum_alpha_delta": cum_alpha_end - cum_alpha_prev,
+        "ann_alpha_end": ann_alpha_end,
+        "ann_alpha_delta": ann_alpha_end - ann_alpha_prev,
+    }
 
 
+case_metrics = compute_case_metrics(df_mape, df_wiki)
 
-# Text
+st.markdown(
+    """
+    <div class="top-nav">
+        <div class="brand-mark">
+            <span class="brand-dot">PM</span>
+            <span class="brand-name">PrettyModels AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="#what-we-build">Research</a>
+            <a href="#marylin-case-study">Marylin</a>
+            <a href="#research-console">Signals</a>
+            <a href="https://docs.prettymodels.ai" target="_blank">Docs</a>
+            <a href="https://tausch.capital" target="_blank">tausch.capital</a>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
+hero_text, hero_visual = st.columns([1.12, 0.88], gap="large", vertical_alignment="center")
+with hero_text:
+    st.markdown('<div class="eyebrow">Applied AI investment research lab</div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero-title">Turning market narratives into testable allocation signals.</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="hero-copy">
+            PrettyModels AI develops LLM-based scoring systems, portfolio rules,
+            and live validation studies for public equities. We study where
+            AI-generated signals can improve allocation decisions, and where
+            they fail.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        """
+        <div class="hero-thesis">
+            The lab's job is simple: make qualitative market information
+            measurable, comparable, and accountable to live evidence.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-col1, col2, = st.columns([1, 1])
-with col1:
-    st.markdown("# Our mission is simple.")
-with col2:
-    st.markdown("# Beat the market with AI.")
+with hero_visual:
+    st.image("images/allocation-pipeline.svg", width="stretch")
+    st.markdown(
+        '<div class="hero-visual-caption">Qualitative evidence becomes scores, weights, and testable allocation signals.</div>',
+        unsafe_allow_html=True,
+    )
 
-st.markdown("##### _Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself._")
+st.markdown(
+    f"""
+    <div class="proof-strip">
+        <div class="proof-item">
+            <div class="proof-label">Live case study</div>
+            <div class="proof-value">Marylin</div>
+            <div class="proof-note">{case_metrics["start_date"].strftime("%b %Y")} through {case_metrics["end_date"].strftime("%b %Y")}</div>
+        </div>
+        <div class="proof-item">
+            <div class="proof-label">Public index record</div>
+            <div class="proof-value">{case_metrics["case_return"]:.1%}</div>
+            <div class="proof-note">{case_metrics["case_return_delta"]:+.1%} in {case_metrics["end_date"].strftime("%B")}</div>
+        </div>
+        <div class="proof-item">
+            <div class="proof-label">Alpha vs. Internet</div>
+            <div class="proof-value">{case_metrics["cum_alpha_end"]:.1%}</div>
+            <div class="proof-note">{case_metrics["cum_alpha_delta"]:+.1%} in {case_metrics["end_date"].strftime("%B")}</div>
+        </div>
+        <div class="proof-item">
+            <div class="proof-label">Annualized alpha</div>
+            <div class="proof-value">{case_metrics["ann_alpha_end"]:.1%}</div>
+            <div class="proof-note">{case_metrics["ann_alpha_delta"]:+.1%} latest change</div>
+        </div>
+    </div>
+    <div class="metric-context">
+        Marylin is shown as a live validation study, not an investment recommendation.
+        Asset-management material and the Wikifolio presentation belong at
+        <strong>tausch.capital</strong>.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
-if True:
-    col1, col2, = st.columns([1, 1])
-    with col1:
-        st.image("images/info2-bg.png", width='stretch')
-    with col2:
-        st.image("images/info-bg.png", width='stretch')
+st.markdown('<span id="what-we-build"></span>', unsafe_allow_html=True)
+st.markdown('<div class="section-title">What We Build</div>', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div class="section-intro">
+        The lab produces reusable research artifacts: signal definitions,
+        scoring runs, portfolio rules, and validation records. Each artifact
+        must be inspectable before it can influence allocation.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+build1, build2, build3, build4 = st.columns(4, gap="medium")
+with build1:
+    st.markdown(
+        """
+        <div class="build-card">
+            <div class="build-index">01 / SIGNAL</div>
+            <h3>Narrative Extraction</h3>
+            <p>Prompt systems that read company context, market structure, and AI-era themes.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with build2:
+    st.markdown(
+        """
+        <div class="build-card">
+            <div class="build-index">02 / SCORE</div>
+            <h3>Factor Scoring</h3>
+            <p>Comparable scores for quality, resilience, upside, market structure, and AI exposure.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with build3:
+    st.markdown(
+        """
+        <div class="build-card">
+            <div class="build-index">03 / ALLOCATE</div>
+            <h3>Portfolio Translation</h3>
+            <p>Rules that turn signals into weights, concentration limits, benchmarks, and risk constraints.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with build4:
+    st.markdown(
+        """
+        <div class="build-card">
+            <div class="build-index">04 / VALIDATE</div>
+            <h3>Live Evaluation</h3>
+            <p>Public case studies that track model behavior against benchmarks, drawdowns, drift, and failures.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+st.markdown('<div class="section-title with-rule">From Language to Allocation</div>', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div class="section-intro">
+        The workflow is deliberately mechanical. A model can generate insight,
+        but the lab only keeps what survives translation into a score, a rule,
+        and an observable market record.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+st.markdown(
+    """
+    <div class="process-map">
+        <div class="process-step">
+            <div class="process-label">Input</div>
+            <div class="process-title">Market Narrative</div>
+            <div class="process-copy">Company context, sector change, filings, sentiment, product signals, and AI-era relevance.</div>
+        </div>
+        <div class="process-step">
+            <div class="process-label">Model</div>
+            <div class="process-title">Prompted Scoring</div>
+            <div class="process-copy">LLM runs convert qualitative evidence into normalized research categories.</div>
+        </div>
+        <div class="process-step">
+            <div class="process-label">Data</div>
+            <div class="process-title">Signal Table</div>
+            <div class="process-copy">Scores become comparable across assets, months, categories, and model variants.</div>
+        </div>
+        <div class="process-step">
+            <div class="process-label">Rule</div>
+            <div class="process-title">Portfolio Logic</div>
+            <div class="process-copy">Signals are mapped to rank, weight, conviction, benchmark, and risk constraints.</div>
+        </div>
+        <div class="process-step">
+            <div class="process-label">Evidence</div>
+            <div class="process-title">Live Record</div>
+            <div class="process-copy">The strategy is tracked against market alternatives and monitored for drift or failure.</div>
+        </div>
+    </div>
+    <div class="process-output">
+        Research output: a traceable chain from qualitative evidence to allocation behavior, with Marylin as the first public validation record.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 
@@ -192,74 +521,59 @@ if True:
 #  MARYLIN
 
 
-with st.expander("Real-World Performance", icon="📈", expanded=True):
-    #st.balloons()
-    #st.toast('Thank you for investing!', icon='😍')
-    #st.divider()
-    st.markdown("# MARYLIN PORTFOLIO")
-    #st.header("Wikifolio Performance", divider=False)
+st.markdown('<span id="marylin-case-study"></span>', unsafe_allow_html=True)
+with st.expander("Research Case Study: Marylin", icon="📈", expanded=True):
+    st.markdown("# MARYLIN CASE STUDY")
+    st.markdown(
+        """
+        Marylin is the first public validation artifact from PrettyModels AI: a
+        high-conviction portfolio experiment used to study whether AI-generated
+        signals can hold up in live markets. The investor-facing presentation of
+        the strategy belongs to **tausch.capital**; this page keeps the research
+        context, diagnostics, and limitations visible.
+        """
+    )
+
+    start_date = case_metrics["start_date"]
+    end_date = case_metrics["end_date"]
+    df_wiki_case = case_metrics["wiki_case"]
 
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
     with col2:
-        st.image("images/marylin6.png", width='stretch')
-        #st.image("images/image5.png")
+        st.image("images/marylin6.png", width="stretch")
     with col1:
-        # st.markdown("##### Marylin is our first **PrettyModels AI** release. She pursues a bold, growth-aggressive investment style derived from her goal to outperform the market in a _growth-optimal_ way. She is willing to take high risks to kick-start her wealth generation in young years.")
-        st.markdown("##### Marylin is our first **PrettyModels AI** release.")
-        st.markdown("##### She pursues a high-conviction investment style.")
-        st.markdown("##### Her goal is to outperform the market in a _growth-optimal_ way.")
-        # st.markdown("##### She is willing to take high risks to kick-start her wealth generation in young years.")
-        st.markdown("##### We track Marylin's performance by a Wikifolio since December 27, 2024.")
-        #st.markdown("##### Wikifolio index certificate issued at September 2, 2025.")
-        #st.markdown("##### Visit her now!")
-        st.link_button("Visit Wikifolio", "https://www.wikifolio.com/en/int/w/wfmarylin1", type="primary")
-        st.link_button("Read Full Story", "https://quant-unit.com/the-story-of-marylin-pt-1/")
+        st.markdown("##### First live **PrettyModels AI** portfolio experiment.")
+        st.markdown("##### Tests high-conviction AI allocation outside a backtest.")
+        st.markdown("##### Tracks alpha against public ETF-style benchmarks.")
+        st.markdown("##### Public record starts on December 27, 2024.")
+        st.link_button("Asset manager site", "https://tausch.capital", type="primary")
+        st.link_button("Public Wikifolio record", "https://www.wikifolio.com/en/int/w/wfmarylin1")
+        st.link_button("Read research story", "https://quant-unit.com/the-story-of-marylin-pt-1/")
 
-    # st.markdown("Statistics of real-world Wikifolio: [Marylin](https://www.wikifolio.com/en/int/w/wfmarylin1)")
-
-    # Calc annualized alpha of the df_mape Internet column for the total period and the difference to the previous period
-    start_date = df_mape.index[0]
-    end_date = df_mape.index[-1]
-    prev_date = df_mape.index[-2]
-
-    days_end = (end_date - start_date).days
-    days_prev = (prev_date - start_date).days
-
-    cum_alpha_end = df_mape["Internet"].iloc[-1]
-    cum_alpha_prev = df_mape["Internet"].iloc[-2]
-
-    ann_alpha_end = (1 + cum_alpha_end) ** (365.25 / days_end) - 1
-    ann_alpha_prev = (1 + cum_alpha_prev) ** (365.25 / days_prev) - 1
-    ann_alpha_diff = ann_alpha_end - ann_alpha_prev
-
-    col3.metric("Performance (Dec 2024 - April 2026)", "37.2%", "+15.2% (April 2026)", border=True)
-    col3.metric("Alpha (Dec 2024 - April 2026)", "29.7%", "0.7% (April 2026)", border=True)
-    #col3.metric("Number of Trades (Total)", "220", "5 (March 2026)", border=True)
-    col3.metric("Alpha (Annualized)", f"{ann_alpha_end:.1%}", f"{ann_alpha_diff:+.1%} ({end_date.strftime('%B %Y')})", border=True)
+    col3.metric(
+        f"Marylin index ({start_date.strftime('%b %Y')} - {end_date.strftime('%b %Y')})",
+        f"{case_metrics['case_return']:.1%}",
+        f"{case_metrics['case_return_delta']:+.1%} in {end_date.strftime('%B %Y')}",
+        border=True,
+    )
+    col3.metric(
+        "Alpha vs. Internet benchmark",
+        f"{case_metrics['cum_alpha_end']:.1%}",
+        f"{case_metrics['cum_alpha_delta']:+.1%} in {end_date.strftime('%B %Y')}",
+        border=True,
+    )
+    col3.metric(
+        "Annualized alpha",
+        f"{case_metrics['ann_alpha_end']:.1%}",
+        f"{case_metrics['ann_alpha_delta']:+.1%} ({end_date.strftime('%B %Y')})",
+        border=True,
+    )
 
     col1, col2 = st.columns([1, 1])
 
     with col1:
-        # Wikifolio Chart
-        @st.cache_data
-        def load_wikifolio_data():
-            df = pd.read_csv(
-                "data/WFMARYLIN1-PriceData-20260701150456.csv",
-                sep=";",
-                decimal=",",  # <-- IMPORTANT: your file uses comma decimals
-            )
-
-            # Parse the timestamp explicitly (your file is like: 27.12.24 00:00)
-            df["Begin date"] = pd.to_datetime(df["Begin date"], format="%d.%m.%y %H:%M")
-
-            df.rename(columns={"Begin date": "Date", "Close": "Marylin Index"}, inplace=True)
-            df = df[["Date", "Marylin Index"]].sort_values("Date")
-            return df
-
-        df_wiki = load_wikifolio_data()
-
-        perf_cols = df_wiki.columns.drop("Date").tolist()
-        chart_df = df_wiki.melt(
+        perf_cols = df_wiki_case.columns.drop("Date").tolist()
+        chart_df = df_wiki_case.melt(
             id_vars=["Date"],
             value_vars=perf_cols,
             var_name="Metric",
@@ -306,8 +620,9 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
             )
         )
 
-        st.markdown("### Marylin Wikifolio Index")
+        st.markdown("### Marylin public index record")
         st.altair_chart(final_chart, use_container_width=True)
+        st.caption("Index level shown through the latest month with matching benchmark-alpha data.")
 
     with col2:
         # Marylin's Out-Performance
@@ -353,27 +668,31 @@ with st.expander("Real-World Performance", icon="📈", expanded=True):
         # Combine the two layers
         final_chart = chart + zero_line
 
-        st.markdown("### Marylin's Alpha vs. ETFs")
+        st.markdown("### Benchmark-relative alpha")
         st.altair_chart(final_chart, use_container_width=True)
 
 
 
-with st.expander("Investment Universe", icon="✨", expanded=True):
+st.markdown('<span id="research-console"></span>', unsafe_allow_html=True)
+with st.expander("Research Console", icon="✨", expanded=True):
     # DATA
 
     #st.divider()
     #st.write("Our [Allocation Intelligence](https://docs.prettymodels.ai) models provide 100% AI-powered asset assessments, custom-tailored for your unique investment universe.")
-    st.markdown("# WATCHLIST")
+    st.markdown("# AI SIGNAL WATCHLIST")
     # st.markdown("This dataset is the ❤️ of all PrettyModels AI strategies.")
     st.markdown("""
-    We use AI to estimate scores for all stocks in our universe on a monthly basis.    
+    This is a lab view into monthly AI-generated signal categories for the
+    public-equity universe. The table is designed for research inspection:
+    compare factor structure, identify model disagreements, and stress-test
+    portfolio candidates before anything becomes an asset-management story.
     """)
 
     # Load the data from a CSV. We're caching this so it doesn't reload every time the app
     # reruns (e.g. if the user interacts with the widgets).
     @st.cache_data
     def load_data():
-        # data contains AI-generated scores for stocks to support high-alpha portfolio creation
+        # Data contains AI-generated scores used for signal research and allocation experiments.
         df = pd.read_csv("data/full_weights - raw.csv")
         df.set_index("Asset", inplace=True, drop=True)
         df = df.sort_values("w", ascending=False)
@@ -450,12 +769,12 @@ with st.expander("Investment Universe", icon="✨", expanded=True):
 
 
     # Make Tabs
-    tab0, tab1, tab2 = st.tabs([ "Select Scores", "Compare Companies", "Asset Analyzer"])
+    tab0, tab1, tab2 = st.tabs(["Signal Mix", "Company Comparison", "Asset Diagnostics"])
 
 
     with tab2:
         company = st.selectbox(
-        "Which asset do you want to analyze?",
+        "Which asset should the lab view inspect?",
         sorted(set(df_data.index)),
         )
 
@@ -518,7 +837,7 @@ with st.expander("Investment Universe", icon="✨", expanded=True):
             )
 
         # Cumulative Score Chart
-        st.header("Cumulative Score")
+        st.header("Cumulative Signal Score")
 
         # Bar Chart
         # st.bar_chart(data=df_filtered, y=list(scores))
@@ -529,14 +848,14 @@ with st.expander("Investment Universe", icon="✨", expanded=True):
     with tab0:
         # Show a multiselect widget with the genres using `st.multiselect`.
         scores = st.multiselect(
-            "Scores",
+            "Signal categories",
             all_scores,
             all_scores,
         )
 
         # Show a slider widget with the years using `st.slider`.
         max_rank = df_data["Rank"].max()
-        ranks = st.slider("Rank", 1, min(500, int(max_rank)), (1, 10))
+        ranks = st.slider("Model rank", 1, min(500, int(max_rank)), (1, 10))
 
         # Filter the dataframe based on the widget input and reshape it.
         cols = ["Rank"] + list(scores)
@@ -556,7 +875,7 @@ with st.expander("Investment Universe", icon="✨", expanded=True):
             )
 
         # Cumulative Score Chart
-        st.header("Cumulative Score")
+        st.header("Cumulative Signal Score")
 
         # Bar Chart
         # st.bar_chart(data=df_filtered, y=list(scores))
@@ -609,73 +928,33 @@ with st.expander("Investment Universe", icon="✨", expanded=True):
             st.altair_chart(chart, use_container_width=True)
 
 
-with st.expander("Manifesto", icon="📄", expanded=False):
+with st.expander("Research Charter", icon="📄", expanded=False):
     st.markdown("""
-    ## Pretty, Models, AI
+    ## PrettyModels AI researches investment intelligence.
 
-    True elegance in finance is rare because it requires the absolute removal of the ego. For centuries, men have tried to beat markets with gut instinct, confusing their luck with genius and their anxiety with insight. The result is always the same: a chaotic, ugly portfolio where emotions erode returns. At PrettyModels AI, we hold a different view. We believe that a financial model is only "pretty" when it is stripped of human folly, leaving behind nothing but the raw, unvarnished probability of Alpha.
+    Markets are full of information that is too qualitative, fragmented, and
+    narrative-heavy for classical screens alone. Large language models make it
+    possible to turn more of that information into structured research inputs,
+    but the result is only useful if it can be measured, compared, and tested.
 
-    The modern financial industry has convinced the world that mediocrity is a virtue. You are told to buy the index, accept average returns, and be grateful. This is excellent advice for the fearful, the financially illiterate, and the wealthy who merely wish to stay wealthy. But for the ambitious individual with limited capital, the safety of the herd is a mathematical trap. You cannot compound a fortune by mimicking the average; to build life-changing wealth, you must deviate from the mean. You must be right when the consensus is wrong.
+    Our work is to design those translation layers: prompts, scoring systems,
+    model ensembles, portfolio rules, and validation loops for public-market
+    allocation. We are interested in signals that survive contact with live
+    data, not just signals that look persuasive in a backtest.
 
-    The tragedy of the active investor has always been biology. We are flawed hardware, plagued by cognitive biases that no amount of discipline can fully erase. But we are currently standing at the precipice of a new epoch. We are witnessing the rise of Large Language Models—not merely as chat bots, but as the first truly "smart" statistical engines in history. These are systems that digest the chaotic noise of the world and organize it into reasoning. As we accelerate toward superintelligence, the edge in markets will no longer belong to the person who can read the most annual reports, but to the person who commands the superior statistical mind.
+    The lab follows five principles:
 
-    The question you must ask yourself regarding the next twenty years is uncomfortable but necessary: Who is the better steward of your future? Is it "I," with all my doubts and erratic impulses? Or is it "AI," a system capable of cold, relentless execution? A pretty model does not hope, and it does not panic. It does not care about market sentiment or media narratives. It cares only about Alpha. It hunts for asymmetry with a precision no human brain can match.
-
-    At PrettyModels AI, our philosophy is simple: the era of the gut feeling is over. We are building the architecture for high-conviction, automated intelligence because we know that the greatest risk to your wealth is your own interference. The smartest investment decision you will ever make is to stop trying to be the genius, and instead, align yourself with one. The future belongs to those who recognize that the most beautiful model is the one that simply, quietly, and ruthlessly outperforms.
+    1. **Research before promotion.** A strategy starts as a falsifiable
+       experiment, not as a product story.
+    2. **Every narrative becomes a number.** Qualitative judgment must become a
+       comparable signal before it can enter an allocation model.
+    3. **Benchmarks matter.** Alpha only has meaning relative to a relevant
+       alternative.
+    4. **Live validation beats beautiful theory.** Public records and ongoing
+       diagnostics are part of the research process.
+    5. **AI stays accountable.** Model outputs can be wrong, biased, stale, or
+       overconfident; research discipline matters more as automation improves.
     """)
-
-    if False:
-        st.markdown("""
-        # Our mission is simple.
-        # Beat the market with AI.
-
-        Most investors are stuck in the slow lane with standard ETFs. At PrettyModels AI, we use advanced algorithms to remove human bias and outperform the market, so you can build meaningful wealth faster without the stress of managing it yourself.
-
-        If you have high ambitions and less than one million Euro/Dollar, typically ETFs won't do the trick to make you rich.
-        You have to consistently outperform diversified ETFs to achieve meaningful compounding of returns.
-        In the long run, is outperforming ETFs an easier task for you or an AI-powered algorithm?
-        In other words, who will be the better active investment manager for the next 10 or 20 years? I or AI?
-
-        Given the current progress with LLMs, a properly designed AI-driven algorithm can help you stay committed to faster wealth generation without losing money due to human biases or emotions.
-        To achieve extraordinary investment success, you presumably want to spend your time identifying the most capable AI systems than trying to pick stocks on your own.
-        The smartest way to manage your wealth in the future will be to use the AI that is most aligned with you investment goals (and simply let it work for you).
-
-        # ALLOCATION INTELLIGENCE
-        ##### We build proprietary AI-powered algorithms to unlock new investment strategies.
-        ##### We transform chaotic qualitative information into robust quantitative signals.
-        ##### We explore different AI models to assess what really beats the market in the long run.
-        ##### We aim at high-conviction strategies to create wealth faster.
-        ##### We track our performance by publicly traded portfolios.
-
-        ## Our Principles:
-        ##### 🔥 **Prompted for Outperformance**
-        ##### 🔥 **100% AI-Powered (LLMs)**
-        ##### 🔥 **Quantitative Output**
-        ##### 🔥 **Statistical Approach**
-        ##### 🔥 **High Conviction**
-        """)
-
-if False:
-    # Contact Form
-    col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratios if needed
-
-
-    with col2:
-        st.markdown("# Wanna talk to us?")
-        st.markdown("""
-        ### We always can have a chat about models, data, customization and more!
-        """)
-
-        # Crisp Chatbot Integration
-        chat_url = "https://go.crisp.chat/chat/embed/?website_id=4a5016c9-b741-4e78-a0df-793321048d6b"
-
-        if st.button("Open Live Chat"):
-            st.components.v1.iframe(
-                src=chat_url,
-                height=400,
-                scrolling=True,
-                #sandbox="allow-scripts allow-same-origin"
-            )
 
 # with st.expander("Slides", icon="📂"):
 #     st.pdf("2025 PM Slides.pdf", height=500)
@@ -718,21 +997,19 @@ st.caption(
     """
     #### Disclaimer
     
-    **1. General Information & AI Nature** This content is generated by artificial intelligence (AI) and is for informational purposes only. While PrettyModels.ai strives for accuracy, the "strategies" and "scorings" are outputs of probabilistic models and large language models (LLMs). These may contain errors, hallucinations, or biases. Do not rely on this content as a definitive source of truth.
+    **1. General Information & AI Nature** This website describes research by PrettyModels AI and is for informational purposes only. The strategies, scores, and diagnostics shown here are outputs of probabilistic models and large language models (LLMs). They may contain errors, hallucinations, stale assumptions, or biases.
     
-    **2. No Investment Advice** Nothing contained herein constitutes financial, legal, tax, or investment advice. This content is not a recommendation to buy, sell, or hold any security or to adopt any investment strategy. It does not take into account your specific financial situation, objectives, or risk tolerance. Always consult a qualified financial professional before making investment decisions.
+    **2. No Investment Advice** Nothing contained herein constitutes financial, legal, tax, or investment advice. This content is not a recommendation to buy, sell, or hold any security or to adopt any investment strategy. It does not take into account any person's financial situation, objectives, or risk tolerance.
     
     **3. No Offer or Solicitation** This material is not an offer to sell or a solicitation of an offer to buy any securities, investment products, or services in any jurisdiction where such offer or solicitation would be unlawful.
     
-    **4. Risk Warning** Past performance is not indicative of future results. All investments involve significant risk, including the total loss of principal. AI-driven models are experimental; hypothetical or back-tested results presented may not reflect actual trading and have inherent limitations.
+    **4. Risk Warning** Past performance is not indicative of future results. All investments involve risk, including the possible loss of principal. AI-driven models are experimental; hypothetical or back-tested results may not reflect actual trading and have inherent limitations.
     
-    **5. Conflict of Interest** PrettyModels.ai, its affiliates, and their respective officers or employees may hold positions in, or trade, the securities or instruments mentioned herein. Our proprietary algorithms may generate outputs that align with or contradict these internal positions.
+    **5. Conflict of Interest** PrettyModels AI, its affiliates, and their respective officers or employees may hold positions in, or trade, securities or instruments mentioned herein. Research outputs may align with or contradict those positions.
     
-    **6. Limitation of Liability** The content is provided on an "as is" and "as available" basis without warranties of any kind, express or implied. PrettyModels.ai expressly disclaims liability for any direct, indirect, consequential, or incidental damages arising from the use of, or reliance on, this information. You assume full responsibility for your use of this content.
+    **6. Limitation of Liability** The content is provided on an "as is" and "as available" basis without warranties of any kind, express or implied. PrettyModels AI disclaims liability for damages arising from use of, or reliance on, this information.
     
-    **7. Confidentiality & Use** This material is strictly confidential and intended solely for the recipient’s internal use. Unauthorized reproduction, distribution, or public display of this content, in whole or in part, is strictly prohibited. By accessing this content, you agree to these terms.
-    
-    © PrettyModels.ai 2026. All rights reserved. _Further information and legal notices can be found here:_
+    © PrettyModels AI 2026. All rights reserved. _Further information and legal notices can be found here:_
     """
 )
 
@@ -741,6 +1018,8 @@ with c1:
     st.link_button("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai")
 with c2:
     st.link_button("More Info", "https://docs.prettymodels.ai")
+with c3:
+    st.link_button("tausch.capital", "https://tausch.capital")
 
 if False:
     with c3:
