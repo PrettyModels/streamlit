@@ -24,14 +24,17 @@ NAV = [
 ]
 
 # --- §0 Abstract / Hero ------------------------------------------------------
-HERO_EYEBROW = "PrettyModels AI · Independent Research Lab"
+# The masthead directly above already carries the brand + "Independent AI Research
+# Lab" tagline, so the eyebrow and lead don't repeat the introduction; the lead
+# opens with the research question itself.
+HERO_EYEBROW = "Research brief · Updated monthly"
 HERO_HEADLINE = "Turning frontier AI into public-market investment signals."
 HERO_LEAD = (
-    "PrettyModels AI is an independent research lab. We study whether large language "
-    "models can evaluate public companies with enough consistency to inform investment "
-    "decisions. Our process converts the qualitative record of a business — filings, "
-    "disclosures, management commentary — into structured scores, builds a portfolio "
-    "from them, and measures the result on a live, publicly traded index."
+    "We study one question: can large language models evaluate public companies "
+    "with enough consistency to inform investment decisions? Our process converts "
+    "the qualitative record of a business — filings, disclosures, management "
+    "commentary — into structured scores, builds a portfolio from them, and "
+    "measures the result on a live, publicly traded index."
 )
 
 # --- §1 Thesis ---------------------------------------------------------------
@@ -85,7 +88,7 @@ METHOD_STEPS = [
 # --- §3 Scoring Engine -------------------------------------------------------
 SCORING_SUBTITLE = "Scores across the investable universe, updated monthly"
 SCORING_INTRO = (
-    "The tables below present the current month’s output — the scores the portfolio is "
+    "The table below presents the current month’s output — the scores the portfolio is "
     "constructed from. Each company is summarized by {n_comp} composite factors, each "
     "derived from the {n_dim} underlying dimensions. The universe can be sorted, companies "
     "compared, and any single company examined factor by factor."
@@ -207,13 +210,15 @@ incidental damages arising from use of, or reliance on, this information.
 © PrettyModels AI 2026. All rights reserved.
 """
 
-LINK_LINKEDIN = ("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai")
-LINK_STORY = ("The Story of Marylin", "https://quant-unit.com/the-story-of-marylin-pt-1/")
-
-# Internal legal pages (registered in streamlit_app.py). Footer links to these
-# via st.page_link, replacing the retired docs.prettymodels.ai subdomain.
-LINK_IMPRINT = "Legal Notice"
-LINK_PRIVACY = "Privacy"
+# Footer link row: external profiles plus the internal legal pages (whose
+# url_paths are registered in streamlit_app.py, replacing the retired
+# docs.prettymodels.ai subdomain).
+FOOTER_LINKS = [
+    ("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai"),
+    ("The Story of Marylin", "https://quant-unit.com/the-story-of-marylin-pt-1/"),
+    ("Legal Notice", "/legal-notice"),
+    ("Privacy", "/privacy-policy"),
+]
 
 
 # --- Legal pages =============================================================

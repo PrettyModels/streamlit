@@ -30,4 +30,6 @@ codeFont    = "IBM Plex Mono"
 
 # Research-figure chart palette: indigo primary + muted neutrals (no neon).
 chartCategoricalColors = ["#3A34C0", "#8A87B8", "#B08968", "#6B6B6B", "#9A9A9A", "#C4B9A6"]
-chartSequentialColors  = ["#EDEBFF", "#CFCBF2", "#A9A3E0", "#7E77CE", "#5A52C4", "#3A34C0"]
+# (Streamlit requires exactly 10 values here; a 6-value ramp is silently ignored.)
+chartSequentialColors  = ["#EDEBFF", "#D9D7F8", "#C5C2F1", "#B1AEEA", "#9D9AE3",
+                          "#8A85DC", "#7671D5", "#625DCE", "#4E48C7", "#3A34C0"]

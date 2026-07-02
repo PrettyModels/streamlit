@@ -53,7 +53,7 @@ def register_altair_theme() -> None:
                 "font": "Inter",
                 "view": {"stroke": "transparent"},
                 "axis": axis,
-                "axisY": {**axis, "gridDash": [2, 4]},
+                "axisY": {**axis, "gridDash": [2, 4], "labelLimit": 200},
                 "axisX": {**axis, "grid": False},
                 "legend": {"labelColor": INK, "titleColor": MUTED,
                            "labelFont": "Inter", "titleFont": "Inter",
@@ -86,6 +86,7 @@ def inject_theme() -> None:
 
 .stApp {{ background: var(--paper); }}
 .block-container {{ max-width: 1080px; padding-top: 1rem; padding-bottom: 5rem; }}
+section[data-testid="stMain"] {{ scroll-behavior: smooth; }}
 
 html, body, [class*="st-"], .stMarkdown, p, li {{
   font-family: var(--sans); color: var(--ink);
@@ -149,6 +150,21 @@ a:hover {{ text-decoration: underline; }}
 .pm-figcap {{ font-family: var(--serif); font-style: italic; font-size: 0.9rem;
   color: var(--muted); margin: 0.4rem 0 1.4rem; }}
 
+/* ---- interactive "figure" chrome: widget labels, tabs, chart titles ---- */
+/* h6 is only used for chart titles inside the tabs; render it like a figure label */
+h6 {{ font-family: var(--mono) !important; font-size: 0.72rem !important;
+  font-weight: 500 !important; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted) !important; margin-bottom: 0 !important; }}
+[data-testid="stWidgetLabel"] p {{ font-family: var(--mono); font-size: 0.72rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }}
+.stTabs [data-baseweb="tab-list"] {{ gap: 1.6rem; }}
+.stTabs button[data-baseweb="tab"] p {{ font-family: var(--mono); font-size: 0.74rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }}
+.stTabs button[data-baseweb="tab"][aria-selected="true"] p {{ color: var(--accent); }}
+.stMultiSelect [data-baseweb="tag"] {{ background: var(--accent-soft); }}
+.stMultiSelect [data-baseweb="tag"] span {{ color: var(--accent); }}
+.stMultiSelect [data-baseweb="tag"] svg {{ fill: var(--accent); }}
+
 /* ---- stat strip ---- */
 .pm-stats {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
   background: var(--hairline); border: 1px solid var(--hairline); margin: 2rem 0 0.5rem; }}
@@ -182,6 +198,13 @@ a:hover {{ text-decoration: underline; }}
 .pm-entity {{ font-size: 0.92rem; line-height: 1.6; color: var(--muted);
   background: var(--paper2); border: 1px solid var(--hairline); border-radius: 4px;
   padding: 0.9rem 1.1rem; margin: 0.5rem 0 1.5rem; }}
+.pm-footer {{ display: flex; gap: 1.6rem; flex-wrap: wrap; align-items: baseline;
+  border-top: 1px solid var(--hairline); padding-top: 1.1rem; margin-top: 1.6rem; }}
+.pm-footer a {{ font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted); }}
+.pm-footer a:hover {{ color: var(--accent); text-decoration: none; }}
+.pm-footer-meta {{ margin-left: auto; font-family: var(--mono); font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }}
 
 /* ---- legal pages ---- */
 .pm-legal-h {{ font-family: var(--serif); font-weight: 600; font-size: 1.28rem;
@@ -289,6 +312,17 @@ def glossary_grid(items: list[tuple[str, str]]) -> None:
 
 def entity_note(text: str) -> None:
     _md(f'<div class="pm-entity">{text}</div>')
+
+
+def footer_links(links: list[tuple[str, str]], meta: str = "") -> None:
+    """Footer link row; external links (http…) open in a new tab."""
+    anchors = "".join(
+        f'<a href="{href}"{" target=_blank rel=noopener" if href.startswith("http") else ""}>'
+        f'{label}</a>'
+        for label, href in links
+    )
+    meta_html = f'<span class="pm-footer-meta">{meta}</span>' if meta else ""
+    _md(f'<div class="pm-footer">{anchors}{meta_html}</div>')
 
 
 def legal_title(title: str, updated: str = "") -> None:

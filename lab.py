@@ -146,7 +146,9 @@ with tab_explore:
                 color=alt.Color("Loading:Q", legend=alt.Legend(title=None)),
                 tooltip=["Component", "Factor", "Loading"],
             )
-            .properties(height=280)
+            # left padding: keep the longest y label from clipping at the edge
+            .properties(height=280, padding={"left": 12, "top": 5, "right": 5,
+                                             "bottom": 5})
         )
         st.altair_chart(heat, use_container_width=True)
 
@@ -187,7 +189,7 @@ c.lead(T.VALIDATION_INTRO)
 
 a = metrics["alpha"]
 c.stat_strip([
-    (f'+{metrics["index_return"]:.0%}', "Marylin index (base 100)"),
+    (f'+{metrics["index_return"]:.0%}', "index return since inception"),
     (f'+{a["Internet"]["cum"]:.0%}', "cumulative alpha vs. Internet"),
     (f'+{a["Nasdaq"]["cum"]:.0%}', "cumulative alpha vs. Nasdaq"),
     (f'+{a["Quality"]["cum"]:.0%}', "cumulative alpha vs. Quality"),
@@ -261,18 +263,8 @@ c.pull_quote(T.PHILOSOPHY_PULLQUOTE)
 # =============================================================================
 c.hairline()
 c.entity_note(T.ENTITY_NOTE)
-st.badge(
-    label=f"Research log · Marylin 1.2.5 · updated {metrics['end'].strftime('%Y-%m-%d')}",
-    icon=None, color="grey",
-)
 st.caption(T.DISCLAIMER)
-
-f1, f2, f3, f4, _ = st.columns([1, 1.7, 1.1, 0.9, 1.5])
-with f1:
-    st.page_link(T.LINK_LINKEDIN[1], label=T.LINK_LINKEDIN[0])
-with f2:
-    st.page_link(T.LINK_STORY[1], label=T.LINK_STORY[0])
-with f3:
-    st.page_link("legal_imprint.py", label=T.LINK_IMPRINT)
-with f4:
-    st.page_link("legal_privacy.py", label=T.LINK_PRIVACY)
+c.footer_links(
+    T.FOOTER_LINKS,
+    meta=f"Research log · Marylin 1.2.5 · updated {metrics['end'].strftime('%Y-%m-%d')}",
+)
