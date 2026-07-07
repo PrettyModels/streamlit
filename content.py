@@ -188,15 +188,21 @@ PHILOSOPHY_BODY = [
     "position disclosed, every month scored. Marylin is ours; her scoreboard is §4.",
 ]
 PHILOSOPHY_PULLQUOTE = (
-    "Intelligence is now sold by the token. A track record still has to be earned "
-    "the slow way."
+    """
+    Intelligence is now sold by the token.<br>
+    A track record still has to be earned the slow way.
+    """
 )
 
 # --- Footer ------------------------------------------------------------------
 # NOTE: rendered inside an HTML container, so the link is an <a> tag, not markdown.
 ENTITY_NOTE = (
-    "PrettyModels AI conducts the research and develops the models.<br> The Marylin strategy "
-    "is operated as a live portfolio by <a href=\"https://tausch.capital\">tausch.capital</a>."
+    """
+    <h4>Ecosystem</h4>
+    <a href=\"https://prettymodels.ai\">prettymodels.ai</a> conducts the research and develops the models.<br> 
+    <a href=\"https://tausch.capital\">tausch.capital</a> operates the Marylin strategy as a live portfolio.<br>
+    <a href=\"https://quant-unit.com\">quant-unit.com</a> is the personal blog of founder Christian Tausch.
+    """
 )
 DISCLAIMER = """
 **Disclaimer**
