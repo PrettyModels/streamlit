@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "streamlit",
-      "runtimeExecutable": "venv_mm/bin/streamlit",
-      "runtimeArgs": ["run", "streamlit_app.py", "--server.port", "8555", "--server.headless", "true"],
-      "port": 8555
+      "runtimeExecutable": "./venv_mm/bin/python",
+      "runtimeArgs": ["-m", "streamlit", "run", "streamlit_app.py", "--server.port", "8561", "--server.headless", "true"],
+      "port": 8561
     }
   ]
 }

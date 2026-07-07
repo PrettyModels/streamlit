@@ -119,7 +119,8 @@ tab_explore, tab_compare, tab_analyze = st.tabs(
 with tab_explore:
     scores = st.multiselect("Factors", all_scores, all_scores)
     max_rank = int(df_scores["Rank"].max())
-    ranks = st.slider("Conviction rank", 1, min(500, max_rank), (1, 10))
+    no_of_companies = len(df_scores)
+    ranks = st.slider("Conviction rank", 1, min(500, max_rank), (1, no_of_companies))
     df_f = df_scores.loc[df_scores["Rank"].between(ranks[0], ranks[1]),
                          ["Rank"] + list(scores)]
     st.markdown("###### Cumulative factor score")

@@ -32,8 +32,8 @@ HERO_HEADLINE = "Turning frontier AI into public-market investment signals."
 HERO_LEAD = (
     "We study one question: can large language models evaluate public companies "
     "with enough consistency to inform investment decisions? Our process converts "
-    "the qualitative record of a business — filings, disclosures, management "
-    "commentary — into structured scores, builds a portfolio from them, and "
+    "the qualitative record of a business — filings, disclosures, market "
+    "data — into structured scores, builds a portfolio from them, and "
     "measures the result on a live, publicly traded index."
 )
 
@@ -47,16 +47,16 @@ THESIS_BODY = [
 
     "Large language models are the first systems able to read the unstructured "
     "information that surrounds a company — annual reports, earnings calls, news flow — "
-    "and return a structured, repeatable assessment. This does not make their judgments "
-    "correct. It makes them consistent, and consistency is what can be measured.",
+    "and return a structured, repeatable assessment. Whether those assessments are any "
+    "good remains an empirical question, and because they are repeatable, it is one we "
+    "can put to a proper test.",
 
-    "Our research program follows from that distinction. We translate model assessments "
-    "into scores, scores into portfolio weights, and weights into positions, then "
-    "evaluate the outcome against public benchmarks, out-of-sample and in the open.",
+    "Our research program follows from that. We translate model assessments into "
+    "scores, scores into portfolio weights, and weights into positions, then evaluate "
+    "the outcome against public benchmarks, out-of-sample and in the open.",
 ]
 THESIS_PULLQUOTE = (
-    "A model’s judgment is not an answer. It is a hypothesis, to be tested against the "
-    "market."
+    "Each score the model produces is a hypothesis; the market runs the experiment."
 )
 
 # --- §2 Method ---------------------------------------------------------------
@@ -117,10 +117,11 @@ TAB_ANALYZE = "Analyze a company"
 # --- §4 Live Validation ------------------------------------------------------
 VALIDATION_SUBTITLE = "Out-of-sample, in public"
 VALIDATION_INTRO = (
-    "A back-test can be fitted to historical data; a forward test cannot. Since "
-    "27 December 2024 the Marylin strategy has been implemented as a live, publicly "
-    "traded Wikifolio index, with every position disclosed and priced daily. The results "
-    "below are therefore out-of-sample."
+    "Back-tests are easy to flatter: with enough tuning, most strategies look good on "
+    "data they have already seen. Since 27 December 2024 the Marylin strategy has "
+    "therefore run as a live, publicly traded Wikifolio index — every position "
+    "disclosed, priced daily, and impossible to revise after the fact. Everything "
+    "below is out-of-sample."
 )
 VALIDATION_INDEX_CAPTION = "Marylin index level, indexed to 100 at inception."
 VALIDATION_ALPHA_CAPTION = (
@@ -138,38 +139,57 @@ WIKIFOLIO_URL = "https://www.wikifolio.com/en/int/w/wfmarylin1"
 # plainly, as a research lab should, and consistent with the no-solicitation stance.
 OPEN_QUESTIONS_SUBTITLE = "Open questions"
 OPEN_QUESTIONS_BODY = [
-    "The live series is short, and a single favorable market cycle is not evidence of a "
-    "durable edge. Consistency is not correctness: a model can be reliably wrong, or "
-    "reliably reproduce the biases embedded in its own training data. And some part of "
-    "the measured alpha may be exposure to factors that academic finance already names, "
-    "rather than anything genuinely new.",
+    "The live series is short, and one favorable market cycle proves little about "
+    "durability. A consistent model can still be consistently wrong, or can faithfully "
+    "reproduce whatever biases its training data carries. And part of the measured "
+    "alpha may turn out to be exposure to factors that academic finance named decades "
+    "ago.",
 
-    "These are the questions the lab exists to keep testing — in public and "
-    "out-of-sample — rather than to settle by assertion.",
+    "The lab keeps these questions open on purpose, and keeps testing them where the "
+    "answers can hurt: in public, out-of-sample.",
 ]
 
 # --- §5 Philosophy -----------------------------------------------------------
-PHILOSOPHY_SUBTITLE = "The principle behind the name"
+PHILOSOPHY_SUBTITLE = "Pretty models for the age of cheap intelligence"
 PHILOSOPHY_BODY = [
-    "In statistical modeling, elegance is not decoration. A model that must be supported "
-    "by special cases, manual overrides, and the modeler’s conviction is fragile; a "
-    "model that reaches the same conclusion from the evidence alone is robust. We use "
-    "the word *pretty* in that narrower, technical sense: a model reduced to what the "
-    "data supports, and no more.",
+    "Machine learning ended a century of argument about whether machines could think, "
+    "and it ended it rudely: engineers multiplied matrices until judgment fell out. "
+    "Nobody has proven that intelligence is mathematics, but enough of it turned out "
+    "to be — reading, weighing, arguing, deciding — that the distinction stopped "
+    "mattering commercially. Thinking is now sold by the token and metered like "
+    "electricity, and the price falls every quarter. Every earlier age treated "
+    "judgment as the scarcest input in the economy. Ours is the first that must ask "
+    "what changes when it is cheap.",
 
-    "The same principle governs the behavior a model removes. Human investors carry "
-    "biases that are difficult to suppress — attachment to existing positions, the need "
-    "to be proven right, the impulse to sell under pressure. A model carries none of "
-    "them. It evaluates the available evidence and ranks it, and the discipline this "
-    "imposes is the point of the exercise.",
+    "Investing feels the change first, because investing was always two jobs bundled "
+    "together: knowing things and staying sane. The old masters preached that "
+    "temperament beats intellect; they meant it as a warning about human nature, and "
+    "we read it as an engineering specification. A machine can now do the knowing for "
+    "anyone — every filing, every footnote, every cycle since records began. It also "
+    "supplies the staying sane: no grudge against a position, no urge to average "
+    "down, no story needed to sleep at night. Markets were never short of brains; "
+    "they were short of temperament, and temperament just became manufacturable.",
 
-    "The lab is therefore not organized around a single insight or forecast. It is "
-    "organized to produce models that can be examined, challenged, and improved, and to "
-    "let performance be settled in public rather than asserted. Marylin, the strategy we "
-    "run live, is the current expression of that approach.",
+    "The deeper consequence lands on everyone who has never read a filing. Financial "
+    "under-education is the most expensive illiteracy there is, and a whole industry "
+    "has quietly billed it by the hour. Cheap intelligence attacks that gap from "
+    "below. An agent that reads every disclosure, knows its owner’s situation, and "
+    "flatters nobody will soon cost less than a lunch — the first honest analyst most "
+    "households will ever employ. For the young, entering markets with decades of "
+    "compounding ahead of them, finance is about to become hyper-personal, and "
+    "ignorance stops being the default setting of wealth.",
+
+    "Abundance has a by-product: infinite plausible opinions. When anyone can "
+    "generate a convincing investment thesis in eight seconds, theses are worth "
+    "nothing and verification becomes the scarce good. That scarcity is where this "
+    "lab works. We build models that place their judgments in the open and let the "
+    "market grade the temperament we claim to have engineered. A *pretty* model, in "
+    "the age of cheap intelligence, is one that keeps its figure in public — every "
+    "position disclosed, every month scored. Marylin is ours; her scoreboard is §4.",
 ]
 PHILOSOPHY_PULLQUOTE = (
-    "Elegance, in a model, is the absence of everything the evidence does not require."
+    "Intelligence is now sold by the token. A track record still has to be earned "
+    "the slow way."
 )
 
 # --- Footer ------------------------------------------------------------------

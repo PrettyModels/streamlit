@@ -97,11 +97,21 @@ a {{ color: var(--accent); text-decoration: none; }}
 a:hover {{ text-decoration: underline; }}
 
 /* ---- masthead ---- */
-.pm-masthead {{
+/* Sticky must sit on the element container: st.markdown wraps the masthead in a
+   container exactly its own height, so sticky on .pm-masthead itself has no room
+   to travel and scrolls away with the page. will-change promotes the bar to its
+   own compositing layer so passing text cannot bleed through mid-scroll, and the
+   masthead carries its own opaque background as a second line of defense. */
+.stElementContainer:has(.pm-masthead) {{
   position: sticky; top: 0; z-index: 999; background: var(--paper);
+  margin-bottom: 2.8rem;
+  will-change: transform;
+}}
+.pm-masthead {{
   display: flex; align-items: center; gap: 0.9rem;
-  padding: 0.7rem 0 0.7rem; margin-bottom: 2.8rem;
+  padding: 0.7rem 0 1.15rem;
   border-bottom: 1px solid var(--hairline);
+  background: var(--paper);
 }}
 .pm-mark {{
   width: 36px; height: 36px; border-radius: 50%; flex: 0 0 auto;
