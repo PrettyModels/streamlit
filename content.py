@@ -32,8 +32,8 @@ HERO_HEADLINE = "Turning frontier AI into public-market investment signals."
 HERO_LEAD = (
     "We study one question: can large language models evaluate public companies "
     "with enough consistency to inform investment decisions? Our process converts "
-    "the qualitative record of a business — filings, disclosures, market "
-    "data — into structured scores, builds a portfolio from them, and "
+    "the qualitative record of a business (filings, disclosures, market data) "
+    "into structured scores, builds a portfolio from them, and "
     "measures the result on a live, publicly traded index."
 )
 
@@ -45,7 +45,7 @@ THESIS_BODY = [
     "These biases are difficult to remove through discipline alone, and they impose a "
     "persistent, measurable cost on returns.",
 
-    "Large language models are the first systems able to read the unstructured "
+    "LLMs (plus harness) are the first systems able to read the unstructured "
     "information that surrounds a company — annual reports, earnings calls, news flow — "
     "and return a structured, repeatable assessment. Whether those assessments are any "
     "good remains an empirical question, and because they are repeatable, it is one we "
@@ -56,7 +56,10 @@ THESIS_BODY = [
     "the outcome against public benchmarks, out-of-sample and in the open.",
 ]
 THESIS_PULLQUOTE = (
-    "Each score the model produces is a hypothesis; the market runs the experiment."
+    """
+    Each score the model produces is a hypothesis.<br>
+    The market runs the experiment.
+    """
 )
 
 # --- §2 Method ---------------------------------------------------------------
@@ -150,7 +153,7 @@ OPEN_QUESTIONS_BODY = [
 ]
 
 # --- §5 Philosophy -----------------------------------------------------------
-PHILOSOPHY_SUBTITLE = "Pretty models for the age of cheap intelligence"
+PHILOSOPHY_SUBTITLE = "Intelligent models for the age of cheap intelligence"
 PHILOSOPHY_BODY = [
     "Machine learning ended a century of argument about whether machines could think, "
     "and it ended it rudely: engineers multiplied matrices until judgment fell out. "
@@ -189,18 +192,18 @@ PHILOSOPHY_BODY = [
 ]
 PHILOSOPHY_PULLQUOTE = (
     """
-    Intelligence is now sold by the token.<br>
-    A track record still has to be earned the slow way.
+    All to answer one question:<br>
+    Can AI beat the market?
     """
 )
 
 # --- Footer ------------------------------------------------------------------
 # NOTE: rendered inside an HTML container, so the link is an <a> tag, not markdown.
+#     <a href=\"https://tausch.capital\">tausch.capital</a> operates the Marylin strategy as a live portfolio.<br>
 ENTITY_NOTE = (
     """
     <h4>Ecosystem</h4>
     <a href=\"https://prettymodels.ai\">prettymodels.ai</a> conducts the research and develops the models.<br> 
-    <a href=\"https://tausch.capital\">tausch.capital</a> operates the Marylin strategy as a live portfolio.<br>
     <a href=\"https://quant-unit.com\">quant-unit.com</a> is the personal blog of founder Christian Tausch.
     """
 )
