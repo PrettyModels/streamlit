@@ -81,6 +81,6 @@ def wishlist():
                     x=alt.X('ticker:O', title=None),
                     y='votes'
                 )
-                st.altair_chart(chart, use_container_width=True)
+                st.altair_chart(chart, width="stretch")
             else:
                 st.info("No votes yet.")

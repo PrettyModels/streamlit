@@ -40,7 +40,12 @@ with hero_l:
                 unsafe_allow_html=True)
     c.lead(T.HERO_LEAD)
 with hero_r:
-    st.image("images/marylin6.png", width="stretch")
+    c.hero_image(
+        "/app/static/research-hero.webp",
+        "",
+        750,
+        663,
+    )
 
 c.stat_strip([
     (str(stats["n_assets"]), "companies scored monthly"),
@@ -99,7 +104,7 @@ def _bar_chart(df: pd.DataFrame, scores: list[str], id_vars: list[str]) -> None:
             color=alt.Color("Factor:N", legend=alt.Legend(title=None, orient="top")),
         )
     )
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, width="stretch")
 
 
 # score table
@@ -156,7 +161,7 @@ with tab_explore:
             .properties(height=280, padding={"left": 12, "top": 5, "right": 5,
                                              "bottom": 5})
         )
-        st.altair_chart(heat, use_container_width=True)
+        st.altair_chart(heat, width="stretch")
 
 with tab_compare:
     default = df_scores.nlargest(6, "w").sort_index().index
@@ -184,7 +189,7 @@ with tab_analyze:
                             legend=alt.Legend(title=None)),
         )
     )
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, width="stretch")
 
 # =============================================================================
 # §4 — Live Validation
@@ -222,7 +227,7 @@ with fig_l:
         .mark_rule(color=c.FAINT, strokeDash=[3, 4], strokeWidth=1.5)
         .encode(y="y:Q")
     )
-    st.altair_chart(base + line, use_container_width=True)
+    st.altair_chart(base + line, width="stretch")
     c.figure_caption(
         f"{T.VALIDATION_INDEX_CAPTION} Data through "
         f"{freshness['reference_index_as_of_label']}."
@@ -250,7 +255,7 @@ with fig_r:
         .mark_rule(color=c.FAINT, strokeDash=[3, 4], strokeWidth=1.5)
         .encode(y="y:Q")
     )
-    st.altair_chart(zero + line, use_container_width=True)
+    st.altair_chart(zero + line, width="stretch")
     c.figure_caption(
         f"{T.VALIDATION_ALPHA_CAPTION} Data through "
         f"{freshness['performance_as_of_label']}."

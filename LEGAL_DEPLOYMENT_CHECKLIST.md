@@ -74,14 +74,23 @@ the service, research process, operator details, or financial interests change.
 
 ## Release
 
-- [ ] Deploy the repository version and verify `/`, `/research-disclosures`,
-  `/legal-notice`, and `/privacy-policy` without authentication or broken links.
+- [ ] Run `python3 scripts/generate_seo_assets.py --check` and deploy the exact
+  repository revision. Verify `/`, `/research-disclosures`, `/legal-notice`,
+  and `/privacy-policy` without authentication or broken links.
 - [ ] Inspect the raw HTML response for each route and confirm the title,
   description, canonical URL, Open Graph/Twitter card, favicon and JSON-LD are
   present before JavaScript runs. Confirm the retired “Beat the market”
   description and Streamlit crown are absent.
 - [ ] Verify `/robots.txt`, `/sitemap.xml`, `/favicon.ico`, the web manifest and
-  the 1200×630 social image return `200` from the canonical `www` hostname.
+  the 1200×630 social image return `200` with the correct MIME type from the
+  canonical `www` hostname. Run `python3 scripts/verify_public_site.py`.
+- [ ] Confirm a made-up document URL returns a real `404` and each public
+  trailing-slash variant permanently redirects to its slashless canonical URL.
+- [ ] Use Search Console live URL Inspection for every sitemap route. Confirm
+  the rendered page contains the same H1 and substantive text as the raw
+  fallback; submit the sitemap and request recrawling.
+- [ ] Review the Search Console Core Web Vitals report on mobile and desktop.
+  Investigate any group outside LCP 2.5 s, INP 200 ms or CLS 0.1 before release.
 - [ ] Re-scrape the homepage in the LinkedIn Post Inspector and any other social
   networks used for publication so their cached preview is refreshed.
 - [ ] Remove the old deployment and retired `docs.prettymodels.ai` links from all

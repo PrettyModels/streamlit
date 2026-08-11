@@ -4,6 +4,7 @@ registered Altair theme so charts read as research figures, and small reusable
 render helpers used by lab.py.
 """
 import base64
+import html
 from pathlib import Path
 
 import altair as alt
@@ -135,6 +136,8 @@ a:hover {{ text-decoration: underline; }}
 .pm-hero-h1 {{ font-family: var(--serif) !important; font-weight: 500; font-size: 3rem;
   line-height: 1.08; letter-spacing: -0.02em; margin: 0.55rem 0 1.1rem; }}
 .pm-lead {{ font-size: 1.16rem; line-height: 1.6; color: #2b2b2b; max-width: 40em; }}
+.pm-hero-img {{ display: block; width: 100%; height: auto; aspect-ratio: 250 / 221;
+  object-fit: contain; }}
 
 /* ---- section header ---- */
 .pm-sec-head {{ display: flex; align-items: baseline; gap: 0.55rem;
@@ -262,6 +265,15 @@ def section_header(anchor_id: str, num: str, title: str, subtitle: str = "") -> 
 
 def lead(text: str) -> None:
     _md(f'<p class="pm-lead">{text}</p>')
+
+
+def hero_image(src: str, alt: str, width: int, height: int) -> None:
+    """Render a cacheable, dimensioned hero image without Streamlit's media proxy."""
+    _md(
+        f'<img class="pm-hero-img" src="{html.escape(src, quote=True)}" '
+        f'alt="{html.escape(alt, quote=True)}" width="{width}" height="{height}" '
+        'decoding="async" fetchpriority="high">'
+    )
 
 
 def body(paragraphs: list[str]) -> None:

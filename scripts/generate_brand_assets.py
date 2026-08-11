@@ -17,6 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = ROOT / "static"
 SCORES_CSV = ROOT / "data" / "full_weights - raw.csv"
+HERO_SOURCE = ROOT / "images" / "marylin6.png"
 
 PAPER = "#FBFAF8"
 INK = "#1A1A1A"
@@ -146,6 +147,24 @@ def generate_icons(logo: Image.Image) -> None:
     )
 
 
+def generate_research_hero() -> None:
+    """Export the above-the-fold illustration with dimensions and browser compression.
+
+    The original remains the editable source. The page uses this checked-in WebP
+    directly through Nginx, avoiding Streamlit's media proxy and reserving the
+    final aspect ratio before it downloads.
+    """
+    hero = Image.open(HERO_SOURCE).convert("RGBA")
+    hero = hero.resize((750, 663), Image.Resampling.LANCZOS)
+    hero.save(
+        STATIC / "research-hero.webp",
+        format="WEBP",
+        quality=84,
+        method=6,
+        exact=True,
+    )
+
+
 def load_figure_data() -> tuple[pd.DataFrame, int, int]:
     """Composite-factor ranks per company, plus the universe counts on the card.
 
@@ -260,6 +279,7 @@ def main() -> None:
     STATIC.mkdir(exist_ok=True)
     logo = Image.open(ROOT / "images" / "logo.png").convert("RGBA")
     generate_icons(logo)
+    generate_research_hero()
     generate_social_preview(logo)
 
 

@@ -26,8 +26,11 @@ Live site: [prettymodels.ai](https://prettymodels.ai/)
 | `legal_privacy.py` | GDPR/TDDDG privacy notice |
 | `LEGAL_DEPLOYMENT_CHECKLIST.md` | Required factual, infrastructure and counsel checks before release |
 | `.streamlit/config.toml` | "Academic paper" theme (colors, fonts, chart palette) |
-| `static/` | Favicon, app icons, social preview, manifest, robots and sitemap |
+| `static/` | Optimized hero, favicon, app icons, social preview, manifest, robots and sitemap |
 | `deploy/nginx/` | Crawler-visible metadata and conventional public-file routes |
+| `seo_config.py` | Technical mapping from existing public copy to crawler metadata |
+| `scripts/generate_seo_assets.py` | Generates Nginx metadata, prerender summaries, robots and sitemap from `seo_config.ROUTES` |
+| `scripts/verify_public_site.py` | Verifies raw production HTML, assets, redirects and 404 behavior |
 
 ## Run it locally
 
@@ -47,7 +50,16 @@ Live site: [prettymodels.ai](https://prettymodels.ai/)
 
 Streamlit's `st.set_page_config` updates the tab title and icon only after the
 app connects. Search engines and social-preview crawlers inspect the initial
-HTML response instead, so production Nginx must also expose the metadata there.
+HTML response instead, so production Nginx exposes metadata and a concise,
+same-content HTML fallback before the websocket starts.
+
+- Change public route metadata only in `seo_config.ROUTES`, then regenerate and
+  verify the committed outputs:
+
+  ```bash
+  python3 scripts/generate_seo_assets.py
+  python3 scripts/generate_seo_assets.py --check
+  ```
 
 - Enable the three checked-in snippets in the canonical HTTPS configuration:
   `deploy/nginx/http-metadata-map.conf` at `http` scope,
@@ -55,8 +67,15 @@ HTML response instead, so production Nginx must also expose the metadata there.
   `location /` block, and `deploy/nginx/public-files.conf` at `server` scope.
 - Test with `sudo nginx -t`, reload Nginx, then verify the raw page source—not
   only the browser DOM—contains `og:title`, `og:image`, and the PM favicon.
-- If the PM mark or public positioning changes, regenerate the image assets
-  with `python scripts/generate_brand_assets.py` and commit the results.
+- If the PM mark, hero or public positioning changes, regenerate the optimized
+  image assets with `python3 scripts/generate_brand_assets.py` and commit them.
+- After deployment, run `python3 scripts/verify_public_site.py`. This fails if
+  any public document is missing metadata/prerender content, an asset has the
+  wrong MIME type, an alternate trailing-slash URL does not redirect, or an
+  unknown document does not return `404`.
+- In Google Search Console, inspect the live rendered HTML for all sitemap URLs,
+  submit `/sitemap.xml`, request recrawling after material releases, and review
+  Page Indexing plus Core Web Vitals before calling a deployment SEO-ready.
 
 The canonical public hostname is `https://www.prettymodels.ai/`; the apex domain
 should continue to redirect there.
@@ -70,6 +89,6 @@ should continue to redirect there.
   one. The app automatically selects the newest timestamped export.
 - Append the latest month to `data/marylin_performance.csv`. Its last date is
   used automatically in chart captions and disclosures.
-- Before deployment, run `python -m py_compile data.py content.py lab.py
+- Before deployment, run `python3 -m py_compile data.py content.py lab.py
   legal_disclosures.py streamlit_app.py` and start the app locally. The data
   loaders validate required columns, dates, duplicate assets and metadata.
