@@ -203,6 +203,20 @@ h6 {{ font-family: var(--mono) !important; font-size: 0.72rem !important;
   color: var(--accent); margin-bottom: 0.4rem; }}
 .pm-gloss-d {{ font-size: 0.86rem; line-height: 1.5; color: #333; }}
 
+/* ---- open research questions ---- */
+.pm-questions {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  background: var(--hairline); border: 1px solid var(--hairline); margin: 1rem 0 1.1rem; }}
+.pm-question {{ background: var(--paper2); padding: 1.15rem 1.15rem 1.25rem; }}
+.pm-question-k {{ display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.65rem; }}
+.pm-question-n {{ font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+  color: var(--accent); }}
+.pm-question-t {{ font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); }}
+.pm-question-d {{ font-family: var(--serif); font-size: 1.08rem; line-height: 1.46;
+  color: var(--ink); }}
+.pm-question-note {{ font-size: 0.96rem; line-height: 1.62; color: var(--muted);
+  max-width: 40em; margin: 0 0 1.4rem; }}
+
 /* ---- footer ---- */
 .pm-entity {{ font-size: 0.92rem; line-height: 1.6; color: var(--muted);
   background: var(--paper2); border: 1px solid var(--hairline); border-radius: 4px;
@@ -222,6 +236,7 @@ h6 {{ font-family: var(--mono) !important; font-size: 0.72rem !important;
 
 @media (max-width: 820px) {{
   .pm-stats, .pm-steps, .pm-gloss {{ grid-template-columns: repeat(2, 1fr); }}
+  .pm-questions {{ grid-template-columns: 1fr; }}
   .pm-hero-h1 {{ font-size: 2.2rem; }}
   .pm-nav {{ display: none; }}
 }}
@@ -326,6 +341,18 @@ def glossary_grid(items: list[tuple[str, str]]) -> None:
         for t, d in items
     )
     _md(f'<div class="pm-gloss">{cells}</div>')
+
+
+def question_grid(items: list[tuple[str, str, str]], note: str = "") -> None:
+    cells = "".join(
+        f'<div class="pm-question"><div class="pm-question-k">'
+        f'<span class="pm-question-n">{n}</span>'
+        f'<span class="pm-question-t">{title}</span></div>'
+        f'<div class="pm-question-d">{question}</div></div>'
+        for n, title, question in items
+    )
+    note_html = f'<p class="pm-question-note">{note}</p>' if note else ""
+    _md(f'<div class="pm-questions">{cells}</div>{note_html}')
 
 
 def entity_note(text: str) -> None:

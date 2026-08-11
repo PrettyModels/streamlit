@@ -64,9 +64,13 @@ THESIS_PULLQUOTE = (
 # --- §2 Method ---------------------------------------------------------------
 METHOD_SUBTITLE = "From source material to portfolio"
 METHOD_INTRO = (
-    "The same process runs each month, end to end. It is designed to be auditable: "
-    "every position can be traced back through its factor weights and scores to the "
-    "source material the model evaluated."
+    "Marylin separates open-ended model judgment from deterministic portfolio "
+    "construction. Around each reporting season, the same research sequence is "
+    "applied across a defined universe: dated public evidence is assessed through a "
+    "consistent analytical framework, converted into comparable scores, and "
+    "translated by fixed portfolio rules into a reviewable monthly hypothesis. "
+    "Inputs and outputs are retained for out-of-sample evaluation, while human "
+    "review remains between the model portfolio and any real-world execution."
 )
 METHOD_STEPS = [
     ("01", "Corpus", "Source material",
@@ -123,12 +127,10 @@ VALIDATION_INTRO = (
     "Back-tests are easy to flatter: with enough tuning, most strategies look good on "
     "data they have already seen. Since 27 December 2024, Marylin has therefore been "
     "recorded as a public Wikifolio reference portfolio, with positions and changes "
-    "published on the third-party platform. The associated investable certificate was "
-    "first issued on 2 September 2025. Results before that date are public "
-    "reference-portfolio results, not returns earned by certificate investors."
+    "published on the third-party platform."
 )
 VALIDATION_INDEX_CAPTION = (
-    "Marylin Wikifolio reference-index level (not the certificate price), shown against "
+    "Marylin Wikifolio reference-index level, shown against "
     "a nominal base of 100."
 )
 VALIDATION_ALPHA_CAPTION = (
@@ -141,22 +143,27 @@ VALIDATION_NOTE = (
     "investability. Past performance is not a reliable indicator of future results. "
     "Read the Research & Risk Disclosures before interpreting them."
 )
-VALIDATION_VERIFY = "Verify the portfolio and certificate details on Wikifolio ↗"
+VALIDATION_VERIFY = "Verify the portfolio on Wikifolio ↗"
 WIKIFOLIO_URL = "https://www.wikifolio.com/en/int/w/wfmarylin1"
 
 # Limitations coda to §4 — what the live record does not yet establish. Stated
 # plainly, as a research lab should, and consistent with the no-solicitation stance.
 OPEN_QUESTIONS_SUBTITLE = "Open questions"
-OPEN_QUESTIONS_BODY = [
-    "The public series is short, and one favorable market cycle proves little about "
-    "durability. A consistent model can still be consistently wrong, or can faithfully "
-    "reproduce whatever biases its training data carries. And part of the measured "
-    "alpha may turn out to be exposure to factors that academic finance named decades "
-    "ago.",
-
-    "The lab keeps these questions open on purpose, and keeps testing them where the "
-    "answers can hurt: in public, out-of-sample.",
+OPEN_QUESTIONS = [
+    ("01", "Durability",
+     "Will the result persist through market regimes unlike the one in which the "
+     "public record began?"),
+    ("02", "Model risk",
+     "Do consistent assessments add independent signal, or consistently reproduce "
+     "biases in their evidence and training?"),
+    ("03", "Attribution",
+     "How much of the measured return difference is distinct from exposures already "
+     "described by academic finance?"),
 ]
+OPEN_QUESTIONS_NOTE = (
+    "The record is still short. The lab keeps these questions open on purpose — and "
+    "tests them where the answers can hurt: in public, out of sample."
+)
 
 # --- §5 Philosophy -----------------------------------------------------------
 PHILOSOPHY_SUBTITLE = "Intelligent models for the age of cheap intelligence"
@@ -180,8 +187,9 @@ PHILOSOPHY_BODY = [
     "they were short of temperament, and temperament just became manufacturable.",
 
     "The deeper consequence lands on everyone who has never read a filing. Financial "
-    "under-education is the most expensive illiteracy there is, and a whole industry "
-    "has quietly billed it by the hour. Cheap intelligence attacks that gap from "
+    "under-education is the most expensive illiteracy there is, and an entire industry "
+    "has profited by selling average products, designed for the average, at prices that "
+    "are anything but. Cheap intelligence attacks that gap from "
     "below. An agent that reads every disclosure, knows its owner’s situation, and "
     "flatters nobody will soon cost less than a lunch — the first honest analyst most "
     "households will ever employ. For the young, entering markets with decades of "

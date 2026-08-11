@@ -262,7 +262,7 @@ with fig_r:
     )
 
 c.eyebrow(T.OPEN_QUESTIONS_SUBTITLE)
-c.body(T.OPEN_QUESTIONS_BODY)
+c.question_grid(T.OPEN_QUESTIONS, T.OPEN_QUESTIONS_NOTE)
 
 st.markdown(T.VALIDATION_NOTE)
 st.link_button(T.VALIDATION_VERIFY, T.WIKIFOLIO_URL)
