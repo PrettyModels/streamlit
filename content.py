@@ -186,9 +186,7 @@ PHILOSOPHY_BODY = [
     "generate a convincing investment thesis in eight seconds, theses are worth "
     "nothing and verification becomes the scarce good. That scarcity is where this "
     "lab works. We build models that place their judgments in the open and let the "
-    "market grade the temperament we claim to have engineered. A *pretty* model, in "
-    "the age of cheap intelligence, is one that keeps its figure in public — every "
-    "position disclosed, every month scored. Marylin is ours; her scoreboard is §4.",
+    "market grade the temperament we claim to have engineered.",
 ]
 PHILOSOPHY_PULLQUOTE = (
     """
