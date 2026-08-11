@@ -1,5 +1,39 @@
-[theme]
-base = "light"   # or "dark"
-
 [client]
 toolbarMode = "minimal"
+
+[browser]
+# Optional Streamlit telemetry is not necessary to provide the research site.
+# Keep this disabled so no analytics consent layer is required.
+gatherUsageStats = false
+
+# ---------------------------------------------------------------------------
+# PrettyModels AI — "academic paper" research-lab theme (Streamlit >= 1.50)
+# The named families use local/system fallbacks; no third-party font CDN is used.
+# ---------------------------------------------------------------------------
+[theme]
+base = "light"
+
+primaryColor        = "#3A34C0"   # restrained indigo accent
+backgroundColor     = "#FBFAF8"   # off-white "paper"
+secondaryBackgroundColor = "#F3F1EC"
+textColor           = "#1A1A1A"   # ink
+linkColor           = "#3A34C0"
+linkUnderline       = false
+borderColor         = "#E4E1DA"   # hairline
+dataframeBorderColor = "#E4E1DA"
+dataframeHeaderBackgroundColor = "#F3F1EC"
+showWidgetBorder    = true
+showSidebarBorder   = false
+
+baseFontSize = 16
+baseRadius   = "0.25rem"
+
+font        = "Inter"
+headingFont = "Newsreader"
+codeFont    = "IBM Plex Mono"
+
+# Research-figure chart palette: indigo primary + muted neutrals (no neon).
+chartCategoricalColors = ["#3A34C0", "#8A87B8", "#B08968", "#6B6B6B", "#9A9A9A", "#C4B9A6"]
+# (Streamlit requires exactly 10 values here; a 6-value ramp is silently ignored.)
+chartSequentialColors  = ["#EDEBFF", "#D9D7F8", "#C5C2F1", "#B1AEEA", "#9D9AE3",
+                          "#8A85DC", "#7671D5", "#625DCE", "#4E48C7", "#3A34C0"]
