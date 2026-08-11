@@ -1,15 +1,15 @@
 # PrettyModels AI — Research Lab
 
-The public site for **PrettyModels AI**, an independent research lab building
-AI-driven algorithms that turn frontier language models into quantitative,
-public-market signals. The signal is validated out-of-sample on a live Wikifolio
-index ("Marylin").
+The public site for **PrettyModels AI**, an AI research lab testing whether
+frontier language models can evaluate public companies consistently. Model
+outputs are evaluated against the public Marylin Wikifolio reference portfolio.
 
 Live site: [prettymodels.ai](https://prettymodels.ai/)
 
-> Note: PrettyModels AI is a research lab. It does not manage money or offer
-> investment products. The Marylin index is operated separately by
-> Until Singularity Asset Management ([tausch.capital](https://tausch.capital)).
+> Important: Christian Tausch publishes the research and operates the Marylin
+> Wikifolio. An associated third-party certificate exists, and the trader may be
+> eligible for performance-linked remuneration. See the site's Research & Risk
+> Disclosures.
 
 ## Structure
 
@@ -20,6 +20,10 @@ Live site: [prettymodels.ai](https://prettymodels.ai/)
 | `components.py` | Design system: theme/CSS, Altair chart theme, render helpers |
 | `content.py` | All copy, kept separate from layout |
 | `data.py` | Cached CSV loaders and computed metrics (from `data/`) |
+| `legal_disclosures.py` | Research, financial-risk, performance and conflict disclosures |
+| `legal_imprint.py` | DDG/MStV provider and editorial notice |
+| `legal_privacy.py` | GDPR/TDDDG privacy notice |
+| `LEGAL_DEPLOYMENT_CHECKLIST.md` | Required factual, infrastructure and counsel checks before release |
 | `.streamlit/config.toml` | "Academic paper" theme (colors, fonts, chart palette) |
 
 ## Run it locally

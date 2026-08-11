@@ -23,7 +23,7 @@ BENCHMARK_LABELS = {
 
 @st.cache_data
 def load_perf_data() -> pd.DataFrame:
-    """Cumulative alpha of the signal vs. each benchmark (month-end + inception)."""
+    """Cumulative return difference vs. each benchmark (month-end + inception)."""
     df = pd.read_csv(
         PERF_CSV, sep=";", decimal=",",
         parse_dates=["Date"], dayfirst=True, date_format="%d.%m.%y",
@@ -74,7 +74,7 @@ def universe_stats() -> dict:
 
 @st.cache_data
 def validation_metrics() -> dict:
-    """Out-of-sample metrics for §4, computed from the index and alpha series."""
+    """Public-track-record metrics computed from the reference-index series."""
     perf = load_perf_data()
     wiki = load_wikifolio_data()
 
@@ -90,7 +90,7 @@ def validation_metrics() -> dict:
         ann = (1 + cum) ** (365.25 / days) - 1
         alpha[col] = {"cum": cum, "ann": ann, "label": BENCHMARK_LABELS.get(col, col)}
 
-    # "Headline" alpha = the median benchmark, to avoid cherry-picking the best one.
+    # Headline difference = median benchmark, avoiding selection of the best one.
     cum_values = sorted(v["cum"] for v in alpha.values())
     headline_cum = cum_values[len(cum_values) // 2]
 

@@ -1,18 +1,12 @@
-"""
-content.py — all copy for the PrettyModels AI research-lab site, kept separate
-from layout. Nothing here solicits investment or offers a product: PrettyModels
-AI is a research lab; the Marylin index is shown only as out-of-sample research
-validation.
-"""
+"""All public copy for the PrettyModels AI research-lab site."""
 
 # --- Masthead / meta ---------------------------------------------------------
 BRAND = "PrettyModels AI"
-TAGLINE = "Independent AI Research Lab"
-PAGE_TITLE = "PrettyModels AI — Independent AI Research Lab"
+TAGLINE = "AI Research Lab"
+PAGE_TITLE = "PrettyModels AI — AI Research Lab"
 PAGE_DESCRIPTION = (
-    "PrettyModels AI is an independent research lab studying whether large language "
-    "models can evaluate public companies consistently enough to inform investment "
-    "decisions, validated on a live public index."
+    "PrettyModels AI studies whether large language models can evaluate public "
+    "companies consistently, using a public model portfolio as an empirical test."
 )
 
 NAV = [
@@ -24,17 +18,17 @@ NAV = [
 ]
 
 # --- §0 Abstract / Hero ------------------------------------------------------
-# The masthead directly above already carries the brand + "Independent AI Research
-# Lab" tagline, so the eyebrow and lead don't repeat the introduction; the lead
+# The masthead directly above already carries the brand + lab tagline, so the
+# eyebrow and lead don't repeat the introduction; the lead
 # opens with the research question itself.
 HERO_EYEBROW = "Research brief · Updated monthly"
-HERO_HEADLINE = "Turning frontier AI into public-market investment signals."
+HERO_HEADLINE = "Testing frontier AI against public-market outcomes."
 HERO_LEAD = (
     "We study one question: can large language models evaluate public companies "
     "with enough consistency to inform investment decisions? Our process converts "
     "the qualitative record of a business (filings, disclosures, market data) "
     "into structured scores, builds a portfolio from them, and "
-    "measures the result on a live, publicly traded index."
+    "measures the result in a public reference portfolio."
 )
 
 # --- §1 Thesis ---------------------------------------------------------------
@@ -83,13 +77,13 @@ METHOD_STEPS = [
     ("04", "Weights", "Aggregation & sizing",
      "The {n_dim} dimensions are aggregated into {n_comp} composite factors, ranked across the "
      "universe, and translated into portfolio weights."),
-    ("05", "Signal", "Monthly output",
-     "The result is a fully specified target portfolio — the month’s signal — carried "
-     "forward for out-of-sample evaluation."),
+    ("05", "Portfolio", "Monthly research output",
+     "The result is a fully specified model portfolio — the month’s research "
+     "hypothesis — carried forward for out-of-sample evaluation."),
 ]
 
 # --- §3 Scoring Engine -------------------------------------------------------
-SCORING_SUBTITLE = "Scores across the investable universe, updated monthly"
+SCORING_SUBTITLE = "Scores across the research universe, updated monthly"
 SCORING_INTRO = (
     "The table below presents the current month’s output — the scores the portfolio is "
     "constructed from. Each company is summarized by {n_comp} composite factors, each "
@@ -113,36 +107,46 @@ GLOSSARY = [
 SCORING_TABLE_CAPTION = (
     "Highlighted cells indicate the top-scoring company on each factor."
 )
+RESEARCH_VERSION = "Marylin 1.2.5"
+SCORING_DATA_AS_OF = "23 June 2026 at 20:48 CEST"
+PERFORMANCE_DATA_AS_OF = "30 June 2026"
+RESEARCH_UPDATE_FREQUENCY = "monthly"
 TAB_EXPLORE = "Explore scores"
 TAB_COMPARE = "Compare companies"
 TAB_ANALYZE = "Analyze a company"
 
 # --- §4 Live Validation ------------------------------------------------------
-VALIDATION_SUBTITLE = "Out-of-sample, in public"
+VALIDATION_SUBTITLE = "Public reference record"
 VALIDATION_INTRO = (
     "Back-tests are easy to flatter: with enough tuning, most strategies look good on "
-    "data they have already seen. Since 27 December 2024 the Marylin strategy has "
-    "therefore run as a live, publicly traded Wikifolio index — every position "
-    "disclosed, priced daily, and impossible to revise after the fact. Everything "
-    "below is out-of-sample."
+    "data they have already seen. Since 27 December 2024, Marylin has therefore been "
+    "recorded as a public Wikifolio reference portfolio, with positions and changes "
+    "published on the third-party platform. The associated investable certificate was "
+    "first issued on 2 September 2025. Results before that date are public "
+    "reference-portfolio results, not returns earned by certificate investors."
 )
-VALIDATION_INDEX_CAPTION = "Marylin index level, indexed to 100 at inception."
+VALIDATION_INDEX_CAPTION = (
+    "Marylin Wikifolio reference-index level (not the certificate price), shown against "
+    "a nominal base of 100."
+)
 VALIDATION_ALPHA_CAPTION = (
-    "Cumulative alpha of the strategy relative to three public benchmarks."
+    "Cumulative simple return difference versus three public benchmarks; this is not "
+    "risk-adjusted or regression alpha."
 )
 VALIDATION_NOTE = (
-    "These figures are presented for research transparency. Past performance is not "
-    "indicative of future results, and nothing on this page constitutes investment "
-    "advice or an offer of any product."
+    "These figures are research observations, not investor returns or a performance "
+    "promise. Comparisons may differ in fees, spreads, currency, taxes, risk and "
+    "investability. Past performance is not a reliable indicator of future results. "
+    "Read the Research & Risk Disclosures before interpreting them."
 )
-VALIDATION_VERIFY = "View the live index on Wikifolio ↗"
+VALIDATION_VERIFY = "Verify the portfolio and certificate details on Wikifolio ↗"
 WIKIFOLIO_URL = "https://www.wikifolio.com/en/int/w/wfmarylin1"
 
 # Limitations coda to §4 — what the live record does not yet establish. Stated
 # plainly, as a research lab should, and consistent with the no-solicitation stance.
 OPEN_QUESTIONS_SUBTITLE = "Open questions"
 OPEN_QUESTIONS_BODY = [
-    "The live series is short, and one favorable market cycle proves little about "
+    "The public series is short, and one favorable market cycle proves little about "
     "durability. A consistent model can still be consistently wrong, or can faithfully "
     "reproduce whatever biases its training data carries. And part of the measured "
     "alpha may turn out to be exposure to factors that academic finance named decades "
@@ -196,8 +200,7 @@ PHILOSOPHY_PULLQUOTE = (
 )
 
 # --- Footer ------------------------------------------------------------------
-# NOTE: rendered inside an HTML container, so the link is an <a> tag, not markdown.
-#     <a href=\"https://tausch.capital\">tausch.capital</a> operates the Marylin strategy as a live portfolio.<br>
+# NOTE: rendered inside an HTML container, so links are <a> tags, not markdown.
 ENTITY_NOTE = (
     """
     <h4>Ecosystem</h4>
@@ -206,35 +209,12 @@ ENTITY_NOTE = (
     """
 )
 DISCLAIMER = """
-**Disclaimer**
-
-**1. General information & AI nature.** This content is generated with the help of
-artificial intelligence and is for informational and research purposes only. The
-"scores", "factors" and "signals" are outputs of probabilistic models and large language
-models, and may contain errors, hallucinations or biases. Do not rely on this content as
-a definitive source of truth.
-
-**2. No investment advice.** Nothing here constitutes financial, legal, tax or investment
-advice, nor a recommendation to buy, sell or hold any security or to adopt any strategy.
-It does not consider your circumstances, objectives or risk tolerance. Consult a
-qualified professional before making any investment decision.
-
-**3. No offer or solicitation.** This material is not an offer to sell or a solicitation
-of an offer to buy any security, investment product or service in any jurisdiction.
-
-**4. Risk warning.** Past performance is not indicative of future results. All investment
-involves significant risk, including total loss of principal. AI-driven models are
-experimental; any hypothetical or back-tested results shown have inherent limitations.
-
-**5. Conflicts of interest.** PrettyModels AI, its affiliates and their officers may hold
-positions in, or transact in, the securities or instruments discussed. The lab's outputs
-may align with or contradict those positions.
-
-**6. Limitation of liability.** Content is provided "as is", without warranties of any
-kind. PrettyModels AI disclaims liability for any direct, indirect, consequential or
-incidental damages arising from use of, or reliance on, this information.
-
-© PrettyModels AI 2026. All rights reserved.
+**Important disclosures.** AI-assisted, human-reviewed research; model outputs can be
+wrong. This is general, impersonal information—not personalised advice, an offer or a
+performance promise. Capital is at risk. Christian Tausch also operates the Marylin
+Wikifolio and may be entitled to performance-linked remuneration, creating a direct
+conflict of interest. A label cannot override the legal character of the content. Read the
+[Research & Risk Disclosures](/research-disclosures). © PrettyModels AI 2026.
 """
 
 # Footer link row: external profiles plus the internal legal pages (whose
@@ -243,85 +223,74 @@ incidental damages arising from use of, or reliance on, this information.
 FOOTER_LINKS = [
     ("LinkedIn", "https://www.linkedin.com/company/prettymodels-ai"),
     ("The Story of Marylin", "https://quant-unit.com/the-story-of-marylin-pt-1/"),
-    ("Legal Notice", "/legal-notice"),
+    ("Risk Disclosures", "/research-disclosures"),
+    ("Legal Notice / Imprint", "/legal-notice"),
     ("Privacy", "/privacy-policy"),
 ]
 
 
 # --- Legal pages =============================================================
 # The docs.prettymodels.ai subdomain is retired; its legal notice (German
-# Impressum, § 5 TMG) and privacy policy now live here as native pages that
+# Impressum, § 5 DDG) and privacy policy now live here as native pages that
 # inherit the paper design system.
 LEGAL_BACK = "← Back to the research"
 
 # --- Legal notice / Impressum ------------------------------------------------
 IMPRINT_PAGE_TITLE = "Legal Notice — PrettyModels AI"
 IMPRINT_EYEBROW = "PrettyModels AI · Legal"
-IMPRINT_TITLE = "Legal Notice"
+IMPRINT_TITLE = "Legal Notice / Impressum"
+IMPRINT_UPDATED = "11 August 2026"
 IMPRINT_INTRO = (
-    "Information pursuant to § 5 TMG (German Telemedia Act) and § 18(2) MStV."
+    "Provider information pursuant to § 5 DDG and editorial responsibility pursuant "
+    "to § 18(2) MStV."
 )
 IMPRINT_SECTIONS = [
-    ("Operator", [
-        "Christian Tausch — PrettyModels AI<br>"
+    ("Service provider and operator", [
+        "Christian Tausch, operating under the project name PrettyModels AI<br>"
         "Ben-Chorin-Str. 1<br>80339 Munich<br>Germany",
-        "Contact: <a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>",
+        "Email: <a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>",
+        "PrettyModels AI is not identified on this site as a separate legal person. "
+        "Christian Tausch is responsible for this service and its content.",
     ]),
-    ("Responsible for content", [
+    ("Editorial responsibility", [
         "Responsible for editorial content pursuant to § 18(2) MStV: "
         "Christian Tausch (address as above).",
     ]),
-    ("Liability for content", [
-        "As a service provider we are responsible for our own content on these "
-        "pages under general law, in accordance with § 7(1) TMG. Under §§ 8 to 10 "
-        "TMG, however, we are not obliged to monitor transmitted or stored "
-        "third-party information, or to investigate circumstances that indicate "
-        "unlawful activity.",
-        "Obligations to remove or block the use of information under general law "
-        "remain unaffected. Any liability in this respect is only possible from "
-        "the point in time at which we become aware of a specific infringement. "
-        "Upon notification of such violations, we will remove the content "
-        "concerned without delay.",
+    ("Research and financial disclosures", [
+        "The site publishes model research about financial instruments and links to "
+        "the Marylin Wikifolio. Important information about the operator’s economic "
+        "interest, model limitations, risk and performance presentation appears in "
+        "the <a href='/research-disclosures'>Research &amp; Risk Disclosures</a>. "
+        "Those disclosures form an integral part of every research output on this site.",
     ]),
-    ("Liability for links", [
-        "Our site contains links to external third-party websites over whose "
-        "content we have no influence. We therefore accept no liability for this "
-        "external content. The respective provider or operator of the linked "
-        "pages is always responsible for their content.",
-        "The linked pages were checked for possible legal violations at the time "
-        "of linking; no unlawful content was recognizable. A permanent monitoring "
-        "of the content of the linked pages is not reasonable without concrete "
-        "evidence of an infringement. Upon notification of violations, we will "
-        "remove such links without delay.",
+    ("External links", [
+        "External services are operated under their providers’ responsibility. A link "
+        "does not mean that we adopt all third-party content as our own. If we learn "
+        "that linked content is unlawful, we will review and remove the link where "
+        "required.",
     ]),
     ("Copyright", [
-        "The content and works created by the operator on these pages are subject "
-        "to German copyright law. Reproduction, editing, distribution and any form "
-        "of commercial exploitation beyond the scope of copyright law require the "
-        "prior written consent of the operator. Downloads and copies of this site "
-        "are permitted only for private, non-commercial use.",
-        "Insofar as the content on this site was not created by the operator, the "
-        "copyrights of third parties are respected. Should you nevertheless become "
-        "aware of a copyright infringement, please let us know accordingly. Upon "
-        "notification of violations, we will remove such content without delay.",
+        "Unless stated otherwise, operator-created text, graphics and code are protected "
+        "by applicable copyright law. Uses beyond statutory permissions require prior "
+        "consent. Quotation, private-copy and other mandatory statutory exceptions "
+        "remain unaffected. Third-party names, data and marks belong to their respective "
+        "owners.",
     ]),
-    ("Availability & technical disclaimer", [
-        "We assume no liability for the uninterrupted availability of this website "
-        "or for its freedom from technical errors, malware or other harmful "
-        "components. Use of the site is at your own risk.",
+    ("Liability", [
+        "Nothing on this site creates a guarantee of accuracy, completeness, timeliness, "
+        "availability or a particular result. The specific research and investment-risk "
+        "limitations are set out in the Research &amp; Risk Disclosures.",
+        "Nothing in these notices excludes or limits liability where exclusion is not "
+        "permitted by law, including liability for intent or gross negligence, injury to "
+        "life, body or health, fraudulently concealed defects, an expressly assumed "
+        "guarantee, or mandatory statutory liability. Where liability for ordinary "
+        "negligence may lawfully be limited, it is limited to breach of an essential "
+        "obligation and to the foreseeable damage typical for that kind of breach.",
     ]),
-    ("Applicable law & dispute resolution", [
-        "German law applies. We are neither willing nor obliged to participate in "
-        "dispute-resolution proceedings before a consumer arbitration board within "
-        "the meaning of § 36 VSBG.",
-    ]),
-    ("Reporting violations", [
-        "If you believe that content on this site infringes your rights, please "
-        "contact us directly at "
-        "<a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a> before "
-        "instructing a lawyer. This allows us to resolve the matter quickly and "
-        "without unnecessary cost; the costs of a legal warning issued without "
-        "prior contact will not be recognized as justified.",
+    ("Consumer dispute resolution", [
+        "No consumer contracts are concluded through this website. The operator is "
+        "neither willing nor obliged to participate in dispute-resolution proceedings "
+        "before a consumer arbitration board (§ 36 VSBG).",
     ]),
 ]
 
@@ -329,76 +298,238 @@ IMPRINT_SECTIONS = [
 PRIVACY_PAGE_TITLE = "Privacy Policy — PrettyModels AI"
 PRIVACY_EYEBROW = "PrettyModels AI · Legal"
 PRIVACY_TITLE = "Privacy Policy"
-PRIVACY_UPDATED = "29 January 2025"
+PRIVACY_UPDATED = "11 August 2026"
 PRIVACY_INTRO = (
-    "Your privacy is important to us. This Privacy Policy explains how PrettyModels "
-    "AI (“we”, “us” or “our”) collects, uses, discloses "
-    "and safeguards your personal information when you interact with this site. By "
-    "accessing or using our website, services or any contact form, you consent to "
-    "the practices described below."
+    "This notice provides the information required by Articles 12–14 GDPR. Merely "
+    "visiting the site is not consent to data processing. We process only the data "
+    "described below and rely on the stated legal basis for each purpose."
 )
 PRIVACY_SECTIONS = [
-    ("1. Information we collect", [
-        "<strong>Information you provide.</strong> When you contact us or use a "
-        "form, we may collect personal information such as your full name, email "
-        "address, company name, job title, phone number (if provided) and any "
-        "additional information you choose to submit.",
-        "<strong>Automatically collected information.</strong> We may automatically "
-        "collect your IP address, browser type and version, device information, "
-        "operating system, referral source, pages viewed and time spent on the "
-        "site, and clickstream and user-behaviour analytics.",
-        "<strong>Cookies and tracking technologies.</strong> We use cookies, pixels "
-        "and similar technologies to improve the user experience, analyze trends "
-        "and personalize content. You can manage cookie preferences through your "
-        "browser settings.",
+    ("1. Controller", [
+        "Christian Tausch — PrettyModels AI<br>Ben-Chorin-Str. 1<br>"
+        "80339 Munich, Germany<br>Email: "
+        "<a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>",
+        "Privacy requests can be sent to the contact above.",
     ]),
-    ("2. How we use your information", [
-        "We use the information we collect to respond to inquiries and facilitate "
-        "potential business relationships; to send newsletters and promotional "
-        "material and personalize marketing content; to analyze website usage and "
-        "monitor performance and security; and to comply with legal obligations "
-        "and enforce our terms of service.",
+    ("2. Website delivery and server logs", [
+        "When you request a page, our server necessarily processes the IP address, date "
+        "and time, requested URL and response status, amount of data transferred, "
+        "referrer (if sent), and browser/operating-system and protocol information. "
+        "This is required to deliver the site, keep it stable and secure, diagnose "
+        "errors and investigate abuse.",
+        "The legal basis is Article 6(1)(f) GDPR. Our legitimate interests are secure, "
+        "reliable and efficient publication of the research service and defence against "
+        "misuse and legal claims. Access and error logs under our control are scheduled "
+        "for deletion or anonymisation after 14 days, unless an identified security "
+        "incident or legal claim requires relevant entries to be retained until it is "
+        "resolved.",
+        "The server is hosted on infrastructure of DigitalOcean, LLC, 105 Edgeview "
+        "Drive, Suite 425, Broomfield, CO 80021, USA, acting as a processor. See "
+        "DigitalOcean’s <a href='https://www.digitalocean.com/legal/privacy-policy/' "
+        "target='_blank' rel='noopener'>privacy policy</a> and "
+        "<a href='https://www.digitalocean.com/legal/data-processing-agreement' "
+        "target='_blank' rel='noopener'>data-processing terms</a>.",
     ]),
-    ("3. How we share your information", [
-        "We do not sell, rent or trade your personal information.",
-        "We may share information with service providers and business partners — "
-        "such as cloud storage providers, email-marketing platforms and analytics "
-        "tools — that are required to maintain its confidentiality. We may also "
-        "disclose information where required by law, to comply with legal "
-        "obligations, or to protect safety and security.",
+    ("3. Local storage, cookies and telemetry", [
+        "We do not use advertising pixels, marketing cookies, audience measurement or "
+        "cross-site profiling. Optional Streamlit usage telemetry is disabled in the "
+        "application configuration.",
+        "The Streamlit framework may use short-lived session identifiers or browser "
+        "storage strictly necessary to maintain the interactive connection, preserve "
+        "the state you request and protect the service. These mechanisms are not used "
+        "by us to identify you across sites. To the extent information is stored in or "
+        "read from your device for these necessary functions, § 25(2)(2) TDDDG applies; "
+        "consent is not required for a function expressly requested by the user.",
     ]),
-    ("4. Your choices and rights", [
-        "<strong>Marketing opt-out.</strong> You can unsubscribe at any time via "
-        "the links in our emails or by contacting us directly.",
-        "<strong>Access, correction and deletion.</strong> Depending on your "
-        "jurisdiction, you may access, correct or request deletion of your "
-        "personal data by contacting "
-        "<a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>.",
-        "<strong>Managing cookies.</strong> You can modify cookie settings in your "
-        "browser, though disabling certain cookies may affect site functionality.",
+    ("4. Fonts, media and external links", [
+        "Site fonts, images and data files are served from our own host; loading a page "
+        "does not require a request to Google Fonts. Third-party services such as "
+        "Wikifolio, LinkedIn and Quant-Unit are linked, not embedded. Your browser "
+        "contacts those providers only if you follow a link, at which point their own "
+        "privacy notices apply.",
     ]),
-    ("5. Data security and retention", [
-        "We implement industry-standard security measures to protect your personal "
-        "information from unauthorized access, disclosure or misuse. We retain "
-        "personal data for as long as necessary to fulfil the purposes described "
-        "here or as required by law.",
+    ("5. Interactive research tools", [
+        "Selections made in tables, sliders and charts are processed transiently in the "
+        "Streamlit session so the requested view can be rendered. The public site does "
+        "not require an account, assign a user profile, or intentionally store those "
+        "selections after the session ends. Do not enter personal or confidential data "
+        "into any interactive control.",
     ]),
-    ("6. International data transfers", [
-        "Your information may be transferred to, stored and processed in the United "
-        "States or other countries where our service providers operate.",
+    ("6. Contact by email", [
+        "If you email us, we process your email address, name (if provided), message, "
+        "attachments and communication metadata to answer the inquiry and keep an "
+        "appropriate record. The legal basis is Article 6(1)(f) GDPR (responding to "
+        "inquiries and documenting communications) or, where your request concerns a "
+        "possible contract, Article 6(1)(b) GDPR. Providing this information is "
+        "voluntary, but we cannot answer without a usable reply address.",
+        "Email is provided by IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, Germany, "
+        "as a processor. Messages are deleted when the inquiry is conclusively resolved, "
+        "unless they must be kept for statutory commercial or tax retention periods or "
+        "for the establishment, exercise or defence of legal claims. In those cases, "
+        "access is restricted and deletion follows when the applicable period expires.",
     ]),
-    ("7. Children’s privacy", [
-        "Our services are not intended for individuals under 18 years of age, and "
-        "we do not knowingly collect personal data from minors.",
+    ("7. Recipients and disclosure", [
+        "We disclose data only to the processors identified above, to professional "
+        "advisers bound by confidentiality where necessary, or to public authorities "
+        "when a valid legal obligation requires it. We do not sell personal data and do "
+        "not use it for newsletters or behavioural advertising.",
     ]),
-    ("8. Changes to this policy", [
-        "We may update this Privacy Policy from time to time. Material changes will "
-        "be reflected by an updated “Last updated” date and, where "
-        "appropriate, additional notice.",
+    ("8. Transfers outside the EEA", [
+        "DigitalOcean is established in the United States. Depending on the contracted "
+        "server region and support operations, personal data may be accessible from or "
+        "transferred to the United States. DigitalOcean states that it participates in "
+        "the EU–U.S. Data Privacy Framework and that its data-processing agreement uses "
+        "the European Commission’s Standard Contractual Clauses as a fallback. Copies or "
+        "information about these safeguards can be requested from us.",
     ]),
-    ("9. Contact us", [
-        "PrettyModels AI<br>"
-        "Email: <a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>",
+    ("9. Your GDPR rights", [
+        "Subject to the statutory conditions, you have the right to access your data "
+        "(Article 15), rectify inaccurate data (Article 16), erase data (Article 17), "
+        "restrict processing (Article 18), receive portable data where applicable "
+        "(Article 20), and object to processing based on legitimate interests "
+        "(Article 21 GDPR). If processing ever relies on consent, you may withdraw it "
+        "for the future at any time.",
+        "<strong>Right to object:</strong> You may object at any time, on grounds "
+        "relating to your particular situation, to processing based on Article 6(1)(f) "
+        "GDPR. We will stop unless compelling legitimate grounds override your interests, "
+        "rights and freedoms or the processing is needed for legal claims.",
+        "To exercise a right, email "
+        "<a href='mailto:team@prettymodels.ai'>team@prettymodels.ai</a>. We may need "
+        "reasonable information to verify that the request concerns you.",
+    ]),
+    ("10. Right to complain", [
+        "You may complain to any competent data-protection supervisory authority, in "
+        "particular in the Member State of your residence, workplace or the alleged "
+        "infringement. The authority responsible for private-sector controllers in "
+        "Bavaria is the Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), "
+        "Promenade 18, 91522 Ansbach, Germany; "
+        "<a href='https://www.lda.bayern.de/de/beschwerde.html' target='_blank' "
+        "rel='noopener'>online complaint service</a>.",
+    ]),
+    ("11. Required data and automated decisions", [
+        "Technical request data is necessary to deliver and secure the website; without "
+        "it the service cannot be provided. Email contact is voluntary. We do not use "
+        "visitor personal data for automated decisions or profiling within Article 22 "
+        "GDPR. The models score public companies, not website visitors.",
+    ]),
+    ("12. Security and changes", [
+        "We use proportionate technical and organisational safeguards, including HTTPS, "
+        "access controls, updates and data minimisation. No internet service can promise "
+        "absolute security. We will update this notice when processing materially "
+        "changes and show the revision date above.",
+    ]),
+]
+
+
+# --- Research and risk disclosures ------------------------------------------
+DISCLOSURE_PAGE_TITLE = "Research & Risk Disclosures — PrettyModels AI"
+DISCLOSURE_EYEBROW = "PrettyModels AI · Important information"
+DISCLOSURE_TITLE = "Research & Risk Disclosures"
+DISCLOSURE_UPDATED = "11 August 2026"
+DISCLOSURE_INTRO = (
+    "Read this before using any score, ranking, model output or performance figure. "
+    "These disclosures are part of every research publication on this site."
+)
+DISCLOSURE_SECTIONS = [
+    ("1. Publisher, editor and update cycle", [
+        "Publisher and responsible editor: Christian Tausch, PrettyModels AI, address "
+        "and contact details in the <a href='/legal-notice'>Legal Notice</a>. Model "
+        f"research is ordinarily refreshed {RESEARCH_UPDATE_FREQUENCY}. The score "
+        f"dataset currently shown was produced on {SCORING_DATA_AS_OF}; performance "
+        f"data runs through {PERFORMANCE_DATA_AS_OF}. The published research version "
+        f"is {RESEARCH_VERSION}. "
+        "Outputs are not monitored or updated continuously between publication cycles.",
+        "AI systems assist with analysis and drafting. Published material is reviewed "
+        "and remains under the human editorial responsibility of Christian Tausch. "
+        "The AI-assistance statement is also intended to make the origin of the material "
+        "clear under the EU AI Act.",
+    ]),
+    ("2. General research—not personalised advice", [
+        "The material is prepared for a general audience and does not take account of "
+        "any person’s knowledge, financial position, objectives, loss capacity, tax "
+        "position or risk tolerance. No suitability or appropriateness assessment is "
+        "performed. Nothing creates an adviser, fiduciary, client or contractual "
+        "relationship with the reader.",
+        "The site does not accept orders or conclude transactions. It is not a "
+        "prospectus, key information document, offer, invitation or personalised "
+        "recommendation. Obtain independent regulated advice and review the issuer’s "
+        "current legal documents before considering any financial instrument.",
+        "Regulatory classification depends on the substance and context of a publication, "
+        "not on a disclaimer. Public model scores, rankings or portfolio information may "
+        "constitute an investment recommendation or information suggesting an investment "
+        "strategy under applicable market-abuse rules. The identification, methodology, "
+        "timing, risk and conflict information on this page is provided on that basis.",
+    ]),
+    ("3. Model and data limitations", [
+        "Scores and rankings are probabilistic research outputs, not facts or trade "
+        "instructions. Large language models can hallucinate, misread sources, reproduce "
+        "bias, omit material information and change behaviour between versions. Public "
+        "filings, transcripts, news and market data can be incomplete, delayed, revised "
+        "or wrong. Human review reduces but does not eliminate these risks.",
+        "The same labels can conceal different assumptions across issuers. Aggregation "
+        "and portfolio sizing amplify model and data errors. No representation is made "
+        "that a score measures intrinsic value, predicts a price or is statistically "
+        "significant. Reproducibility can be affected by model, prompt, source-corpus and "
+        "software changes.",
+        "The high-level methodology is described on the main page. Material assumptions "
+        "include the selected company universe, source availability, fixed prompt set, "
+        "normalisation, composite-factor construction and ranking/weighting rules. The "
+        "methodology may change; comparisons across versions may therefore be invalid.",
+    ]),
+    ("4. Investment risks", [
+        "Investments can lose some or all capital. Concentrated, growth-oriented, foreign "
+        "currency, small-cap and technology exposures can be especially volatile. Other "
+        "risks include liquidity, valuation, model, execution, counterparty, issuer, "
+        "currency, political, regulatory, tax and operational risk. Diversification does "
+        "not guarantee a profit or prevent loss.",
+        "No return, outperformance, level of risk or availability is promised. Past "
+        "performance is not a reliable indicator of future results, and a short record "
+        "or favourable market regime cannot establish durability.",
+    ]),
+    ("5. Marylin record and benchmark presentation", [
+        "Marylin is a public Wikifolio reference portfolio operated by Christian Tausch "
+        "under the profile PrettyModelsAI. The associated Wikifolio certificate is a "
+        "third-party investment product. The reference portfolio began in December 2024; "
+        "the certificate’s first issue date was 2 September 2025. Pre-issuance figures "
+        "are therefore not actual certificate-investor returns.",
+        "The chart uses downloaded Wikifolio reference-index levels. The site’s "
+        "“cumulative alpha” series is a simple cumulative return difference between the "
+        "Marylin series and each named benchmark; it is not regression alpha, does not "
+        "control for risk or factor exposures, and carries no claim of statistical "
+        "significance. Benchmarks may differ in currency, composition, risk, fees, tax, "
+        "rebalancing, investability and calculation time.",
+        "Certificate investors may experience a different return because of the issue "
+        "date, certificate and performance fees, bid/ask spreads, purchase price, broker "
+        "charges, taxes, market hours, tracking and issuer risk. The current product "
+        "terms, prospectus, key information document, fees and risk factors are available "
+        "only from the issuer/distributor and Wikifolio; their documents control.",
+    ]),
+    ("6. Material conflicts of interest", [
+        "Christian Tausch both publishes this research and operates the Marylin "
+        "Wikifolio. The associated certificate has a performance fee. Under Wikifolio’s "
+        "published trader-remuneration model, an eligible trader may receive a "
+        "performance-linked success bonus representing a share of that fee. The operator "
+        "therefore has a direct economic interest in positive performance and in capital "
+        "invested in the certificate. This conflicts with an entirely disinterested "
+        "presentation of the strategy.",
+        "The operator and related persons may also hold, buy or sell instruments discussed "
+        "or held in Marylin, before or after publication, and are not required by this site "
+        "to trade in line with a model output. The live Wikifolio page shows the reference "
+        "portfolio’s disclosed positions and transactions; it does not disclose every "
+        "personal account. Readers should assume that the publisher may benefit from "
+        "favourable attention to Marylin or to an instrument held by it.",
+        "No issuer is stated to have paid for a score or supplied consideration for "
+        "coverage. If that changes, the affected publication must carry a specific, "
+        "prominent disclosure. Instrument-specific interests that market-abuse rules "
+        "require to be disclosed must likewise be added to the affected publication; "
+        "this general statement is not a substitute for them.",
+    ]),
+    ("7. No warranty; legally permitted limits", [
+        "Research is supplied without a contractual guarantee of accuracy, completeness, "
+        "timeliness, availability, merchantability, fitness for purpose or non-infringement. "
+        "You remain responsible for independently checking sources and decisions.",
+        "Nothing excludes liability that cannot lawfully be excluded. The qualified "
+        "liability provisions in the <a href='/legal-notice'>Legal Notice</a> apply.",
     ]),
 ]
 

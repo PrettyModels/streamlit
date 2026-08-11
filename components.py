@@ -23,13 +23,9 @@ SERIF = "'Newsreader', Georgia, 'Times New Roman', serif"
 SANS = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
 MONO = "'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace"
 
-FONT_IMPORT = (
-    "@import url('https://fonts.googleapis.com/css2?"
-    "family=Inter:wght@400;500;600&"
-    "family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;"
-    "1,6..72,400;1,6..72,500&"
-    "family=IBM+Plex+Mono:wght@400;500;600&display=swap');"
-)
+# Deliberately no external font import. This avoids disclosing visitor IP
+# addresses to a font CDN before consent and keeps the privacy notice accurate.
+FONT_IMPORT = ""
 
 
 def _md(html: str) -> None:

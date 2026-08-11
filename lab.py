@@ -45,7 +45,7 @@ c.stat_strip([
     (str(stats["n_assets"]), "companies scored monthly"),
     (str(stats["n_dimensions"]), "AI score dimensions"),
     (str(stats["n_composites"]), "composite factors"),
-    (f'{metrics["months"]}', "months live, out-of-sample"),
+    (f'{metrics["months"]}', "months publicly tracked"),
 ])
 
 # =============================================================================
@@ -111,6 +111,10 @@ st.dataframe(
     column_config=col_cfg,
 )
 c.figure_caption(T.SCORING_TABLE_CAPTION)
+st.caption(
+    f"Model-output date: {T.SCORING_DATA_AS_OF} · "
+    f"Scheduled update frequency: {T.RESEARCH_UPDATE_FREQUENCY}"
+)
 
 tab_explore, tab_compare, tab_analyze = st.tabs(
     [T.TAB_EXPLORE, T.TAB_COMPARE, T.TAB_ANALYZE]
@@ -190,10 +194,10 @@ c.lead(T.VALIDATION_INTRO)
 
 a = metrics["alpha"]
 c.stat_strip([
-    (f'+{metrics["index_return"]:.0%}', "index return since inception"),
-    (f'+{a["Internet"]["cum"]:.0%}', "cumulative alpha vs. Internet"),
-    (f'+{a["Nasdaq"]["cum"]:.0%}', "cumulative alpha vs. Nasdaq"),
-    (f'+{a["Quality"]["cum"]:.0%}', "cumulative alpha vs. Quality"),
+    (f'{metrics["index_return"]:+.0%}', "reference-index return since inception"),
+    (f'{a["Internet"]["cum"]:+.0%}', "return difference vs. Internet"),
+    (f'{a["Nasdaq"]["cum"]:+.0%}', "return difference vs. Nasdaq"),
+    (f'{a["Quality"]["cum"]:+.0%}', "return difference vs. Quality"),
 ])
 
 fig_l, fig_r = st.columns(2)
@@ -250,6 +254,7 @@ c.body(T.OPEN_QUESTIONS_BODY)
 
 st.markdown(T.VALIDATION_NOTE)
 st.link_button(T.VALIDATION_VERIFY, T.WIKIFOLIO_URL)
+st.page_link("legal_disclosures.py", label="Read the Research & Risk Disclosures")
 
 # =============================================================================
 # §5 — Philosophy
@@ -267,5 +272,6 @@ c.entity_note(T.ENTITY_NOTE)
 st.caption(T.DISCLAIMER)
 c.footer_links(
     T.FOOTER_LINKS,
-    meta=f"Research log · Marylin 1.2.5 · updated {metrics['end'].strftime('%Y-%m-%d')}",
+    meta=(f"Research log · {T.RESEARCH_VERSION} · "
+          f"updated {metrics['end'].strftime('%Y-%m-%d')}"),
 )
