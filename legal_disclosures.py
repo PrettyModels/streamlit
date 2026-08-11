@@ -8,7 +8,7 @@ import data as D
 
 st.set_page_config(
     page_title=T.DISCLOSURE_PAGE_TITLE,
-    page_icon="images/logo.png",
+    page_icon=T.PAGE_ICON,
     layout="wide",
     initial_sidebar_state="collapsed",
 )

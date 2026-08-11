@@ -18,7 +18,7 @@ import data as D
 # --- page setup --------------------------------------------------------------
 st.set_page_config(
     page_title=T.PAGE_TITLE,
-    page_icon="images/logo.png",
+    page_icon=T.PAGE_ICON,
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -36,7 +36,7 @@ copy = T.fill(stats)  # copy with the universe counts (31 dims, 5 factors) woven
 hero_l, hero_r = st.columns([1.3, 1], vertical_alignment="center")
 with hero_l:
     c.eyebrow(T.HERO_EYEBROW)
-    st.markdown(f'<div class="pm-hero-h1">{T.HERO_HEADLINE}</div>',
+    st.markdown(f'<h1 class="pm-hero-h1">{T.HERO_HEADLINE}</h1>',
                 unsafe_allow_html=True)
     c.lead(T.HERO_LEAD)
 with hero_r:

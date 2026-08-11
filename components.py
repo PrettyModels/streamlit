@@ -132,7 +132,7 @@ a:hover {{ text-decoration: underline; }}
   margin: 3.2rem 0 1.6rem; }}
 
 /* ---- hero ---- */
-.pm-hero-h1 {{ font-family: var(--serif); font-weight: 500; font-size: 3rem;
+.pm-hero-h1 {{ font-family: var(--serif) !important; font-weight: 500; font-size: 3rem;
   line-height: 1.08; letter-spacing: -0.02em; margin: 0.55rem 0 1.1rem; }}
 .pm-lead {{ font-size: 1.16rem; line-height: 1.6; color: #2b2b2b; max-width: 40em; }}
 
@@ -142,7 +142,7 @@ a:hover {{ text-decoration: underline; }}
 .pm-sec-num {{ font-family: var(--mono); font-size: 1.05rem; letter-spacing: 0.16em;
   color: var(--accent); text-transform: uppercase; flex: 0 0 auto; white-space: nowrap; }}
 .pm-sec-title {{ font-family: var(--serif); font-weight: 500; font-size: 2rem;
-  line-height: 1.12; letter-spacing: -0.015em; }}
+  line-height: 1.12; letter-spacing: -0.015em; margin: 0; }}
 .pm-sec-sub {{ font-family: var(--sans); color: var(--muted); font-size: 1.02rem;
   margin-bottom: 0.4rem; }}
 
@@ -257,7 +257,7 @@ def section_header(anchor_id: str, num: str, title: str, subtitle: str = "") -> 
     sub = f'<div class="pm-sec-sub">{subtitle}</div>' if subtitle else ""
     _md(f'<div class="pm-sec-head">'
         f'<span class="pm-sec-num">§{num}</span>'
-        f'<span class="pm-sec-title">{title}</span></div>{sub}')
+        f'<h2 class="pm-sec-title">{title}</h2></div>{sub}')
 
 
 def lead(text: str) -> None:
@@ -334,10 +334,10 @@ def footer_links(links: list[tuple[str, str]], meta: str = "") -> None:
 def legal_title(title: str, updated: str = "") -> None:
     """Page title for a legal page, styled like a section title."""
     sub = f'<div class="pm-sec-sub">Last updated {updated}</div>' if updated else ""
-    _md(f'<div class="pm-sec-head"><span class="pm-sec-title">{title}</span></div>{sub}')
+    _md(f'<div class="pm-sec-head"><h1 class="pm-sec-title">{title}</h1></div>{sub}')
 
 
 def legal_section(heading: str, paragraphs: list[str]) -> None:
     """A heading followed by body paragraphs; paragraphs may contain inline HTML."""
     inner = "".join(f"<p>{p}</p>" for p in paragraphs)
-    _md(f'<div class="pm-legal-h">{heading}</div><div class="pm-body">{inner}</div>')
+    _md(f'<h2 class="pm-legal-h">{heading}</h2><div class="pm-body">{inner}</div>')

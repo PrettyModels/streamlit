@@ -76,6 +76,14 @@ the service, research process, operator details, or financial interests change.
 
 - [ ] Deploy the repository version and verify `/`, `/research-disclosures`,
   `/legal-notice`, and `/privacy-policy` without authentication or broken links.
+- [ ] Inspect the raw HTML response for each route and confirm the title,
+  description, canonical URL, Open Graph/Twitter card, favicon and JSON-LD are
+  present before JavaScript runs. Confirm the retired “Beat the market”
+  description and Streamlit crown are absent.
+- [ ] Verify `/robots.txt`, `/sitemap.xml`, `/favicon.ico`, the web manifest and
+  the 1200×630 social image return `200` from the canonical `www` hostname.
+- [ ] Re-scrape the homepage in the LinkedIn Post Inspector and any other social
+  networks used for publication so their cached preview is refreshed.
 - [ ] Remove the old deployment and retired `docs.prettymodels.ai` links from all
   search profiles, social profiles, and cached navigation under the operator's
   control.

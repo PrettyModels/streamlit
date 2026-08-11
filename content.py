@@ -4,10 +4,12 @@
 BRAND = "PrettyModels AI"
 TAGLINE = "AI Research Lab"
 PAGE_TITLE = "PrettyModels AI — AI Research Lab"
+PAGE_ICON = "static/favicon-32x32.png"
 PAGE_DESCRIPTION = (
     "PrettyModels AI studies whether large language models can evaluate public "
     "companies consistently, using a public model portfolio as an empirical test."
 )
+CANONICAL_URL = "https://www.prettymodels.ai/"
 
 NAV = [
     ("Thesis", "thesis"),

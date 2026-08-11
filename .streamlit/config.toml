@@ -6,6 +6,11 @@ toolbarMode = "minimal"
 # Keep this disabled so no analytics consent layer is required.
 gatherUsageStats = false
 
+[server]
+# Exposes checked-in brand assets at /app/static/* so the reverse proxy can
+# reference stable, crawler-visible favicon and social-preview URLs.
+enableStaticServing = true
+
 # ---------------------------------------------------------------------------
 # PrettyModels AI — "academic paper" research-lab theme (Streamlit >= 1.50)
 # The named families use local/system fallbacks; no third-party font CDN is used.

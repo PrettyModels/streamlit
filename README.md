@@ -26,6 +26,8 @@ Live site: [prettymodels.ai](https://prettymodels.ai/)
 | `legal_privacy.py` | GDPR/TDDDG privacy notice |
 | `LEGAL_DEPLOYMENT_CHECKLIST.md` | Required factual, infrastructure and counsel checks before release |
 | `.streamlit/config.toml` | "Academic paper" theme (colors, fonts, chart palette) |
+| `static/` | Favicon, app icons, social preview, manifest, robots and sitemap |
+| `deploy/nginx/` | Crawler-visible metadata and conventional public-file routes |
 
 ## Run it locally
 
@@ -40,6 +42,24 @@ Live site: [prettymodels.ai](https://prettymodels.ai/)
    ```
    $ streamlit run streamlit_app.py
    ```
+
+## Browser and sharing metadata
+
+Streamlit's `st.set_page_config` updates the tab title and icon only after the
+app connects. Search engines and social-preview crawlers inspect the initial
+HTML response instead, so production Nginx must also expose the metadata there.
+
+- Enable the three checked-in snippets in the canonical HTTPS configuration:
+  `deploy/nginx/http-metadata-map.conf` at `http` scope,
+  `deploy/nginx/streamlit-location-metadata.conf` inside the existing
+  `location /` block, and `deploy/nginx/public-files.conf` at `server` scope.
+- Test with `sudo nginx -t`, reload Nginx, then verify the raw page source—not
+  only the browser DOM—contains `og:title`, `og:image`, and the PM favicon.
+- If the PM mark or public positioning changes, regenerate the image assets
+  with `python scripts/generate_brand_assets.py` and commit the results.
+
+The canonical public hostname is `https://www.prettymodels.ai/`; the apex domain
+should continue to redirect there.
 
 ## Updating research data
 
