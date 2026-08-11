@@ -30,6 +30,7 @@ c.masthead(T.BRAND, T.TAGLINE, T.NAV)
 # =============================================================================
 stats = D.universe_stats()
 metrics = D.validation_metrics()
+freshness = D.data_freshness()
 copy = T.fill(stats)  # copy with the universe counts (31 dims, 5 factors) woven in
 
 hero_l, hero_r = st.columns([1.3, 1], vertical_alignment="center")
@@ -112,7 +113,7 @@ st.dataframe(
 )
 c.figure_caption(T.SCORING_TABLE_CAPTION)
 st.caption(
-    f"Model-output date: {T.SCORING_DATA_AS_OF} · "
+    f"Model-output date: {freshness['scoring_as_of_label']} · "
     f"Scheduled update frequency: {T.RESEARCH_UPDATE_FREQUENCY}"
 )
 
@@ -222,7 +223,10 @@ with fig_l:
         .encode(y="y:Q")
     )
     st.altair_chart(base + line, use_container_width=True)
-    c.figure_caption(T.VALIDATION_INDEX_CAPTION)
+    c.figure_caption(
+        f"{T.VALIDATION_INDEX_CAPTION} Data through "
+        f"{freshness['reference_index_as_of_label']}."
+    )
 
 with fig_r:
     df_perf = D.load_perf_data().reset_index().rename(columns=D.BENCHMARK_LABELS)
@@ -247,7 +251,10 @@ with fig_r:
         .encode(y="y:Q")
     )
     st.altair_chart(zero + line, use_container_width=True)
-    c.figure_caption(T.VALIDATION_ALPHA_CAPTION)
+    c.figure_caption(
+        f"{T.VALIDATION_ALPHA_CAPTION} Data through "
+        f"{freshness['performance_as_of_label']}."
+    )
 
 c.eyebrow(T.OPEN_QUESTIONS_SUBTITLE)
 c.body(T.OPEN_QUESTIONS_BODY)
@@ -272,6 +279,6 @@ c.entity_note(T.ENTITY_NOTE)
 st.caption(T.DISCLAIMER)
 c.footer_links(
     T.FOOTER_LINKS,
-    meta=(f"Research log · {T.RESEARCH_VERSION} · "
-          f"updated {metrics['end'].strftime('%Y-%m-%d')}"),
+    meta=(f"Research log · {freshness['research_version']} · "
+          f"data through {freshness['latest_as_of'].strftime('%Y-%m-%d')}"),
 )

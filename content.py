@@ -107,9 +107,6 @@ GLOSSARY = [
 SCORING_TABLE_CAPTION = (
     "Highlighted cells indicate the top-scoring company on each factor."
 )
-RESEARCH_VERSION = "Marylin 1.2.5"
-SCORING_DATA_AS_OF = "23 June 2026 at 20:48 CEST"
-PERFORMANCE_DATA_AS_OF = "30 June 2026"
 RESEARCH_UPDATE_FREQUENCY = "monthly"
 TAB_EXPLORE = "Explore scores"
 TAB_COMPARE = "Compare companies"
@@ -435,9 +432,10 @@ DISCLOSURE_SECTIONS = [
         "Publisher and responsible editor: Christian Tausch, PrettyModels AI, address "
         "and contact details in the <a href='/legal-notice'>Legal Notice</a>. Model "
         f"research is ordinarily refreshed {RESEARCH_UPDATE_FREQUENCY}. The score "
-        f"dataset currently shown was produced on {SCORING_DATA_AS_OF}; performance "
-        f"data runs through {PERFORMANCE_DATA_AS_OF}. The published research version "
-        f"is {RESEARCH_VERSION}. "
+        "dataset currently shown was produced on {scoring_as_of}; benchmark-comparison "
+        "data runs through {performance_as_of}, and Wikifolio reference-index data runs "
+        "through {reference_index_as_of}. The published research version is "
+        "{research_version}. "
         "Outputs are not monitored or updated continuously between publication cycles.",
         "AI systems assist with analysis and drafting. Published material is reviewed "
         "and remains under the human editorial responsibility of Christian Tausch. "
@@ -564,3 +562,17 @@ def fill(stats: dict) -> dict:
         "scoring_intro": SCORING_INTRO.format(**ctx),
         "glossary_subtitle": GLOSSARY_SUBTITLE.format(**ctx),
     }
+
+
+def fill_disclosures(freshness: dict) -> list[tuple[str, list[str]]]:
+    """Weave checksum-verified snapshot metadata into the public disclosures."""
+    ctx = {
+        "scoring_as_of": freshness["scoring_as_of_label"],
+        "performance_as_of": freshness["performance_as_of_label"],
+        "reference_index_as_of": freshness["reference_index_as_of_label"],
+        "research_version": freshness["research_version"],
+    }
+    return [
+        (heading, [paragraph.format(**ctx) for paragraph in paragraphs])
+        for heading, paragraphs in DISCLOSURE_SECTIONS
+    ]

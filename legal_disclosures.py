@@ -4,6 +4,7 @@ import streamlit as st
 
 import components as c
 import content as T
+import data as D
 
 st.set_page_config(
     page_title=T.DISCLOSURE_PAGE_TITLE,
@@ -20,7 +21,7 @@ c.eyebrow(T.DISCLOSURE_EYEBROW)
 c.legal_title(T.DISCLOSURE_TITLE, T.DISCLOSURE_UPDATED)
 c.lead(T.DISCLOSURE_INTRO)
 
-for heading, paragraphs in T.DISCLOSURE_SECTIONS:
+for heading, paragraphs in T.fill_disclosures(D.data_freshness()):
     c.legal_section(heading, paragraphs)
 
 c.hairline()
