@@ -3,11 +3,14 @@
 # --- Masthead / meta ---------------------------------------------------------
 BRAND = "PrettyModels AI"
 TAGLINE = "AI Research Lab"
-PAGE_TITLE = "PrettyModels AI — AI Research Lab"
+# Crawlers never wait for Streamlit's websocket, so the tags they actually read
+# are injected by deploy/nginx/http-metadata-map.conf. These constants set the
+# browser tab title and must be kept in step with that map's `default` values.
+PAGE_TITLE = "PrettyModels AI — Testing LLMs on Public-Market Outcomes"
 PAGE_ICON = "static/favicon-32x32.png"
 PAGE_DESCRIPTION = (
-    "PrettyModels AI studies whether large language models can evaluate public "
-    "companies consistently, using a public model portfolio as an empirical test."
+    "Can large language models evaluate public companies consistently? An AI "
+    "research lab that scores a fixed universe monthly and tests the result in public."
 )
 CANONICAL_URL = "https://www.prettymodels.ai/"
 

@@ -33,6 +33,26 @@ JavaScript):
 
 ```bash
 curl -s https://www.prettymodels.ai/ | grep -o 'og:[^>]*'
-curl -I https://www.prettymodels.ai/app/static/social-preview.png
+curl -I https://www.prettymodels.ai/app/static/social-preview-v2.png
 curl -I https://www.prettymodels.ai/robots.txt
 ```
+
+Confirm the canonical host resolves the way the tags claim — a `www` canonical
+served from an `apex` host that does not redirect splits ranking signals across
+two URLs:
+
+```bash
+curl -sI https://prettymodels.ai/ | grep -i '^location'
+```
+
+## Refreshing the social card
+
+Facebook, LinkedIn and Slack cache `og:image` by URL and never re-fetch it on
+their own. After running `python scripts/generate_brand_assets.py`, a changed
+card only reaches people who have shared the link before if the filename
+changes too: bump `social-preview-vN.png` in the script and in the `sub_filter`
+line, then re-scrape once per platform.
+
+- LinkedIn: <https://www.linkedin.com/post-inspector/>
+- Facebook: <https://developers.facebook.com/tools/debug/>
+- X: <https://cards-dev.twitter.com/validator>
